@@ -10,13 +10,19 @@ from api.models import db
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
+from flask_cors import CORS
+from flask_jwt_extended import JWTManager
 
+app = Flask(__name__)
+app.config['JWT_SECRET_KEY'] = 'supersecreto123'
+jwt = JWTManager(app)
+
+CORS(app, origins=["https://potential-chainsaw-97j7q96jxvv4cxx6v-3000.app.github.dev"], supports_credentials=True)
 # from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../dist/')
-app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 # database condiguration
@@ -42,6 +48,13 @@ app.register_blueprint(api, url_prefix='/api')
 
 # Handle/serialize errors like a JSON object
 
+@app.errorhandler(Exception)
+def handle_all_exceptions(error):
+    response = jsonify(message=str(error))
+    response.status_code = 500
+    # Añade headers CORS manualmente si no se agregan
+    response.headers.add("Access-Control-Allow-Origin", "https://potential-chainsaw-97j7q96jxvv4cxx6v-3000.app.github.dev")
+    return response
 
 @app.errorhandler(APIException)
 def handle_invalid_usage(error):

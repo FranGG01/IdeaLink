@@ -7,6 +7,7 @@ from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_jwt_extended import create_access_token
+from werkzeug.security import check_password_hash
 
 api = Blueprint('api', __name__)
 
@@ -16,20 +17,16 @@ CORS(api)
 
 @api.route('/token', methods=['POST'])
 def create_token():
-    email = request.json.get('email')
-    password = request.json.get('password')
+    data = request.get_json(force=True)
+    print("Datos recibidos:", data)
+    email = data.get('email')
+    password = data.get('password')
+    print(f"Email: '{email}', Password: '{password}'")
 
-    user = User.query.filter_(email=email, password=password).first()
+    user = User.query.filter_by(email=email, password=password).first()
     if not user:
+        print("Usuario no encontrado o contraseña incorrecta")
         return jsonify({"msg": "Invalid credentials"}), 401
-    
+
     access_token = create_access_token(identity=user.id)
-    return jsonify({'token':access_token,'user_id':user.id}), 200
-
-@api.route('/profile', methods=['GET'])
-@jwt_required()
-def protected():
-    current_user_id = get_jwt_identity()
-    user = User.query.get(current_user_id)
-    return jsonify(user.serialize()), 200
-
+    return jsonify({'token': access_token, 'user_id': user.id}), 200

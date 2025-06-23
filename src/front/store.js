@@ -39,7 +39,7 @@ export default function storeReducer(store, action = {}) {
 
 
 export const login = async (email,password) => {
-  const res = await fetch("http://localhost:5000/token", {
+  const res = await fetch("https://potential-chainsaw-97j7q96jxvv4cxx6v-3001.app.github.dev/api/token", {
     method: "POST",
     headers: { "Content-Type": "application/json"},
     body: JSON.stringify({ email, password })
@@ -56,7 +56,7 @@ export const login = async (email,password) => {
 export const getProfile = async () => {
   const token = localStorage.getItem('jwt-token');
 
-  const res = await fetch("http://localhost:5000/profile", {
+  const res = await fetch("https://potential-chainsaw-97j7q96jxvv4cxx6v-3001.app.github.dev/api/profile", {
     method: 'GET',
     headers: {
       'Authorization': 'Bearer ' + token,
