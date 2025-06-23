@@ -36,3 +36,36 @@ export default function storeReducer(store, action = {}) {
       throw Error('Unknown action.');
   }    
 }
+
+
+export const login = async (email,password) => {
+  const res = await fetch("http://localhost:5000/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/json"},
+    body: JSON.stringify({ email, password })
+  });
+
+  if(!res.ok) throw new Error("Login fallido");
+
+  const data = await res.json();
+  localStorage.setItem("jwt-token", data.token);
+  return data
+};
+
+
+export const getProfile = async () => {
+  const token = localStorage.getItem('jwt-token');
+
+  const res = await fetch("http://localhost:5000/profile", {
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if(!res.ok) throw new Error('Acceso denegado');
+
+  const data = await res.json();
+  return data;
+};
