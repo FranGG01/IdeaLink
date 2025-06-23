@@ -1,7 +1,7 @@
 :root{
-.paleta-idealink-1-rgba { color: rgba(214, 54, 217, 1); }
-.paleta-idealink-2-rgba { color: rgba(147, 43, 217, 1); }
-.paleta-idealink-3-rgba { color: rgba(72, 46, 242, 1); }
-.paleta-idealink-4-rgba { color: rgba(17, 29, 64, 1); }
-.paleta-idealink-5-rgba { color: rgba(242, 242, 242, 1); }
+--color-1: #D636D9;
+--color-2: #932BD9;
+--color-3: #482EF2;
+--color-4: #111D40;
+--color-5: #F2F2F2;
 }
