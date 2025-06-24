@@ -28,13 +28,13 @@ const Login = () => {
     };
     return (
         <>
-          <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 h-[700px] w-[400px]">
+          <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 h-[700px] w-[600px]">
   <div className="sm:mx-auto sm:w-full sm:max-w-sm">
     <img className="mx-auto h-50 " src={logo} alt="Your Company" />
     <h2 className="mt- text-center text-2xl/9 font-bold tracking-tight text-purple-600 ">Sign in to your account</h2>
   </div>
 
-  <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+  <div className="mt-10  h-[700px] sm:mx-auto sm:w-full sm:max-w-sm">
     <form onSubmit={handleLogin} className="space-y-6" action="#" method="POST">
       <div>
         <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">Email address</label>
