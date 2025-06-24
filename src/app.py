@@ -17,8 +17,13 @@ app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = 'supersecreto123'
 jwt = JWTManager(app)
 
-CORS(app, origins=["https://potential-chainsaw-97j7q96jxvv4cxx6v-3000.app.github.dev"], supports_credentials=True)
-# from models import Person
+CORS(app, supports_credentials=True)
+# Configura CORS para los orígenes que usas (añade los que necesites)
+CORS(app, origins=[
+    "https://potential-chainsaw-97j7q96jxvv4cxx6v-3000.app.github.dev",
+    "https://supreme-telegram-7vpvr97px66vhpr55-3000.app.github.dev",
+    "https://cautious-halibut-4jwjg7qwr9qphqw5q-3000.app.github.dev"
+], supports_credentials=True)
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
@@ -47,13 +52,11 @@ setup_commands(app)
 app.register_blueprint(api, url_prefix='/api')
 
 # Handle/serialize errors like a JSON object
-
 @app.errorhandler(Exception)
 def handle_all_exceptions(error):
     response = jsonify(message=str(error))
     response.status_code = 500
-    # Añade headers CORS manualmente si no se agregan
-    response.headers.add("Access-Control-Allow-Origin", "https://potential-chainsaw-97j7q96jxvv4cxx6v-3000.app.github.dev")
+    # El header CORS ya se añade automáticamente con flask-cors
     return response
 
 @app.errorhandler(APIException)
@@ -61,8 +64,6 @@ def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
 # generate sitemap with all your endpoints
-
-
 @app.route('/')
 def sitemap():
     if ENV == "development":
