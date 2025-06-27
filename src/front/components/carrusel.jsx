@@ -48,7 +48,7 @@ function customPagination(_, className) {
 
  const CarouselDemo = () => {
   return (
-    <div className="max-w-[686px]">
+    <div className="max-w-[686px] mt-15">
       <Swiper
         pagination={{
           enabled: true,

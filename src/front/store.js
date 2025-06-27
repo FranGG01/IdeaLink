@@ -37,6 +37,23 @@ export default function storeReducer(store, action = {}) {
   }    
 }
 
+export const register = async (email,password) => {
+  const res = await fetch("https://supreme-telegram-7vpvr97px66vhpr55-3001.app.github.dev/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify({email, password})
+  })
+  const data = await response.json();
+  if (response.ok) {
+      alert('Usuario registrado correctamente');
+      
+    } else {
+      alert(data.msg || 'Error al registrar usuario');
+    }
+  }
+
+
+
 export const login = async (email,password) => {
   const res = await fetch("https://supreme-telegram-7vpvr97px66vhpr55-3001.app.github.dev/api/token", {
     method: "POST",
@@ -50,6 +67,8 @@ export const login = async (email,password) => {
   localStorage.setItem("jwt-token", data.token);
   return data
 };
+
+
 
 export const getProfile = async () => {
   const token = localStorage.getItem('jwt-token');
@@ -67,3 +86,6 @@ export const getProfile = async () => {
   const data = await res.json();
   return data;
 };
+
+
+ 
