@@ -10,22 +10,16 @@
   --color-4: #111d40;
   --color-5: #f2f2f2;
 }
-#root {
-   
-    gap: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: nowrap;
-    flex-direction: row;
 
-
+.Login{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+
 body{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  
     top: 0 !important;
     background-color: var(--color-5);
 }
-

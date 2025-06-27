@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { login } from '../store';
 import logo from '../assets/img/Logo.png';
 import Register from './Register';
+import Carousel from'./carrusel';
 
 
 
@@ -34,7 +35,8 @@ const Login = () => {
 
   return (
     <>
-      <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 h-[700px] w-[600px]">
+    <div className="Login  ">
+      <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 h-[800px] w-[600px] mt-15   shadow-2xl shadow-purple-500/60">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img className="mx-auto h-50 " src={logo} alt="Your Company" />
           <h2 className="mt- text-center text-2xl/9 font-bold tracking-tight text-purple-600 ">Sign in to your account</h2>
@@ -74,7 +76,10 @@ const Login = () => {
           </p>
         </div>
       </div>
-
+      <div>
+        <Carousel/>
+      </div>
+</div>
     </>
   )
 }
