@@ -9,7 +9,7 @@ import { Navigation, Pagination } from "swiper/modules";
 import { IconButton } from "@material-tailwind/react";
 import { NavArrowRight, NavArrowLeft } from "iconoir-react";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
-import logo1 from '../assets/img/carruselimg2.png';
+import logo1 from '../assets/img/carruselimg1.png';
 import logo2 from '../assets/img/carruselimg3.png';
 
 
@@ -46,9 +46,9 @@ function customPagination(_, className) {
 
 
 
- const CarouselDemo = () => {
+ const Carousel = () => {
   return (
-    <div className="max-w-[686px] mt-15">
+    <div className="max-w-[686px] mt-15 shadow-purple-500/100 ">
       <Swiper
         pagination={{
           enabled: true,
@@ -57,17 +57,17 @@ function customPagination(_, className) {
           renderBullet: customPagination,
         }}
         modules={[Navigation, Pagination]}
-        className="relative rounded-lg [&_div.swiper-button-next]:text-background [&_div.swiper-button-prev]:text-background"
+        className="relative rounded-lg [&_div.swiper-button-next]:text-background [&_div.swiper-button-prev]:text-background "
       >
         {[
           logo2,
           logo1
         ].map((logo, index) => (
-          <SwiperSlide key={index} className="select-none">
+          <SwiperSlide key={index} className="select-none ">
             <img
               src={logo}
               alt={`image-${index}`}
-              className="h-[800px] w-full object-cover"
+              className="h-[800px] w-full object-cover shadow-3xl"
             />
           </SwiperSlide>
         ))}
@@ -76,4 +76,4 @@ function customPagination(_, className) {
     </div>
   );
 }
-export default CarouselDemo
+export default Carousel
