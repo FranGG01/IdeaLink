@@ -62,6 +62,7 @@
 		"@headlessui/react": "^2.2.4",
 		"@heroicons/react": "^2.2.0",
 		"@material-tailwind/react": "^2.1.10",
+		"framer-motion": "^12.19.2",
 		"iconoir-react": "^7.11.0",
 		"prop-types": "^15.8.1",
 		"react": "^18.2.0",

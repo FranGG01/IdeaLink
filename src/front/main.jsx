@@ -5,18 +5,19 @@ import { RouterProvider } from "react-router-dom";  // Import RouterProvider to 
 import { router } from "./routes";  // Import the router configuration
 import { StoreProvider } from './hooks/useGlobalReducer';  // Import the StoreProvider for global state management
 import './index.css';
+import { LoadingProvider } from "../context/LoadingContext";
 
 const Main = () => {
-    
-  
+
+
     return (
-        <React.StrictMode>  
-            {/* Provide global state to all components */}
-            <StoreProvider> 
-                {/* Set up routing for the application */} 
-                <RouterProvider router={router}>
-                </RouterProvider>
-            </StoreProvider>
+        <React.StrictMode>
+            <LoadingProvider>
+                <StoreProvider>
+                    <RouterProvider router={router}>
+                    </RouterProvider>
+                </StoreProvider>
+            </LoadingProvider>
         </React.StrictMode>
     );
 }
