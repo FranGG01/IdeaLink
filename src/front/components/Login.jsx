@@ -76,9 +76,7 @@ const Login = () => {
           </p>
         </div>
       </div>
-      <div>
-        <Carousel/>
-      </div>
+     
 </div>
     </>
   )

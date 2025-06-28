@@ -11,15 +11,10 @@
   --color-5: #f2f2f2;
 }
 
-.Login{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 
 body{
-  
+  overflow: hidden;
     top: 0 !important;
     background-color: var(--color-5);
 }
