@@ -31,35 +31,35 @@ const Register = () => {
   return (
     <>
       <div className='justify-center flex' >
-        <div class="flex min-h-full flex-col justify-center mt-50 lg:px-8 pb-20 w-[500px] h-[550px] shadow-xl  shadow-purple-500/50  ">
-          <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="flex min-h-full flex-col justify-center mt-50 lg:px-8 pb-20 w-[500px] h-[550px] shadow-xl  shadow-purple-500/50  ">
+          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img className="mx-auto h-50 " src={logo} alt="Your Company" />
-            <h2 class=" text-center text-2xl/9 font-bold tracking-tight text-gray-900">REGISTRA TU CUENTA</h2>
+            <h2 className=" text-center text-2xl/9 font-bold tracking-tight text-gray-900">REGISTRA TU CUENTA</h2>
           </div>
 
-          <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form onSubmit={handleRegister} class="space-y-6" action="#" method="POST">
+          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+            <form onSubmit={handleRegister} className="space-y-6" action="#" method="POST">
               <div>
-                <label for="email" class="block text-sm/6 font-medium text-gray-900">Correo electronico</label>
-                <div class="mt-2">
-                  <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} name="email" id="email" autocomplete="email" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">Correo electronico</label>
+                <div className="mt-2">
+                  <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} name="email" id="email" autoComplete="email" required className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
                 </div>
               </div>
 
               <div>
-                <div class="flex items-center justify-between">
-                  <label for="password" class="block text-sm/6 font-medium text-gray-900">Contraseña</label>
-                  <div class="text-sm">
+                <div className="flex items-center justify-between">
+                  <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">Contraseña</label>
+                  <div className="text-sm">
 
                   </div>
                 </div>
-                <div class="mt-2">
-                  <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} name="password" id="password" autocomplete="current-password" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                <div className="mt-2">
+                  <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} name="password" id="password" autoComplete="current-password" required className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
                 </div>
               </div>
 
               <div>
-                <button type="submit" class="flex w-full justify-center rounded-md bg-purple-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Registrate</button>
+                <button type="submit" className="flex w-full justify-center rounded-md bg-purple-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Registrate</button>
               </div>
             </form>
 
