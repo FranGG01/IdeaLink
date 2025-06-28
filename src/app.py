@@ -22,7 +22,8 @@ CORS(app, supports_credentials=True)
 CORS(app, origins=[
     "https://potential-chainsaw-97j7q96jxvv4cxx6v-3000.app.github.dev",
     "https://supreme-telegram-7vpvr97px66vhpr55-3000.app.github.dev",
-    "https://cautious-halibut-4jwjg7qwr9qphqw5q-3000.app.github.dev"
+    "https://cautious-halibut-4jwjg7qwr9qphqw5q-3000.app.github.dev",
+    "http://localhost:3000"
 ], supports_credentials=True)
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
@@ -30,13 +31,12 @@ static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../dist/')
 app.url_map.strict_slashes = False
 
-# database condiguration
+# database configuration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
-    app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace(
-        "postgres://", "postgresql://")
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace("postgres://", "postgresql://")
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 MIGRATE = Migrate(app, db, compare_type=True)

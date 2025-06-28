@@ -38,7 +38,7 @@ export default function storeReducer(store, action = {}) {
 }
 
 export const register = async (email,password) => {
-  const res = await fetch("https://supreme-telegram-7vpvr97px66vhpr55-3001.app.github.dev/api/register", {
+  const res = await fetch("http://127.0.0.1:5000/api/register", {
       method: "POST",
       headers: { "Content-Type": "application/json"},
       body: JSON.stringify({email, password})
@@ -55,9 +55,10 @@ export const register = async (email,password) => {
 
 
 export const login = async (email,password) => {
-  const res = await fetch("https://supreme-telegram-7vpvr97px66vhpr55-3001.app.github.dev/api/token", {
+  const res = await fetch("http://127.0.0.1:5000/api/token", {
     method: "POST",
     headers: { "Content-Type": "application/json"},
+    credentials: "include",
     body: JSON.stringify({ email, password })
   });
 
@@ -78,7 +79,9 @@ export const getProfile = async () => {
     headers: {
       'Authorization': 'Bearer ' + token,
       'Content-Type': 'application/json'
-    }
+    },
+        credentials: "include"
+
   });
 
   if(!res.ok) throw new Error('Acceso denegado');
