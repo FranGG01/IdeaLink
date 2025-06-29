@@ -1,5 +1,5 @@
-import Feed_central from "../components/Feed_central";
-import '../index.css';
+import Feed_central from "../components/feed_central/Feed_central"
+
 
 const Feed = () => {
     return (
