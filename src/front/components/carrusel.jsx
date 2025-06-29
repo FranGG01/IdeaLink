@@ -46,7 +46,7 @@ function customPagination(_, className) {
 
 
 
- const Carousel = () => {
+const Carousel = () => {
   return (
     <div className="max-w-[686px] mt-15 shadow-purple-500/100 ">
       <Swiper
@@ -67,7 +67,8 @@ function customPagination(_, className) {
             <img
               src={logo}
               alt={`image-${index}`}
-              className="h-[800px] w-full object-cover shadow-3xl"
+className="w-[65%] sm:w-full mx-auto object-cover shadow-3xl 
+             h-[500px] sm:h-[700px] md:h-[750px] lg:h-[800px] rounded-lg"
             />
           </SwiperSlide>
         ))}
