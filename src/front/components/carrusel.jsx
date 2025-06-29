@@ -67,7 +67,7 @@ const Carousel = () => {
             <img
               src={logo}
               alt={`image-${index}`}
-className="w-[65%] sm:w-full mx-auto object-cover shadow-3xl 
+              className="w-[65%] sm:w-full mx-auto object-cover shadow-3xl 
              h-[500px] sm:h-[700px] md:h-[750px] lg:h-[800px] rounded-lg"
             />
           </SwiperSlide>

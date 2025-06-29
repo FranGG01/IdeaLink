@@ -41,19 +41,17 @@ const Landing = () => {
   }
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-[#f2f2f2] px-4 py-10">
+    <div className="min-h-screen w-full flex items-center justify-center bg-[#f2f2f2] px-4 py-6 overflow-y-auto md:overflow-y-hidden lg:overflow-y-hidden">
       <div className="flex flex-col md:flex-row items-center justify-center gap-8 max-w-6xl w-full">
-       
         <div className="w-full md:w-1/2 flex justify-center">
           <Login />
         </div>
-
-        
         <div className="w-full md:w-1/2 flex justify-center">
           <Carousel />
         </div>
       </div>
     </div>
+
   );
 };
 
