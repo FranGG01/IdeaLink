@@ -7,6 +7,7 @@ import { StoreProvider } from './hooks/useGlobalReducer';  // Import the StorePr
 import './index.css';
 import { LoadingProvider } from "../context/LoadingContext";
 
+
 const Main = () => {
 
 
