@@ -1,6 +1,5 @@
-import '../index.css';
-import Modal1 from './Modal.jsx';
-
+import Modal1 from '../Modal';
+import './Feed_central.css'
 const Feed_central = () => {
 
     return (

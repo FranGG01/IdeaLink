@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { login } from '../store';
 import logo from '../assets/img/Logo.png';
@@ -10,6 +11,7 @@ import Carousel from './carrusel';
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   function handleInputChange(e) {
     const { name, value } = e.target;
@@ -25,6 +27,7 @@ const Login = () => {
     try {
       const data = await login(email, password);
       alert("Login Successfully")
+      navigate('/feed')
 
 
     } catch (error) {
