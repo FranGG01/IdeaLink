@@ -15,12 +15,13 @@ def get_project(id):
 
 @project_api.route('/projects', methods=['POST'])
 def create_project():
-    data = request.get.json()
+    data = request.get_json()
     project = Project(
         title = data['title'],
         description = data['description'],
         image_url = data.get('image_url'),
         hashtags = data.get('hashtags'),
+         is_accepting_applications=data.get('is_accepting_applications', True),
         owner_id = data['owner_id']
     )
     db.session.add(project)
@@ -41,7 +42,7 @@ def update_project(id):
     db.session.commit()
     return jsonify(project.serialize()), 200
 
-@project_api.route('/projects(<int:id>)', methods=['DELETE'])
+@project_api.route('/projects/<int:id>', methods=['DELETE'])
 def delete_project(id):
     project = Project.query.get_or_404(id)
     db.session.delete(project)
