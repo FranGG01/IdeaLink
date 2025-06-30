@@ -2,7 +2,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@layer utilities {
+  /* Div overlay que crea MTW (v2) */
+  body > div.fixed.w-screen.h-screen {
+    background-color: #ffffff73 !important;   /* slate‑900/45 % */
+    backdrop-filter: none !important;                   /* sin blur       */
+  }
+}
 :root {
   --color-1: #d636d9;
   --color-2: #932bd9;
@@ -19,3 +25,13 @@ body{
     background-color: var(--color-5);
 }
 
+
+.feed-route .bg-black {
+  background-color: oklab(100% 0 -0.00011);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 550px;
+  bottom: 300px;
+}
