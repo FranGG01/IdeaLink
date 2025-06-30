@@ -20,13 +20,3 @@ body{
     background-color: var(--color-5);
 }
 
-
-.feed-route .bg-black {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  right: 550px;
-  bottom: 300px;
-  background-color: transparent;
-}
