@@ -40,7 +40,7 @@
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-react-refresh": "^0.4.3",
 		"postcss": "^8.5.6",
-		"tailwindcss": "^4.1.10",
+		"tailwindcss": "^4.1.11",
 		"vite": "^5.4.19"
 	},
 	"babel": {
@@ -62,7 +62,7 @@
 		"@headlessui/react": "^2.2.4",
 		"@heroicons/react": "^2.2.0",
 		"@material-tailwind/html": "^3.0.0-beta.7",
-		"@material-tailwind/react": "^2.1.10",
+		"@material-tailwind/react": "^3.0.0-beta.24",
 		"framer-motion": "^12.19.2",
 		"iconoir-react": "^7.11.0",
 		"prop-types": "^15.8.1",
