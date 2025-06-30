@@ -10,12 +10,3 @@
   align-items: center;
 }
 
-.feed_central_popup{
-    background-color: oklab(100% 0 -0.00011);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  right: 550px;
-  bottom: 300px;
-}
