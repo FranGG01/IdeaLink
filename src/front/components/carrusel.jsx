@@ -48,7 +48,7 @@ function customPagination(_, className) {
 
 const Carousel = () => {
   return (
-    <div className="max-w-[686px] mt-15 shadow-purple-500/100 ">
+    <div className="max-w-[686px] shadow-purple-500/100 ">
       <Swiper
         pagination={{
           enabled: true,

@@ -31,11 +31,14 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center px-4 py-10 min-h-screen bg-white overflow-auto">
-      <div className="flex flex-col justify-center w-full max-w-[500px] h-auto lg:h-[550px] shadow-xl shadow-purple-500/50 rounded-lg p-6 bg-white">
+    <div className="h-screen flex justify-center items-center bg-gray-900 text-white">
+      <div className="flex flex-col justify-center w-full max-w-[500px] h-auto lg:h-[550px] shadow-xl shadow-purple-500/40 rounded-lg p-6 bg-gray-800">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img className="mx-auto h-20 object-contain" src={logo} alt="Your Company" />
-          <h2 className="mt-4 text-center text-2xl font-bold tracking-tight text-gray-900">
+          <div className="flex justify-center">
+            <img className="h-32 object-contain mb-4" src={logo} alt="Your Company" />
+          </div>
+
+          <h2 className="mt-4 text-center text-2xl font-bold tracking-tight text-white">
             REGISTRA TU CUENTA
           </h2>
         </div>
@@ -43,7 +46,7 @@ const Register = () => {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form onSubmit={handleRegister} className="space-y-6" method="POST">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-900">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-300">
                 Correo electrónico
               </label>
               <input
@@ -54,12 +57,12 @@ const Register = () => {
                 id="email"
                 autoComplete="email"
                 required
-                className="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm"
+                className="mt-2 block w-full rounded-md bg-gray-700 px-3 py-2 text-white outline outline-1 outline-gray-500 placeholder:text-gray-400 focus:outline-2 focus:outline-purple-500 sm:text-sm"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-900">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-300">
                 Contraseña
               </label>
               <input
@@ -70,14 +73,14 @@ const Register = () => {
                 id="password"
                 autoComplete="current-password"
                 required
-                className="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm"
+                className="mt-2 block w-full rounded-md bg-gray-700 px-3 py-2 text-white outline outline-1 outline-gray-500 placeholder:text-gray-400 focus:outline-2 focus:outline-purple-500 sm:text-sm"
               />
             </div>
 
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-purple-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                className="flex w-full justify-center rounded-md bg-purple-600 px-4 py-2 cursor-pointer text-sm font-semibold text-white shadow hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
               >
                 Regístrate
               </button>
