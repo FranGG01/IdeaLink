@@ -23,7 +23,7 @@ export default function Modal1() {
                 CREA TU IDEA
             </Button>
             <div className="flex justify-center">
-                <Dialog open={open} handler={setOpen} className="w-[800px] top-5">
+                <Dialog open={open} handler={setOpen} className="w-[800px] rounded-[1vw] ">
                     <DialogHeader className="flex justify-between items-center">
                         <Typography variant="h6">Crea tu idea</Typography>
                         <Button variant="text" size="sm" onClick={() => setOpen(false)}>
@@ -39,14 +39,14 @@ export default function Modal1() {
                                 <label htmlFor="Titulo" className="text-sm font-semibold">
                                     Título
                                 </label>
-                                <Input id="Titulo" placeholder="Título aquí" />
+                                <Input id="Titulo" className="rounded-full" placeholder="Título aquí" />
                             </div>
 
                             <div className="flex flex-col flex-1">
                                 <label htmlFor="Hashtags" className="text-sm font-semibold">
                                     Hashtags #
                                 </label>
-                                <Input id="Hashtags" placeholder="#innovación" />
+                                <Input id="Hashtags" className="rounded-full" placeholder="#innovación" />
                             </div>
                         </div>
 
@@ -54,7 +54,7 @@ export default function Modal1() {
                             <label htmlFor="Descripcion" className="text-sm font-semibold">
                                 Descripción
                             </label>
-                            <Textarea id="Descripcion" placeholder="Descripción aquí…" />
+                            <Textarea id="Descripcion" className="rounded-[1vw]" placeholder="Descripción aquí…" />
                         </div>
 
                         <div className="flex flex-col space-y-1.5">
@@ -88,7 +88,7 @@ export default function Modal1() {
                                 <p className="text-xs text-gray-500">
                                     SVG, PNG, JPG o GIF (máx. 800×400)
                                 </p>
-                                <input id="dropzone-file" type="file" className="hidden" />
+                                <input id="dropzone-file" type="file" className="hidden" accept=".jpg, .jpeg, .png, .gif, .svg" />
                             </label>
                         </div>
                     </DialogBody>
