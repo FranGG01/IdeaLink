@@ -1,6 +1,6 @@
 import Modal1 from '../Modal';
 import './Feed_central.css'
-import Tarjeta from'./Tarjeta_feed'
+import Tarjeta from './Tarjeta_feed'
 const Feed_central = () => {
 
     return (
@@ -51,9 +51,15 @@ const Feed_central = () => {
             <br />
             <br />
             <div className='mt-4 '>
-              <Tarjeta/>  
+                <Tarjeta />
             </div>
-            
+            <div className='mt-4 '>
+                <Tarjeta />
+            </div>
+            <div className='mt-4 '>
+                <Tarjeta />
+            </div>
+
 
         </>
     )
