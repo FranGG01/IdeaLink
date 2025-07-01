@@ -1,12 +1,25 @@
 import Feed_central from "../components/feed_central/Feed_central"
-
+import Sidebarleft from "../components/sidebars/SidebarLeft"
+import SidebarRight from "../components/sidebars/SidebarRight"
 
 const Feed = () => {
     return (
         <>
-            <div className="feed_central">
-                <Feed_central />
+            <div className="flex flex-row min-h-screen bg-gray-900 text-white">
+                <aside className="hidden lg:block lg:w-1/5 p-4 bg-gray-800">
+                    <Sidebarleft />
+                </aside>
+
+                <main className="flex-1 p-4 bg-gray-900">
+                    <Feed_central />
+                </main>
+
+                <aside className="hidden xl:block xl:w-1/4 p-4 bg-gray-800">
+                    <SidebarRight />
+                </aside>
             </div>
+
+
         </>
     )
 }

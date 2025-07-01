@@ -19,9 +19,8 @@ export default function SidebarLeft() {
         {navItems.map(({ label, icon: Icon }) => (
           <button
             key={label}
-            className={`w-full flex items-center space-x-3 text-left p-2 rounded-md transition-colors duration-200 cursor-pointer ${
-              activeTab === label ? "bg-blue-600" : "hover:bg-blue-500/20"
-            }`}
+            className={`w-full flex items-center space-x-3 text-left p-2 rounded-md transition-colors duration-200 cursor-pointer ${activeTab === label ? "bg-blue-600" : "hover:bg-blue-500/20"
+              }`}
             onClick={() => setActiveTab(label)}
           >
             <Icon className="w-4 h-4" />
