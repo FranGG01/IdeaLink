@@ -43,7 +43,7 @@ export const register = async (email,password) => {
       headers: { "Content-Type": "application/json"},
       body: JSON.stringify({email, password})
   })
-  const data = await response.json();
+  const data = await res.json();
   if (response.ok) {
       alert('Usuario registrado correctamente');
       
