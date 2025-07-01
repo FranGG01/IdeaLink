@@ -12,6 +12,12 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
+from stream_chat import StreamChat
+
+STREAM_API_KEY = os.getenv("STREAM_API_KEY", "2pks7t76xeqd")
+STREAM_API_SECRET = os.getenv("STREAM_API_SECRET", "egfuhcyva6qbngb29zun8ru46v5ruaq7xy2kbfqse885vbfsrs7chgk42pnse5y5")  
+
+stream_client = StreamChat(api_key=STREAM_API_KEY, api_secret=STREAM_API_SECRET)
 
 app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = 'supersecreto123'
