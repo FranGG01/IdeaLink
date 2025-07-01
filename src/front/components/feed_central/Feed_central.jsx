@@ -1,5 +1,6 @@
 import Modal1 from '../Modal';
 import './Feed_central.css'
+import Tarjeta from'./Tarjeta_feed'
 const Feed_central = () => {
 
     return (
@@ -47,6 +48,12 @@ const Feed_central = () => {
                 </button>
                 <Modal1 />
             </div>
+            <br />
+            <br />
+            <div className='mt-4 '>
+              <Tarjeta/>  
+            </div>
+            
 
         </>
     )

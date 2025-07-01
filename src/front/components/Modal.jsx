@@ -33,7 +33,7 @@ export default function Modal1() {
             >
                 <DialogHeader className="flex justify-between items-center">
                     <Typography variant="h6">Crea tu idea</Typography>
-                    <Button variant="text" size="sm" onClick={() => setOpen(false)}>
+                    <Button className="text-white" variant="text" size="sm" onClick={() => setOpen(false)}>
                         ✕
                     </Button>
                 </DialogHeader>
