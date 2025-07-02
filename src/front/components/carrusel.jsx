@@ -30,7 +30,7 @@ function customPagination(_, className) {
 /* -------------------------------------------------------------------------- */
 const Carousel = () => {
   return (
-    <div className="max-w-[686px]">
+    <div className="max-w-[686px] shadow-2xl shadow-purple-500/60">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         autoplay={{
