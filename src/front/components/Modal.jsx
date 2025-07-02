@@ -29,7 +29,7 @@ export default function Modal1() {
                 open={open}
                 handler={setOpen}
                 size="md"
-                className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-[800px] rounded-[1vw] bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+                className="fixed top-1/2 left-1/2 transform -translate-x-118 -translate-y-1/2 z-50 w-[800px] rounded-[1vw] bg-white dark:bg-gray-900 text-gray-900 dark:text-white shadow-sm shadow-white"
             >
                 <DialogHeader className="flex justify-between items-center">
                     <Typography variant="h6">Crea tu idea</Typography>
