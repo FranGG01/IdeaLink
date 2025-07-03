@@ -1,5 +1,5 @@
 import React from "react";
-import { Home, Lightbulb, Search, Folder, User } from "lucide-react";
+import { Home, Folder, User, HelpCircle } from "lucide-react";
 import Separator from "./Separator";
 import { Link, useLocation } from "react-router-dom";
 
@@ -9,9 +9,9 @@ export default function SidebarLeft() {
   const navItems = [
     { label: "Dashboard", icon: Home, to: "/feed" },
     { label: "Perfil", icon: User, to: "/perfil" },
-    { label: "Colaboraciones", icon: Search, to: "/proyectos" },
+    { label: "Colaboraciones", icon: Folder, to: "/proyectos" },
     { label: "Sobre Nosotros", icon: User, to: "/about_us" },
-    { label: "Centro de ayuda", icon: User, to: "/soporte" },
+    { label: "Centro de ayuda", icon: HelpCircle, to: "/soporte" },
   ];
 
   return (
