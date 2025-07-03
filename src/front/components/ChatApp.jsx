@@ -9,6 +9,7 @@ import {
 } from "stream-chat-react";
 import { StreamChat } from "stream-chat";
 import "stream-chat-react/dist/css/v2/index.css";
+import '../index.css';
 
 const apiKey = "2pks7t76xeqd";
 
@@ -53,8 +54,8 @@ export default function ChatApp() {
     if (!chatClient || !channel) return <p>Cargando chat...</p>;
 
     return (
-        <div className=" bg-gray-900 text-white px-4 h-[500px]  ">
-            <div className="  rounded-2xl shadow-xl overflow-hidden border border-gray-700">
+        <div className=" bg-[#1e293b] text-white px-4 h-[420px] shadow-none  ">
+            <div className="  rounded-2xl shadow-xl overflow-hidden border border-gray-700 h-[460px]">
                 <Chat client={chatClient} theme="str-chat__theme-dark">
                     <Channel channel={channel}>
                         <Window>

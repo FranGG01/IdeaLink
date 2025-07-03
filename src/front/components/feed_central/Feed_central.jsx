@@ -11,11 +11,11 @@ const Feed_central = () => {
 
                     <div className="relative w-full">
                         <input
-                            className="w-full bg-transparent placeholder:text-white text-sm border border-gray-100 rounded-[1vw] pl-3 py-2 transition duration-300 focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow text-white"
+                            className="w-full bg-transparent placeholder:text-white text-sm border border-gray-100 rounded-md pl-3 py-2 transition duration-300 focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow text-white"
                             placeholder="UI Kits, Dashboards..."
                         />
                         <button
-                            className="absolute top-1 right-1 flex items-center rounded-[1vw] bg-slate-800 py-1 px-2.5 text-sm text-white shadow-sm hover:bg-slate-700"
+                            className="absolute top-1 right-1 flex items-center rounded-md bg-slate-800 py-1 px-2.5 text-sm text-white shadow-sm hover:bg-slate-700"
                             type="button"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -31,7 +31,7 @@ const Feed_central = () => {
                         {['IA', 'Startup', 'Sostenible', 'Recientes', 'Populares', 'Siguiendo'].map((item, i) => (
                             <button
                                 key={i}
-                                className="rounded-full bg-gray-600 py-2 px-4 text-white text-sm hover:bg-blue-600 transition-all shadow-sm"
+                                className="rounded-md bg-gray-600 py-2 px-4 text-white text-sm hover:bg-blue-600 transition-all shadow-sm"
                             >
                                 {item}
                             </button>
