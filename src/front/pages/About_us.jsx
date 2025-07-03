@@ -21,6 +21,15 @@ const team = [
         linkedin: "https://www.linkedin.com",
         github: "https://github.com/00hank00",
     },
+    {
+        name: "Enrique Spencer",
+        role: "Full Stack Developer",
+        description:
+            "Puedo con el front y el back… hasta que aparece un bug.",
+        image: "../public/Enrique.png",
+        linkedin: "https://www.linkedin.com",
+        github: "https://github.com/VykeAS",
+    },
 ];
 
 export default function AboutUs() {
