@@ -7,11 +7,10 @@ export default function SidebarLeft() {
   const [activeTab, setActiveTab] = useState("Dashboard");
 
   const navItems = [
-    { label: "Dashboard", icon: Home },
-    { label: "Mis Ideas", icon: Lightbulb },
+    { label: "Dashboard", icon: Home, to: "/feed" },
     { label: "Explorar", icon: Search },
     { label: "Proyectos", icon: Folder },
-    { label: "Perfil", icon: User },
+    { label: "Perfil", icon: User, to: "/perfil" },
     { label: "Sobre Nosotros", icon: User, to: "/about_us" },
     { label: "Mensajes", icon: User, to: "/chat" },
   ];
