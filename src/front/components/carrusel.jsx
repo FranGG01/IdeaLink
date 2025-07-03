@@ -13,6 +13,7 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
 import logo1 from "../assets/img/carruselimg1.png";
 import logo2 from "../assets/img/carruselimg3.png";
+import logo3 from "../assets/img/carruselimg2.png";
 
 
 
@@ -46,13 +47,13 @@ const Carousel = () => {
         }}
         className="relative rounded-lg"
       >
-        {[logo2, logo1].map((logo, index) => (
+        {[logo2, logo1, logo3].map((logo, index) => (
           <SwiperSlide key={index} className="select-none">
             <img
               src={logo}
               alt={`slide-${index}`}
               className="mx-auto w-[65%] sm:w-full h-[500px] sm:h-[700px]
-                         md:h-[750px] lg:h-[800px] object-cover shadow-3xl
+                         md:h-[750px] lg:h-[800px]  shadow-3xl
                          rounded-lg"
             />
           </SwiperSlide>

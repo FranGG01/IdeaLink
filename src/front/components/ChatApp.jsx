@@ -53,9 +53,8 @@ export default function ChatApp() {
     if (!chatClient || !channel) return <p>Cargando chat...</p>;
 
     return (
-        <div className="min-h-screen bg-gray-900 text-white p-4">
-            <h1 className="text-2xl font-bold mb-4 text-center">Canal de Comunicación</h1>
-            <div className="max-w-5xl mx-auto rounded-2xl shadow-xl overflow-hidden border border-gray-700">
+        <div className=" bg-gray-900 text-white px-4 h-[500px]  ">
+            <div className="  rounded-2xl shadow-xl overflow-hidden border border-gray-700">
                 <Chat client={chatClient} theme="str-chat__theme-dark">
                     <Channel channel={channel}>
                         <Window>
