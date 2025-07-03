@@ -16,10 +16,10 @@ const ModalChat = () => {
             <Button
                 onClick={() => setOpen(true)}
                 variant="filled"
-                className="rounded-full bg-gray-600 mx-2 py-2 px-4 text-white text-sm
+                className="rounded-md bg-gray-600 mx-2 py-2 px-4 text-white text-sm
                      shadow-sm hover:bg-blue-600 hover:shadow-lg"
             >
-                CREA TU IDEA
+                CHAT
             </Button>
 
             {/* Modal sin límites de altura */}
@@ -27,12 +27,12 @@ const ModalChat = () => {
                 open={open}
                 handler={setOpen}
                 size="xl"
-                className=" fixed bottom-1 right-6 -
+                className=" fixed bottom-2 right-6 -
              flex flex-col items-center justify-center
-             w-full max-w-[500px] h-auto
-             p-4 bg-white dark:bg-gray-900
+             w-full max-w-[450px] h-[]
+             p-4 bg-white dark:bg-[#1e293b]
              text-gray-900 dark:text-white
-             rounded-[1vw] shadow-lg overflow-visible"
+             rounded-[1vw]  overflow-visible shadow-none"
             >
                 <DialogBody className="flex flex-col items-center justify-center w-full p-2">
                     <div className="w-full">
@@ -41,12 +41,7 @@ const ModalChat = () => {
                 </DialogBody>
 
                 <DialogFooter className="w-full flex justify-center mt-2 ">
-                    <Button
-                        onClick={() => setOpen(false)}
-                        className="rounded-full bg-gray-600 py-2 mt-5 px-6 text-white text-sm shadow-sm hover:bg-blue-600 hover:shadow-lg"
-                    >
-                        Guardar
-                    </Button>
+
                 </DialogFooter>
             </Dialog>
 

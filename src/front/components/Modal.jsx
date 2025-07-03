@@ -19,7 +19,7 @@ export default function Modal1() {
             <Button
                 onClick={() => setOpen(true)}
                 variant="filled"
-                className="rounded-full bg-gray-600 mx-2 py-2 px-4 text-white text-sm shadow-sm hover:bg-blue-600 hover:shadow-lg"
+                className="rounded-md bg-gray-600 mx-2 py-2 px-4 text-white text-sm shadow-sm hover:bg-blue-600 hover:shadow-lg"
             >
                 CREA TU IDEA
             </Button>
@@ -46,14 +46,14 @@ export default function Modal1() {
                             <label htmlFor="Titulo" className="text-sm font-semibold">
                                 Título
                             </label>
-                            <Input id="Titulo" className="rounded-full" placeholder="Título aquí" />
+                            <Input id="Titulo" className="rounded-md" placeholder="Título aquí" />
                         </div>
 
                         <div className="flex flex-col flex-1">
                             <label htmlFor="Hashtags" className="text-sm font-semibold">
                                 Hashtags #
                             </label>
-                            <Input id="Hashtags" className="rounded-full" placeholder="#innovación" />
+                            <Input id="Hashtags" className="rounded-md" placeholder="#innovación" />
                         </div>
                     </div>
 
@@ -61,7 +61,7 @@ export default function Modal1() {
                         <label htmlFor="Descripcion" className="text-sm font-semibold">
                             Descripción
                         </label>
-                        <Textarea id="Descripcion" className="rounded-[1vw]" placeholder="Descripción aquí…" />
+                        <Textarea id="Descripcion" className="rounded-md" placeholder="Descripción aquí…" />
                     </div>
 
                     <div className="flex flex-col space-y-1.5">
@@ -106,7 +106,7 @@ export default function Modal1() {
                         fullWidth
                         variant="filled"
                         onClick={() => setOpen(false)}
-                        className="rounded-full bg-gray-600 py-2 px-4 text-white text-sm shadow-sm hover:bg-blue-600 hover:shadow-lg"
+                        className="rounded-md bg-gray-600 py-2 px-4 text-white text-sm shadow-sm hover:bg-blue-600 hover:shadow-lg"
                     >
                         Guardar
                     </Button>
