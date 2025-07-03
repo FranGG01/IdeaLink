@@ -1,18 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { Home, Lightbulb, Search, Folder, User } from "lucide-react";
 import Separator from "./Separator";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function SidebarLeft() {
-  const [activeTab, setActiveTab] = useState("Dashboard");
+  const location = useLocation();
 
   const navItems = [
     { label: "Dashboard", icon: Home, to: "/feed" },
-    { label: "Explorar", icon: Search },
-    { label: "Proyectos", icon: Folder },
     { label: "Perfil", icon: User, to: "/perfil" },
+    { label: "Colaboraciones", icon: Search, to: "/proyectos" },
     { label: "Sobre Nosotros", icon: User, to: "/about_us" },
-    { label: "Mensajes", icon: User, to: "/chat" },
+    { label: "Centro de ayuda", icon: User, to: "/soporte" },
   ];
 
   return (
@@ -22,9 +21,8 @@ export default function SidebarLeft() {
           <Link
             to={to}
             key={label}
-            className={`w-full flex items-center space-x-3 text-left p-2 rounded-md transition-colors duration-200 cursor-pointer ${activeTab === label ? "bg-blue-600" : "hover:bg-blue-500/20"
+            className={`w-full flex items-center space-x-3 text-left p-2 rounded-md transition-colors duration-200 cursor-pointer ${location.pathname === to ? "bg-blue-600" : "hover:bg-blue-500/20"
               }`}
-            onClick={() => setActiveTab(label)}
           >
             <Icon className="w-4 h-4" />
             <span>{label}</span>
