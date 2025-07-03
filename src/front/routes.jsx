@@ -9,7 +9,7 @@ import Register from "./components/Register";
 import Feed from "./pages/Feed";
 import AboutUs from "./pages/About_us";
 import ChatApp from "./components/ChatApp";
-
+import Perfil from "./pages/Perfil";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,6 +19,7 @@ export const router = createBrowserRouter(
       <Route path="Feed" element={<Feed />} />
       <Route path='about_us' element={<AboutUs />} />
       <Route path="chat" element={<ChatApp />} />
+      <Route path="perfil" element={<Perfil />} />
     </Route>
   )
 );
