@@ -16,7 +16,7 @@ const Feed_central = () => {
 
     return (
         <>
-            <div className="w-full flex justify-center mt-6  ">
+            <div className="w-full flex justify-center mt-2  ">
                 <div className="w-full  flex flex-col items-center gap-4 ">
 
                     <div className="relative w-full">
@@ -52,7 +52,7 @@ const Feed_central = () => {
             </div>
 
 
-            <div className="mt-8 space-y-4 px-4 flex flex-col items-center">
+            <div className="mt-4 px-4 flex flex-col items-center overflow-y-auto space-y-4 max-h-[calc(100vh-150px)] ocultar-scroll">
                 {store.projects && store.projects.map((project, index) => (
                     <Tarjeta key={index} project={project} />
                 ))}
