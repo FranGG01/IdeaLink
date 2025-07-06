@@ -1,5 +1,7 @@
 import './Feed_central.css'
 import { Avatar } from "@material-tailwind/react";
+import Modal_postularse from './Modal_postularse';
+import Modal_leer_mas from './Modal_leer_mas';
 
 
 import { Card, Typography, Button } from "@material-tailwind/react";
@@ -34,40 +36,8 @@ export default function Tarjeta() {
 
             </Card.Body>
             <Card.Footer className='flex justify-end p-1 gap-2'>
-                <Button as="a" href="#" className="mb-2 flex w-fit jus gap-2">
-                    Learn More
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                        className="h-4 w-4"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                        />
-                    </svg>
-                </Button>
-                <Button as="a" href="#" className="mb-2 flex w-fit jus gap-2 bg-purple-700">
-                    Postularse
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                        className="h-4 w-4"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                        />
-                    </svg>
-                </Button>
+                <Modal_leer_mas />
+                <Modal_postularse />
             </Card.Footer>
         </Card>
     );

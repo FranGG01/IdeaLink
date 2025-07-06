@@ -41,7 +41,7 @@ const Feed_central = () => {
                 </div>
             </div>
 
-            <div className="mt-8 space-y-4 px-4 flex flex-col items-center">
+            <div className="mt-4 px-4 overflow-y-auto space-y-4 max-h-[calc(100vh-150px)] ocultar-scroll flex flex-col  items-center ">
                 <Tarjeta />
                 <Tarjeta />
                 <Tarjeta />
