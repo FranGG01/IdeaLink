@@ -30,7 +30,7 @@ export default function SidebarRight() {
             placeholder="UI Kits, Dashboards..."
           />
           <button
-            className="absolute top-1 right-1 flex items-center rounded-md bg-slate-800 py-1 px-2.5 text-sm text-white shadow-sm hover:bg-slate-700"
+            className="absolute top-1 right-1 flex items-center rounded-md bg-slate-800 py-1 px-2.5 text-sm text-white shadow-sm hover:bg-purple-700"
             type="button"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
