@@ -51,7 +51,7 @@ export default function Tarjeta() {
                         />
                     </svg>
                 </Button>
-                <Button as="a" href="#" className="mb-2 flex w-fit jus gap-2">
+                <Button as="a" href="#" className="mb-2 flex w-fit jus gap-2 bg-purple-700">
                     Postularse
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

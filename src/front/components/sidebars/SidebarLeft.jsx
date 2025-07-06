@@ -21,7 +21,7 @@ export default function SidebarLeft() {
           <Link
             to={to}
             key={label}
-            className={`w-full flex items-center space-x-3 text-left p-2 rounded-md transition-colors duration-200 cursor-pointer ${location.pathname === to ? "bg-blue-600" : "hover:bg-blue-500/20"
+            className={`w-full flex items-center space-x-3 text-left p-2 rounded-md transition-colors duration-200 cursor-pointer ${location.pathname === to ? "bg-purple-700" : "hover:bg-purple-500/20"
               }`}
           >
             <Icon className="w-4 h-4" />
