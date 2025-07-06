@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { login } from '../store';
+import { login, getProfile } from '../store';
 import Logo_dark from '../assets/img/Logo_dark.png';
+import useGlobalReducer from '../hooks/useGlobalReducer';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { dispatch } = useGlobalReducer();
 
   function handleInputChange(e) {
     const { name, value } = e.target;
@@ -18,16 +20,22 @@ const Login = () => {
     }
   }
 
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const data = await login(email, password);
-      alert("Login Successfully")
-      navigate('/feed')
+      const profile = await getProfile();
+
+      dispatch({ type: 'set_user', payload: profile });
+
+      alert("Login Successfully");
+      navigate('/feed');
     } catch (error) {
       alert("Error al iniciar sesión: " + error.message);
     }
   };
+
 
   return (
     <>
@@ -43,7 +51,7 @@ const Login = () => {
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm mb-20">
             <form onSubmit={handleLogin} className="space-y-6">
               <div>
-                <label htmlFor="email" className="block text-sm/6 font-medium text-gray-300">Dirección de correo electrónico</label>
+                <label htmlFor="email" className="block text-sm/6 font-medium text-gray-300">Email</label>
                 <div className="mt-2">
                   <input
                     type="email"

@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from api.models import db, User
 from flask_jwt_extended import create_access_token
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 auth_api = Blueprint('auth_api', __name__)
 
@@ -35,5 +36,18 @@ def create_token():
     if not user or not check_password_hash(user.password, password):
         return jsonify({"msg": "Credenciales inválidas"}), 401
 
-    access_token = create_access_token(identity=user.id)
+    access_token = create_access_token(identity=str(user.id))
     return jsonify({'token': access_token, 'user_id': user.id}), 200
+
+
+
+@auth_api.route('/profile', methods=['GET'])
+@jwt_required()
+def get_profile():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+
+    if not user:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+
+    return jsonify(user.serialize()), 200
