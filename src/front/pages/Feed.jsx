@@ -1,25 +1,27 @@
 import Feed_central from "../components/feed_central/Feed_central"
 import Sidebarleft from "../components/sidebars/SidebarLeft"
 import SidebarRight from "../components/sidebars/SidebarRight"
+import { useNavigate } from "react-router-dom";
 
 const Feed = () => {
+    const navigate = useNavigate();
     return (
         <>
-            <div className="flex flex-row min-h-screen bg-gray-900 text-white">
+            <div className="flex flex-row h-screen bg-gray-900 text-white">
                 <aside className="hidden lg:block lg:w-1/5 p-4 bg-gray-800">
                     <Sidebarleft />
                 </aside>
 
-                <main className="flex-1 p-4 bg-gray-900">
-                    <Feed_central />
+                <main className="flex-1 p-0 bg-gray-900 overflow-hidden">
+                    <div className="h-full overflow-y-auto p-4 scroll-hidden">
+                        <Feed_central />
+                    </div>
                 </main>
 
                 <aside className="hidden xl:block xl:w-1/4 p-4 bg-gray-800">
                     <SidebarRight />
                 </aside>
             </div>
-
-
         </>
     )
 }

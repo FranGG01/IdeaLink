@@ -25,7 +25,7 @@ const Feed_central = () => {
                         </button>
                     </div>
 
-                    {/* FILTROS */}
+
                     <div className="flex flex-wrap justify-center gap-2">
                         <span className="text-white">🔥 Trending</span>
                         {['IA', 'Startup', 'Sostenible', 'Recientes', 'Populares', 'Siguiendo'].map((item, i) => (

@@ -12,7 +12,7 @@ const ModalChat = () => {
 
     return (
         <>
-            {/* Botón que abre el modal */}
+
             <Button
                 onClick={() => setOpen(true)}
                 variant="filled"
@@ -22,7 +22,7 @@ const ModalChat = () => {
                 CHAT
             </Button>
 
-            {/* Modal sin límites de altura */}
+
             <Dialog
                 open={open}
                 handler={setOpen}
@@ -32,7 +32,7 @@ const ModalChat = () => {
              w-full max-w-[450px] h-[]
              p-4 bg-white dark:bg-[#1e293b]
              text-gray-900 dark:text-white
-             rounded-[1vw]  overflow-visible shadow-none"
+             rounded-[1vw]  overflow-visible shadow-none bg-[#1e293b]"
             >
                 <DialogBody className="flex flex-col items-center justify-center w-full p-2">
                     <div className="w-full">
