@@ -1,4 +1,9 @@
-import { Avatar, Card, Typography, Button, CardBody, CardFooter, CardHeader } from "@material-tailwind/react";
+
+import './Feed_central.css'
+import { Avatar } from "@material-tailwind/react";
+import Modal_postularse from './Modal_postularse';
+import Modal_leer_mas from './Modal_leer_mas';
+
 
 export default function Tarjeta({ project }) {
     return (
@@ -36,15 +41,12 @@ export default function Tarjeta({ project }) {
                 )}
             </CardBody>
 
-            {/* FOOTER */}
-            <CardFooter className="flex justify-end gap-3 mt-4 p-0">
-                <Button variant="outlined" className="text-white border-white hover:bg-gray-700">
-                    Learn More
-                </Button>
-                {project.is_accepting_applications && (
-                    <Button className="bg-purple-700 hover:bg-purple-800">Postularse</Button>
-                )}
-            </CardFooter>
+</Card.Body>
+<Card.Footer className="flex justify-end gap-3 mt-4 p-0">
+    <Modal_leer_mas />
+    {project.is_accepting_applications && <Modal_postularse />}
+</Card.Footer>
+
         </Card>
     );
 }

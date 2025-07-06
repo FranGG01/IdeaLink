@@ -51,10 +51,12 @@ const Feed_central = () => {
                 </div>
             </div>
 
+
             <div className="mt-8 space-y-4 px-4 flex flex-col items-center">
                 {store.projects && store.projects.map((project, index) => (
                     <Tarjeta key={index} project={project} />
                 ))}
+
             </div>
         </>
     );
