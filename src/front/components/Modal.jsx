@@ -19,7 +19,7 @@ export default function Modal1() {
             <Button
                 onClick={() => setOpen(true)}
                 variant="filled"
-                className="rounded-md bg-purple-700 mx-2 py-2 px-4 text-white text-sm shadow-sm hover:bg-purple-500 hover:shadow-lg cursor-pointer"
+                className="rounded-md bg-purple-700 mx-2 py-2 px-4 text-white text-sm shadow-sm shadow-white hover:bg-purple-500 hover:shadow-md cursor-pointer "
             >
                 CREA TU IDEA
             </Button>
