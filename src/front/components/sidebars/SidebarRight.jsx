@@ -23,7 +23,7 @@ export default function SidebarRight() {
     <>
 
       <div className="w-[300px] flex-row justify-center ms-15 mt-2 ">
-        <div className="relative w-full flex justify-start">
+        <div className="relative w-full flex justify-start gap-2 ">
           <Modal_chat />
           <input
             className="w-full bg-transparent placeholder:text-white text-sm border border-gray-100 rounded-md pl-3 py-2 transition duration-300 focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow text-white"

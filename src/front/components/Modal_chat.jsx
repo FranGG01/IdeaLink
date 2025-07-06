@@ -27,7 +27,7 @@ const ModalChat = () => {
                 open={open}
                 handler={setOpen}
                 size="xl"
-                className=" fixed bottom-6 right-6 -
+                className=" fixed bottom-6 right-4 -
              flex flex-col items-center justify-center
              w-full max-w-[450px] h-[]
              p-4 bg-white dark:bg-[#1e293b]

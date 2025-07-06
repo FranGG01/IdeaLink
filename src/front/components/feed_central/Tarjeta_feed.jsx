@@ -44,7 +44,6 @@ export default function Tarjeta({ project }) {
 
 
             <CardFooter className='flex justify-end p-1 gap-2'>
-                <Modal_leer_mas />
                 <Modal_postularse />
             </CardFooter>
         </Card>
