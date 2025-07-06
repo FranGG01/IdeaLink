@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../assets/img/Logo.png';
+import Logo_dark from '../assets/img/Logo_dark.png';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -32,13 +32,13 @@ const Register = () => {
 
   return (
     <div className="h-screen flex justify-center items-center bg-gray-900 text-white">
-      <div className="flex flex-col justify-center w-full max-w-[500px] h-auto lg:h-[550px] shadow-xl shadow-purple-500/40 rounded-lg p-6 bg-gray-800">
+      <div className="flex flex-col justify-center w-full max-w-[500px] h-auto lg:h-[550px] shadow-xl shadow-purple-500/40 rounded-lg p-0 bg-gray-800">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <div className="flex justify-center">
-            <img className="h-32 object-contain mb-4" src={logo} alt="Your Company" />
+          <div className="flex justify-center h-[180px] ">
+            <img className="  object-contain " src={Logo_dark} alt="Your Company" />
           </div>
 
-          <h2 className="mt-4 text-center text-2xl font-bold tracking-tight text-white">
+          <h2 className="mt- text-center text-2xl font-bold tracking-tight text-white">
             REGISTRA TU CUENTA
           </h2>
         </div>

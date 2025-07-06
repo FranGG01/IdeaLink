@@ -19,7 +19,7 @@ export default function Modal1() {
             <Button
                 onClick={() => setOpen(true)}
                 variant="filled"
-                className="rounded-md bg-blue-600 mx-2 py-2 px-4 text-white text-sm shadow-sm hover:bg-blue-900 hover:shadow-lg cursor-pointer"
+                className="rounded-md bg-purple-700 mx-2 py-2 px-4 text-white text-sm shadow-sm hover:bg-purple-500 hover:shadow-lg cursor-pointer"
             >
                 CREA TU IDEA
             </Button>
@@ -106,7 +106,7 @@ export default function Modal1() {
                         fullWidth
                         variant="filled"
                         onClick={() => setOpen(false)}
-                        className="rounded-md bg-gray-600 py-2 px-4 text-white text-sm shadow-sm hover:bg-blue-600 hover:shadow-lg"
+                        className="rounded-md bg-gray-600 py-2 px-4 text-white text-sm shadow-sm hover:bg-purple-700 hover:shadow-lg"
                     >
                         Guardar
                     </Button>

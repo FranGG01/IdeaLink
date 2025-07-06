@@ -1,0 +1,15 @@
+.chat_sidebar::-webkit-scrollbar-thumb{
+    background-color: lab(75.88% 0 -0.01 / 0.267); /* color del scroll */
+  border-radius: 10px;
+  border: 2px solid hsla(0, 0%, 95%, 0);
+}
+
+.chat_sidebar::-webkit-scrollbar {
+    width: 8px;
+    height: 10px;
+  }
+  
+  .chat_sidebar::-webkit-scrollbar-track {
+    background: hsla(0, 0%, 95%, 0); /* color del fondo */
+    
+  }

@@ -16,8 +16,8 @@ const ModalChat = () => {
             <Button
                 onClick={() => setOpen(true)}
                 variant="filled"
-                className="rounded-md bg-gray-600 mx-2 py-2 px-4 text-white text-sm
-                     shadow-sm hover:bg-blue-600 hover:shadow-lg"
+                className="rounded-md bg-purple-700 mx-2 py-2 px-4 text-white text-sm
+                     shadow-sm hover:bg-purple-500 hover:shadow-lg"
             >
                 CHAT
             </Button>
@@ -27,7 +27,7 @@ const ModalChat = () => {
                 open={open}
                 handler={setOpen}
                 size="xl"
-                className=" fixed bottom-2 right-6 -
+                className=" fixed bottom-6 right-6 -
              flex flex-col items-center justify-center
              w-full max-w-[450px] h-[]
              p-4 bg-white dark:bg-[#1e293b]
@@ -40,9 +40,7 @@ const ModalChat = () => {
                     </div>
                 </DialogBody>
 
-                <DialogFooter className="w-full flex justify-center mt-2 ">
 
-                </DialogFooter>
             </Dialog>
 
         </>
