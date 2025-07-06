@@ -10,3 +10,11 @@
   align-items: center;
 }
 
+.ocultar-scroll {
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+.ocultar-scroll::-webkit-scrollbar {
+  display: none; 
+}
