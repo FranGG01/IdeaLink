@@ -36,7 +36,6 @@ export default function Tarjeta() {
 
             </Card.Body>
             <Card.Footer className='flex justify-end p-1 gap-2'>
-                <Modal_leer_mas />
                 <Modal_postularse />
             </Card.Footer>
         </Card>

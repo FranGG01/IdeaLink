@@ -37,13 +37,13 @@ export default function Modal_postularse() {
                 </DialogHeader>
 
                 <DialogBody className="space-y-4">
-                    <Typography>Ingresa los datos de tu idea</Typography>
+                    <Typography>¿Que puedes aportarme?</Typography>
 
                     <div className="flex flex-col space-y-1.5">
                         <label htmlFor="Descripcion" className="text-sm font-semibold">
                             Descripción
                         </label>
-                        <Textarea id="Descripcion" className="rounded-md" placeholder="Descripción aquí…" />
+                        <Textarea id="Descripcion" className="rounded-md min-h-[100px]" placeholder="Descripción aquí…" />
                     </div>
 
 
