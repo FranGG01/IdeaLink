@@ -16,8 +16,8 @@ const Feed_central = () => {
 
     return (
         <>
-            <div className="w-full flex justify-center mt-6">
-                <div className="w-full flex flex-col items-center gap-4">
+            <div className="w-full flex justify-center mt-6  ">
+                <div className="w-full  flex flex-col items-center gap-4 ">
 
                     <div className="relative w-full">
                         <input

@@ -22,9 +22,9 @@ export default function SidebarRight() {
   return (
     <>
 
-      <div className="w-[300px] flex-row justify-center ms-15 ">
-        <Modal_chat />
-        <div className="relative w-full">
+      <div className="w-[300px] flex-row justify-center ms-15 mt-2 ">
+        <div className="relative w-full flex justify-start">
+          <Modal_chat />
           <input
             className="w-full bg-transparent placeholder:text-white text-sm border border-gray-100 rounded-md pl-3 py-2 transition duration-300 focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow text-white"
             placeholder="UI Kits, Dashboards..."
@@ -38,6 +38,7 @@ export default function SidebarRight() {
             </svg>
             Search
           </button>
+
         </div>
         <aside className="chat_sidebar w-[300px] bg-[#1e293b] p-2  text-white border border-gray-500 max-h-[360px] overflow-y-auto rounded-md">
           <div className="space-y-4 text-sm">

@@ -3,6 +3,7 @@ import './Feed_central.css'
 import { Avatar } from "@material-tailwind/react";
 import Modal_postularse from './Modal_postularse';
 import Modal_leer_mas from './Modal_leer_mas';
+import { Card, CardHeader, CardBody, CardFooter, Typography } from "@material-tailwind/react";
 
 
 export default function Tarjeta({ project }) {
@@ -41,12 +42,11 @@ export default function Tarjeta({ project }) {
                 )}
             </CardBody>
 
-</Card.Body>
-<Card.Footer className="flex justify-end gap-3 mt-4 p-0">
-    <Modal_leer_mas />
-    {project.is_accepting_applications && <Modal_postularse />}
-</Card.Footer>
 
+            <CardFooter className='flex justify-end p-1 gap-2'>
+                <Modal_leer_mas />
+                <Modal_postularse />
+            </CardFooter>
         </Card>
     );
 }
