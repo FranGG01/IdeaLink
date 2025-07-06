@@ -21,7 +21,7 @@ def create_project():
         description = data['description'],
         image_url = data.get('image_url'),
         hashtags = data.get('hashtags'),
-         is_accepting_applications=data.get('is_accepting_applications', True),
+        is_accepting_applications=data.get('is_accepting_applications', True),
         owner_id = data['owner_id']
     )
     db.session.add(project)

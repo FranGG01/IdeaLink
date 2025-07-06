@@ -1,13 +1,23 @@
 import Modal1 from '../Modal';
 import './Feed_central.css'
 import Tarjeta from './Tarjeta_feed'
+import useGlobalReducer from '../../hooks/useGlobalReducer';
+import { useEffect } from 'react';
+
 const Feed_central = () => {
+    const { store, dispatch } = useGlobalReducer();
+
+    useEffect(() => {
+        fetch("http://127.0.0.1:5000/api/projects")
+            .then(res => res.json())
+            .then(data => dispatch({ type: 'set_projects', payload: data }))
+            .catch(err => console.error("Error al obtener ideas:", err))
+    }, [dispatch]);
 
     return (
-
         <>
-            <div className="w-full flex justify-center mt-6  ">
-                <div className="w-full  flex flex-col items-center gap-4 ">
+            <div className="w-full flex justify-center mt-6">
+                <div className="w-full flex flex-col items-center gap-4">
 
                     <div className="relative w-full">
                         <input
@@ -31,7 +41,7 @@ const Feed_central = () => {
                         {['IA', 'Startup', 'Sostenible', 'Recientes', 'Populares', 'Siguiendo'].map((item, i) => (
                             <button
                                 key={i}
-                                className="rounded-md bg-gray-600 py-2 px-4 text-white text-sm hover:bg-purple-700 focus:bg-purple-700 active:bg-purple-700 transition-all  "
+                                className="rounded-md bg-gray-600 py-2 px-4 text-white text-sm hover:bg-purple-700 focus:bg-purple-700 active:bg-purple-700 transition-all"
                             >
                                 {item}
                             </button>
@@ -41,14 +51,15 @@ const Feed_central = () => {
                 </div>
             </div>
 
-            <div className="mt-4 px-4 overflow-y-auto space-y-4 max-h-[calc(100vh-150px)] ocultar-scroll flex flex-col  items-center ">
-                <Tarjeta />
-                <Tarjeta />
-                <Tarjeta />
+
+            <div className="mt-8 space-y-4 px-4 flex flex-col items-center">
+                {store.projects && store.projects.map((project, index) => (
+                    <Tarjeta key={index} project={project} />
+                ))}
+
             </div>
         </>
     );
-
 }
 
-export default Feed_central
+export default Feed_central;
