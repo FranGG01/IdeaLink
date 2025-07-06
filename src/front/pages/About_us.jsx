@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
+
 const team = [
     {
         name: "Francisco García",

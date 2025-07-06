@@ -1,10 +1,9 @@
 import Feed_central from "../components/feed_central/Feed_central"
 import Sidebarleft from "../components/sidebars/SidebarLeft"
 import SidebarRight from "../components/sidebars/SidebarRight"
-import { useNavigate } from "react-router-dom";
 
 const Feed = () => {
-    const navigate = useNavigate();
+
     return (
         <>
             <div className="flex flex-row h-screen bg-gray-900 text-white">
