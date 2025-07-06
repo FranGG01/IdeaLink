@@ -41,6 +41,10 @@ body{
 .str-chat__list::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
 .scroll-hidden::-webkit-scrollbar {
   display: none;
 }
+
+
+
