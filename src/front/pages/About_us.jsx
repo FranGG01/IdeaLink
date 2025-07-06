@@ -1,6 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+
 
 const team = [
     {
@@ -8,7 +10,7 @@ const team = [
         role: "Full Stack Developer",
         description:
             "Apasionado por la creación de productos digitales funcionales, bien pensados y con impacto real. Me gusta trabajar en equipo, cuidar los detalles y aportar soluciones que combinan creatividad y lógica.",
-        image: "../public/fran.png",
+        image: "/fran.png",
         linkedin: "https://www.linkedin.com/in/franciscogarcia-dev/",
         github: "https://github.com/FranGG01",
     },
@@ -26,16 +28,23 @@ const team = [
         role: "Full Stack Developer",
         description:
             "Puedo con el front y el back… hasta que aparece un bug.",
-        image: "../public/Enrique.png",
+        image: "/Enrique.png",
         linkedin: "https://www.linkedin.com",
         github: "https://github.com/VykeAS",
     },
 ];
 
 export default function AboutUs() {
+    const navigate = useNavigate();
     return (
         <section className="min-h-screen bg-gray-900 text-white py-20 px-4 sm:px-6 lg:px-8">
             <div className="max-w-5xl mx-auto text-center">
+                <button
+                    onClick={() => navigate("/feed")}
+                    className="self-start mb-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition"
+                >
+                    ← Volver
+                </button>
                 <motion.h2
                     className="text-4xl font-bold mb-6"
                     initial={{ opacity: 0, y: -20 }}
@@ -55,7 +64,7 @@ export default function AboutUs() {
                 </motion.p>
             </div>
 
-            <div className="mt-20 grid gap-10 sm:grid-cols-2 justify-items-center max-w-6xl mx-auto">
+            <div className="mt-20 grid gap-10 sm:grid-cols-3 justify-items-center max-w-6xl mx-auto">
                 {team.map((member, index) => (
                     <motion.div
                         key={index}

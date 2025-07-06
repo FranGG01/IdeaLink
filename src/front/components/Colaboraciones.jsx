@@ -38,6 +38,11 @@ export default function Collaborations() {
                 </h2>
                 <p className="text-gray-400 mb-2">No tienes solicitudes nuevas.</p>
             </section>
+            <iframe
+                src="https://stackblitz.com/edit/react?embed=1&file=src/App.js"
+                className="w-full h-[80vh] border rounded-md"
+                allow="accelerometer; camera; microphone; geolocation; midi; clipboard-read; clipboard-write"
+            ></iframe>
 
         </div>
     );

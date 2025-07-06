@@ -31,12 +31,12 @@ body{
 }
 
 .str-chat__list::-webkit-scrollbar-track {
-  background: hsla(0, 0%, 95%, 0); /* color del fondo */
+  background: hsla(0, 0%, 95%, 0);
   
 }
 
 .str-chat__list::-webkit-scrollbar-thumb {
-  background-color: lab(75.88% 0 -0.01 / 0.267); /* color del scroll */
+  background-color: lab(75.88% 0 -0.01 / 0.267); 
   border-radius: 10px;
   border: 2px solid hsla(0, 0%, 95%, 0);
   
@@ -45,4 +45,10 @@ body{
 .str-chat__list::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.scroll-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+
 
