@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { login } from '../store';
-import logo from '../assets/img/Logo.png';
+import Logo_dark from '../assets/img/Logo_dark.png';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -34,16 +34,16 @@ const Login = () => {
       <div className="Login w-full flex  justify-center bg-gray-900 text-white">
         <div className="flex flex-col justify-center px-6 py-12 lg:px-8 h-auto lg:h-[800px] w-full max-w-[600px]  shadow-2xl shadow-purple-500/60 bg-gray-800 rounded-lg">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <img className="mx-auto h-65" src={logo} alt="Your Company" />
+            <img className="mx-auto h-65" src={Logo_dark} alt="Your Company" />
             <h2 className="mt-2 text-center text-2xl/9 font-bold tracking-tight text-white">
-              Sign in to your account
+              Inicia sesión en tu cuenta
             </h2>
           </div>
 
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm mb-20">
             <form onSubmit={handleLogin} className="space-y-6">
               <div>
-                <label htmlFor="email" className="block text-sm/6 font-medium text-gray-300">Email address</label>
+                <label htmlFor="email" className="block text-sm/6 font-medium text-gray-300">Dirección de correo electrónico</label>
                 <div className="mt-2">
                   <input
                     type="email"
@@ -59,9 +59,9 @@ const Login = () => {
 
               <div>
                 <div className="flex items-center justify-between">
-                  <label htmlFor="password" className="block text-sm/6 font-medium text-gray-300">Password</label>
+                  <label htmlFor="password" className="block text-sm/6 font-medium text-gray-300">Contraseña</label>
                   <div className="text-sm">
-                    <a href="#" className="font-semibold text-purple-400 hover:text-purple-300">Forgot password?</a>
+                    <a href="#" className="font-semibold text-purple-400 hover:text-purple-300">¿Has olvidado tu contraseña?</a>
                   </div>
                 </div>
                 <div className="mt-2">
@@ -82,15 +82,15 @@ const Login = () => {
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-purple-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs cursor-pointer hover:bg-purple-500 focus:outline-2 focus:outline-purple-500"
                 >
-                  Sign in
+                  Iniciar sesión
                 </button>
               </div>
             </form>
 
             <p className="mt-10 text-center text-sm/6 text-gray-400">
-              Not a member?{" "}
+              ¿Aún no eres miembro?{" "}
               <Link to="/register" className="font-semibold text-purple-400 hover:text-purple-300">
-                Register here
+                Regístrate aquí
               </Link>
             </p>
           </div>
