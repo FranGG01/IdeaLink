@@ -18,8 +18,15 @@ export default function SupportPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center px-4">
+        <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center px-4">
+            <button
+                onClick={() => navigate("/feed")}
+                className="mb-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition self-center"
+            >
+                ← Volver
+            </button>
             <div className="w-full max-w-xl bg-gray-800 p-8 rounded-xl shadow-lg">
+
                 <h1 className="text-3xl font-bold mb-4 text-center">Centro de Soporte</h1>
                 <p className="text-gray-400 mb-8 text-center">
                     ¿Tienes alguna pregunta o problema? Escríbenos y te responderemos lo antes posible.

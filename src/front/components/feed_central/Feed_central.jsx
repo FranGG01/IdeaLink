@@ -8,11 +8,33 @@ const Feed_central = () => {
     const { store, dispatch } = useGlobalReducer();
 
     useEffect(() => {
-        fetch("http://127.0.0.1:5000/api/projects")
-            .then(res => res.json())
-            .then(data => dispatch({ type: 'set_projects', payload: data }))
-            .catch(err => console.error("Error al obtener ideas:", err))
+        const fetchProjects = async () => {
+            const token = localStorage.getItem("jwt-token");
+
+            try {
+                const res = await fetch("http://127.0.0.1:5000/api/projects", {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+
+                if (!res.ok) {
+                    const errorText = await res.text();
+                    console.error("❌ Error en proyectos:", errorText);
+                    return;
+                }
+
+                const data = await res.json();
+                dispatch({ type: 'set_projects', payload: data });
+            } catch (err) {
+                console.error("❌ Error de red al obtener ideas:", err);
+            }
+        };
+
+        fetchProjects();
     }, [dispatch]);
+
 
     return (
         <>

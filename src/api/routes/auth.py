@@ -11,7 +11,7 @@ def register_user():
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
-
+    username = data.get('username')
     if not password or not email:
         return jsonify({"msg": "Email y contraseña requeridos"}), 400
 
@@ -19,7 +19,7 @@ def register_user():
         return jsonify({"msg": "El usuario ya existe"}), 409
 
     hashed_password = generate_password_hash(password)
-    new_user = User(email=email, password=hashed_password)
+    new_user = User(email=email, password=hashed_password, username=username)
     db.session.add(new_user)
     db.session.commit()
 

@@ -7,13 +7,15 @@ import { Card, CardHeader, CardBody, CardFooter, Typography } from "@material-ta
 
 
 export default function Tarjeta({ project }) {
+    if (!project || !project.owner) return null;
+
     return (
         <Card className="w-full max-w-[48rem] rounded-[1vw] bg-gray-600 text-white shadow-lg px-6 py-4">
             {/* HEADER */}
             <CardHeader floated={false} shadow={false} className="flex items-center justify-between gap-4 bg-transparent p-0">
                 <div className="flex items-center gap-4">
                     <Avatar
-                        src={project.owner.avatar_url || "https://ui-avatars.com/api/?name=User"}
+                        src={project?.owner?.avatar_url || "https://ui-avatars.com/api/?name=User"}
                         alt="avatar"
                         size="sm"
                         className="rounded-full"
