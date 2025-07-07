@@ -20,12 +20,12 @@ export default function SidebarLeft() {
 
   return (
     <>
-      <div className="h-30 flex items-start">
+      <div className="h-30 flex items-start p-0">
         <LogoBombilla />
       </div>
 
 
-      <aside className="w-64 bg-[#1e293b] p-5  space-y-6 text-white mt-0">
+      <aside className="w-64 bg-[#1e293b] p-5 pt-0 space-y-6 text-white mt-0">
         <nav className="space-y-3">
           {navItems.map(({ label, icon: Icon, to }) => (
             <Link
