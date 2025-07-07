@@ -13,6 +13,7 @@ from api.commands import setup_commands
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from stream_chat import StreamChat
+from api.routes.friend_routes import friend_bp 
 
 STREAM_API_KEY = os.getenv("STREAM_API_KEY", "2pks7t76xeqd")
 STREAM_API_SECRET = os.getenv("STREAM_API_SECRET", "egfuhcyva6qbngb29zun8ru46v5ruaq7xy2kbfqse885vbfsrs7chgk42pnse5y5")  
@@ -56,6 +57,7 @@ setup_commands(app)
 
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
+app.register_blueprint(friend_bp)
 
 # Handle/serialize errors like a JSON object
 @app.errorhandler(Exception)
