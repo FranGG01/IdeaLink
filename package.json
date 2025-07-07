@@ -62,7 +62,7 @@
 		"@material-tailwind/html": "^3.0.0-beta.7",
 		"@material-tailwind/react": "^2.1.10",
 		"@tailwindcss/vite": "^4.1.11",
-		"framer-motion": "^12.22.0",
+		"framer-motion": "^12.23.0",
 		"iconoir-react": "^7.11.0",
 		"lucide-react": "^0.525.0",
 		"prop-types": "^15.8.1",
@@ -74,6 +74,7 @@
 		"stream-chat-react": "^13.2.1",
 		"swiper": "^11.2.8",
 		"tailwind-scrollbar-hide": "^4.0.0",
-		"tailwindcss": "^4.1.11"
+		"tailwindcss": "^4.1.11",
+		"use-sound": "^5.0.0"
 	}
 }

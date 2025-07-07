@@ -4,6 +4,8 @@ import Separator from "./Separator";
 import { Link, useLocation } from "react-router-dom";
 import Logo_dark from "../../assets/img/Logo_dark.png";
 import { useNavigate } from "react-router-dom";
+import LogoBombilla from "../LogoBombilla";
+
 export default function SidebarLeft() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -17,9 +19,11 @@ export default function SidebarLeft() {
   ];
 
   return (
-    <><div className="h-30 flex items-start">
-      <img className=" h-35 w-55 object-cover pb-18 " src={Logo_dark} alt="Your Company" />
-    </div>
+    <>
+      <div className="h-30 flex items-start">
+        <LogoBombilla />
+      </div>
+
 
       <aside className="w-64 bg-[#1e293b] p-5  space-y-6 text-white mt-0">
         <nav className="space-y-3">
