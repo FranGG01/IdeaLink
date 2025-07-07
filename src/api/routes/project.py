@@ -23,7 +23,8 @@ def create_project():
         hashtags = data.get('hashtags'),
         is_accepting_applications=data.get('is_accepting_applications', True),
         owner_id = data['owner_id'],
-        stackblitz_url = data.get('stackblitz_url')
+        stackblitz_url = data.get('stackblitz_url'),
+        code_files=data.get('code_files')
     )
     db.session.add(project)
     db.session.commit()
@@ -41,7 +42,7 @@ def update_project(id):
     project.hashtags = data.get('hashtags', project.hashtags)
     project.is_accepting_applications = data.get('is_accepting_applications', project.is_accepting_applications)
     project.stackblitz_url = data.get('stackblitz_url', project.stackblitz_url)
-
+    project.code_files = data.get('code_files', project.code_files), 
     db.session.commit()
     return jsonify(project.serialize()), 200
 
