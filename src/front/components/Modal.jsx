@@ -5,6 +5,9 @@ import {
 import { useState } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import { createProject } from "../store";
+import sdk from "@stackblitz/sdk";
+import { useRef } from "react";
+
 
 export default function Modal1() {
     const [open, setOpen] = useState(false);
@@ -16,6 +19,7 @@ export default function Modal1() {
         description: "",
         hashtags: "",
         image_url: "",
+        stackblitz_url: ""
     });
 
     const handleChange = (e) => {
@@ -37,8 +41,8 @@ export default function Modal1() {
         }
 
         try {
-            const newProject = await createProject(formData, user);  // backend request
-            dispatch({ type: "add_project", payload: newProject }); // actualiza el store
+            const newProject = await createProject(formData, user);
+            dispatch({ type: "add_project", payload: newProject });
 
             setFormData({ title: "", description: "", hashtags: "", image_url: "" });
             setOpen(false);
@@ -46,7 +50,23 @@ export default function Modal1() {
             console.error("Error al crear proyecto:", err);
             alert("No se pudo crear el proyecto.");
         }
+        sdk.embedProject(stackblitzRef.current, {
+            title: formData.title || "IdeaLink Project",
+            description: formData.description || "Proyecto generado desde IdeaLink",
+            template: "javascript",
+            files: {
+                "index.html": "<h1>Bienvenido a IdeaLink</h1>",
+                "index.js": "console.log('Hola desde StackBlitz');",
+                "style.css": "body { font-family: sans-serif; background: #f4f4f4; }"
+            }
+        }, {
+            openFile: "index.js",
+            view: "editor",
+            height: 500
+        });
+
     };
+    const stackblitzRef = useRef(null);
 
     return (
         <>
@@ -97,6 +117,7 @@ export default function Modal1() {
                                 className="rounded-md"
                                 placeholder="IA, Developer, FullStack"
                             />
+
                         </div>
                     </div>
 
@@ -123,6 +144,19 @@ export default function Modal1() {
                             placeholder="https://example.com/imagen.jpg"
                         />
                     </div>
+                    <div className="flex flex-col space-y-1.5">
+                        <label htmlFor="image_url" className="text-sm font-semibold">URL de StackBlitz</label>
+                        <Input
+                            id="stackblitz_url"
+                            name="StackBlitz_url"
+                            value={formData.stackblitz_url}
+                            onChange={handleChange}
+                            className="rounded-md"
+                            placeholder="StackBlitz URL (OPCIONAL)"
+                        />
+
+                    </div>
+
                 </DialogBody>
 
                 <DialogFooter>
