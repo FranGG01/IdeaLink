@@ -9,7 +9,8 @@ const Perfil = () => {
                     <Sidebarleft />
                 </aside>
 
-                <main className="flex-1 p-4 bg-gray-900">
+                <main className="flex-1 p-4 bg-gray-900 overflow-y-auto h-screen scroll-hidden
+">
                     <User_perfil />
                 </main>
 

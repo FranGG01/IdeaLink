@@ -12,6 +12,10 @@ class User(db.Model):
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False, default=True)
     username: Mapped[str] = mapped_column(String(120), nullable=True)
     avatar_url: Mapped[str] = mapped_column(String(255), nullable=True)
+    banner_url: Mapped[str] = mapped_column(String(255), nullable=True)
+    role: Mapped[str] = mapped_column(String(120), nullable=True)
+    location: Mapped[str] = mapped_column(String(120), nullable=True)
+    bio: Mapped[str] = mapped_column(Text, nullable=True)
 
 
     def serialize(self):
@@ -19,7 +23,11 @@ class User(db.Model):
             "id": self.id,
             "email": self.email,
             "username": self.username,
-            "avatar_url": self.avatar_url
+            "avatar_url": self.avatar_url,
+            "banner_url": self.banner_url,
+            "role": self.role,
+            "location": self.location,
+            "bio": self.bio
         }
         
 

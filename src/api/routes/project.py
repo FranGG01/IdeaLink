@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from api.models import db, Project
-
+from flask_jwt_extended import jwt_required, get_jwt_identity
 project_api = Blueprint('project_api', __name__)
 
 @project_api.route('/projects', methods=['GET'])
@@ -48,3 +48,12 @@ def delete_project(id):
     db.session.delete(project)
     db.session.commit()
     return '', 204
+
+
+
+@project_api.route('/my-projects', methods=['GET'])
+@jwt_required()
+def get_my_projects():
+    user_id = get_jwt_identity()
+    projects = Project.query.filter_by(owner_id=user_id).all()
+    return jsonify([p.serialize() for p in projects]), 200

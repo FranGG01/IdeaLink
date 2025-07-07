@@ -18,7 +18,7 @@ export default function Tarjeta({ project }) {
                         src={project?.owner?.avatar_url || "https://ui-avatars.com/api/?name=User"}
                         alt="avatar"
                         size="sm"
-                        className="rounded-full"
+                        className="rounded-full w-15 h-15"
                     />
 
                     <Typography variant="h6">{project.owner?.username || "Anónimo"}</Typography>

@@ -95,7 +95,7 @@ export default function Modal1() {
                                 value={formData.hashtags}
                                 onChange={handleChange}
                                 className="rounded-md"
-                                placeholder="#innovación"
+                                placeholder="IA, Developer, FullStack"
                             />
                         </div>
                     </div>
