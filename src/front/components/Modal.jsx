@@ -5,6 +5,7 @@ import {
 import { useState } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import { createProject } from "../store";
+import sdk from "@stackblitz/sdk";
 
 export default function Modal1() {
     const [open, setOpen] = useState(false);
@@ -16,6 +17,7 @@ export default function Modal1() {
         description: "",
         hashtags: "",
         image_url: "",
+        stackblitz_url: ""
     });
 
     const handleChange = (e) => {
@@ -37,14 +39,37 @@ export default function Modal1() {
         }
 
         try {
-            const newProject = await createProject(formData, user);  // backend request
-            dispatch({ type: "add_project", payload: newProject }); // actualiza el store
+            const projectData = {
+                title: formData.title,
+                description: formData.description,
+                template: "javascript",
+                files: {
+                    "index.html": `<h1>${formData.title}</h1>`,
+                    "index.js": `console.log('Hola desde IdeaLink');`,
+                    "style.css": "body { font-family: sans-serif; background: #f4f4f4; }"
+                }
+            };
 
-            setFormData({ title: "", description: "", hashtags: "", image_url: "" });
+            sdk.openProject(projectData, {
+                openFile: "index.js",
+                view: "editor"
+            });
+
+            alert("Por favor, guarda el proyecto en StackBlitz y pega la URL en el campo correspondiente.");
+        } catch (err) {
+            console.error("Error al abrir StackBlitz:", err);
+        }
+    };
+
+    const handleFinalSubmit = async () => {
+        try {
+            const newProject = await createProject(formData, user);
+            dispatch({ type: "add_project", payload: newProject });
+            setFormData({ title: "", description: "", hashtags: "", image_url: "", stackblitz_url: "" });
             setOpen(false);
         } catch (err) {
-            console.error("Error al crear proyecto:", err);
-            alert("No se pudo crear el proyecto.");
+            console.error("Error al guardar proyecto:", err);
+            alert("No se pudo guardar el proyecto.");
         }
     };
 
@@ -123,16 +148,34 @@ export default function Modal1() {
                             placeholder="https://example.com/imagen.jpg"
                         />
                     </div>
+
+                    <div className="flex flex-col space-y-1.5">
+                        <label htmlFor="stackblitz_url" className="text-sm font-semibold">Pega aquí la URL final de StackBlitz</label>
+                        <Input
+                            id="stackblitz_url"
+                            name="stackblitz_url"
+                            value={formData.stackblitz_url}
+                            onChange={handleChange}
+                            className="rounded-md"
+                            placeholder="https://stackblitz.com/edit/..."
+                        />
+                    </div>
                 </DialogBody>
 
                 <DialogFooter>
                     <Button
-                        fullWidth
-                        variant="filled"
+                        variant="outlined"
                         onClick={handleSubmit}
-                        className="rounded-md bg-gray-600 py-2 px-4 text-white text-sm shadow-sm hover:bg-purple-700 hover:shadow-lg"
+                        className="rounded-md border-gray-500 text-gray-500 mr-2"
                     >
-                        Guardar
+                        Abrir StackBlitz
+                    </Button>
+                    <Button
+                        variant="filled"
+                        onClick={handleFinalSubmit}
+                        className="rounded-md bg-purple-700 py-2 px-4 text-white text-sm shadow-sm hover:bg-purple-800"
+                    >
+                        Guardar Proyecto
                     </Button>
                 </DialogFooter>
             </Dialog>

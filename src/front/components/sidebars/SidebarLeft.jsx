@@ -60,7 +60,7 @@ export default function SidebarLeft() {
         </div>
         <button
           onClick={() => navigate('/')}
-          className="absolute bottom-4 left-4 bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-md text-sm"
+          className="absolute bottom-4 left-4 bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-md text-sm cursor-pointer"
         >
           Cerrar sesión
         </button>

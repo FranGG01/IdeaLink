@@ -3,6 +3,8 @@ from sqlalchemy import String, Boolean, Text,ForeignKey, DateTime
 from sqlalchemy.orm import Mapped, mapped_column
 from datetime import datetime
 from sqlalchemy.orm import relationship
+from sqlalchemy import JSON
+
 db = SQLAlchemy()
 
 class User(db.Model):
@@ -31,6 +33,13 @@ class User(db.Model):
         }
         
 
+
+project_collaborators = db.Table(
+    'project_collaborators',
+    db.Column('project_id', db.Integer, db.ForeignKey('project.id'), primary_key=True),
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True)
+)
+
 class Project(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(String(120), nullable=False)
@@ -41,6 +50,11 @@ class Project(db.Model):
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
     owner_id: Mapped[int] = mapped_column(ForeignKey('user.id'),nullable=False)
     owner = relationship("User")
+
+    collaborators = db.relationship('User', secondary='project_collaborators')
+    stackblitz_url = db.Column(db.String, nullable=True)
+    code_files: Mapped[dict] = mapped_column(JSON, nullable=True)
+
     def serialize(self):
         return{
             'id':self.id,
@@ -51,6 +65,8 @@ class Project(db.Model):
             'is_accepting_applications':self.is_accepting_applications,
             'created_at':self.created_at.isoformat(),
             'owner_id':self.owner_id,
+            'stackblitz_url': self.stackblitz_url,
+            'code_files': self.code_files,
             "owner": {
             "username": getattr(self.owner, "username", "Anónimo"),
             "avatar_url": getattr(self.owner, "avatar_url", "https://ui-avatars.com/api/?name=User")

@@ -2,7 +2,7 @@ export const initialStore = () => {
   return {
     message: null,
     user: null,
-    projects: [],  // NUEVO: lista de proyectos
+    projects: [],  
     todos: [
       {
         id: 1,
