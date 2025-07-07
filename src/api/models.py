@@ -3,9 +3,25 @@ from sqlalchemy import String, Boolean, Text,ForeignKey, DateTime
 from sqlalchemy.orm import Mapped, mapped_column
 from datetime import datetime
 from sqlalchemy.orm import relationship
+from sqlalchemy import UniqueConstraint
 from sqlalchemy import JSON
 
 db = SQLAlchemy()
+
+
+
+class FriendRequest(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    sender_id: Mapped[int] = mapped_column(ForeignKey('user.id'), nullable=False)
+    receiver_id: Mapped[int] = mapped_column(ForeignKey('user.id'), nullable=False)
+    status: Mapped[str] = mapped_column(String(20), nullable=False, default='pending')  # pending, accepted, rejected
+    created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
+
+    sender = relationship("User", foreign_keys=[sender_id], back_populates="sent_requests")
+    receiver = relationship("User", foreign_keys=[receiver_id], back_populates="received_requests")
+
+    __table_args__ = (UniqueConstraint('sender_id', 'receiver_id', name='_sender_receiver_uc'),)
+
 
 class User(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -19,6 +35,18 @@ class User(db.Model):
     location: Mapped[str] = mapped_column(String(120), nullable=True)
     bio: Mapped[str] = mapped_column(Text, nullable=True)
 
+    sent_requests = relationship("FriendRequest", foreign_keys=[FriendRequest.sender_id], back_populates="sender", lazy="dynamic")
+    received_requests = relationship("FriendRequest", foreign_keys=[FriendRequest.receiver_id], back_populates="receiver", lazy="dynamic")
+
+    @property
+    def friends(self):
+        # Amigos que enviaron solicitud aceptada
+        sent = FriendRequest.query.filter_by(sender_id=self.id, status='accepted').all()
+        # Amigos que recibieron solicitud aceptada
+        received = FriendRequest.query.filter_by(receiver_id=self.id, status='accepted').all()
+        # Lista combinada de usuarios amigos
+        friends_list = [fr.receiver for fr in sent] + [fr.sender for fr in received]
+        return friends_list
 
     def serialize(self):
         return {
@@ -31,6 +59,7 @@ class User(db.Model):
             "location": self.location,
             "bio": self.bio
         }
+
         
 
 

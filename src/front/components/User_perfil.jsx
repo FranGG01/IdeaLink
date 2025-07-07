@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import Tarjeta from "./feed_central/Tarjeta_feed";
+import AddFriendButton from "./AddFriendButton";
 
 const User_perfil = () => {
     const { store, dispatch } = useGlobalReducer();
@@ -16,7 +17,6 @@ const User_perfil = () => {
         avatar_url: user?.avatar_url || "",
         banner_url: user?.banner_url || "",
     });
-
 
     useEffect(() => {
         const fetchUserProjects = async () => {
@@ -38,11 +38,9 @@ const User_perfil = () => {
     }, []);
 
     return (
-
         <>
             <div
                 className="flex flex-col items-center bg-[#1e293b] text-white p-6 rounded-2xl w-full max-w-4xl mx-auto"
-
             >
                 <div className="w-full bg-gradient-to-r from-pink-500 to-purple-500 h-39 rounded-t-2xl relative">
                     <button
@@ -60,18 +58,24 @@ const User_perfil = () => {
                 </div>
                 <div className="grid justify-center mt-16 px-6 w-full">
                     <h2 className=" flex justify-center text-3xl font-bold">{user?.username || "Usuario"}</h2>
+
+                    {/* Aquí agregamos el botón para enviar solicitud de amistad, solo si no es tu propio perfil */}
+                    {user && user.id !== store.user.id && (
+                        <div className="flex justify-center mt-2">
+                            <AddFriendButton receiverId={user.id} />
+                        </div>
+                    )}
+
                     <p className="flex justify-center text-sm text-gray-400">{user?.role}</p>
                     <p className="flex justify-center mt-2 text-sm">
                         {user?.bio || "Escribe algo sobre ti..."}
                     </p>
 
-
-                    <div className="flex justify-center  gap-6 mt-4 text-sm text-gray-400">
+                    <div className="flex justify-center gap-6 mt-4 text-sm text-gray-400">
                         <span>{user?.email} </span>
                         <span>{user?.location || "Ubicación no definida"}</span>
                     </div>
                 </div>
-
             </div>
 
             {editMode && (
@@ -144,7 +148,6 @@ const User_perfil = () => {
             </div>
         </>
     );
+};
 
-}
-
-export default User_perfil
+export default User_perfil;
