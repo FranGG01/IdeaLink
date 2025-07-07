@@ -11,7 +11,7 @@ def register_user():
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
-
+    username = data.get('username')
     if not password or not email:
         return jsonify({"msg": "Email y contraseña requeridos"}), 400
 
@@ -19,7 +19,7 @@ def register_user():
         return jsonify({"msg": "El usuario ya existe"}), 409
 
     hashed_password = generate_password_hash(password)
-    new_user = User(email=email, password=hashed_password)
+    new_user = User(email=email, password=hashed_password, username=username)
     db.session.add(new_user)
     db.session.commit()
 
@@ -51,3 +51,24 @@ def get_profile():
         return jsonify({"msg": "Usuario no encontrado"}), 404
 
     return jsonify(user.serialize()), 200
+
+@auth_api.route('/profile', methods=['PUT'])
+@jwt_required()
+def update_profile():
+    user_id = get_jwt_identity()
+    data = request.get_json()
+    user = User.query.get(user_id)
+
+    if not user:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+
+    user.username = data.get("username", user.username)
+    user.avatar_url = data.get("avatar_url", user.avatar_url)
+    user.banner_url = data.get("banner_url", user.banner_url)
+    user.role = data.get("role", user.role)
+    user.location = data.get("location", user.location)
+    user.bio = data.get("bio", user.bio)
+
+    db.session.commit()
+    return jsonify(user.serialize()), 200
+

@@ -12,6 +12,9 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [mtConfig],
+  plugins: [
+    require('tailwind-scrollbar-hide'),
+    mtConfig
+  ],
 };
 export default config;

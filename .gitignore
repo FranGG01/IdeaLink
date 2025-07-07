@@ -80,4 +80,6 @@ database.database
 database.db
 diagram.png
 __pycache__/
-"instance/test.db" 
+instance/test.db
+
+

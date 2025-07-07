@@ -56,11 +56,11 @@ export default function storeReducer(store, action = {}) {
   }
 }
 
-export const register = async (email, password) => {
+export const register = async (email, password, username) => {
   const res = await fetch("http://127.0.0.1:5000/api/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password })
+    body: JSON.stringify({ email, password, username })
   });
   const data = await res.json();
   if (res.ok) {
@@ -114,6 +114,9 @@ export const getProfile = async () => {
 
 
 export const createProject = async (formData, user) => {
+ const token = localStorage.getItem('jwt-token');
+console.log("🔑 TOKEN:", token); 
+
   const payload = {
     ...formData,
     owner_id: user.id,
@@ -122,7 +125,10 @@ export const createProject = async (formData, user) => {
 
   const res = await fetch("http://127.0.0.1:5000/api/projects", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`  
+    },
     body: JSON.stringify(payload),
   });
 
@@ -134,3 +140,6 @@ export const createProject = async (formData, user) => {
   const data = await res.json();
   return data;
 };
+
+
+
