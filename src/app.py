@@ -2,6 +2,10 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 import os
+from dotenv import load_dotenv          # ➊  Añade esto
+
+load_dotenv(dotenv_path=".env.example")                           # ➋  Carga variables .env **antes de todo**
+
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
@@ -10,22 +14,41 @@ from api.models import db
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
+from flask_cors import CORS
+from flask_jwt_extended import JWTManager
+from stream_chat import StreamChat
+from api.routes.friend_routes import friend_bp   # ← ahora ya es seguro importarlo
 
-# from models import Person
+
+STREAM_API_KEY = os.getenv("STREAM_API_KEY", "2pks7t76xeqd")
+STREAM_API_SECRET = os.getenv("STREAM_API_SECRET", "egfuhcyva6qbngb29zun8ru46v5ruaq7xy2kbfqse885vbfsrs7chgk42pnse5y5")  
+
+stream_client = StreamChat(api_key=STREAM_API_KEY, api_secret=STREAM_API_SECRET)
+
+app = Flask(__name__)
+app.config['JWT_SECRET_KEY'] = 'supersecreto123'
+jwt = JWTManager(app)
+
+CORS(app, supports_credentials=True)
+# Configura CORS para los orígenes que usas (añade los que necesites)
+CORS(app, origins=[
+    "https://potential-chainsaw-97j7q96jxvv4cxx6v-3000.app.github.dev",
+    "https://supreme-telegram-7vpvr97px66vhpr55-3000.app.github.dev",
+    "https://cautious-halibut-4jwjg7qwr9qphqw5q-3000.app.github.dev",
+    "http://localhost:3000"
+], supports_credentials=True)
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../dist/')
-app = Flask(__name__)
 app.url_map.strict_slashes = False
 
-# database condiguration
+# database configuration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
-    app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace(
-        "postgres://", "postgresql://")
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace("postgres://", "postgresql://")
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 MIGRATE = Migrate(app, db, compare_type=True)
@@ -39,17 +62,21 @@ setup_commands(app)
 
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
+app.register_blueprint(friend_bp)
 
 # Handle/serialize errors like a JSON object
-
+@app.errorhandler(Exception)
+def handle_all_exceptions(error):
+    response = jsonify(message=str(error))
+    response.status_code = 500
+    # El header CORS ya se añade automáticamente con flask-cors
+    return response
 
 @app.errorhandler(APIException)
 def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
 # generate sitemap with all your endpoints
-
-
 @app.route('/')
 def sitemap():
     if ENV == "development":

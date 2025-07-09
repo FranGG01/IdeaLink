@@ -1,0 +1,54 @@
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  --color-1: #d636d9;
+  --color-2: #932bd9;
+  --color-3: #482ef2;
+  --color-4: #111d40;
+  --color-5: #f2f2f2;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden; /* 👈 elimina scroll global */
+}
+
+body{
+    
+    top: 0 !important;
+    background-color: var(--color-5);
+}
+
+
+.str-chat__list::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+}
+
+.str-chat__list::-webkit-scrollbar-track {
+  background: hsla(0, 0%, 95%, 0);
+  
+}
+
+.str-chat__list::-webkit-scrollbar-thumb {
+  background-color: lab(75.88% 0 -0.01 / 0.267); 
+  border-radius: 10px;
+  border: 2px solid hsla(0, 0%, 95%, 0);
+  
+}
+
+.str-chat__list::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.scroll-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+
+

@@ -1,30 +1,38 @@
-// Import necessary components and functions from react-router-dom.
-
+// src/router.jsx
 import {
-    createBrowserRouter,
-    createRoutesFromElements,
-    Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
 } from "react-router-dom";
+
 import { Layout } from "./pages/Layout";
-import { Home } from "./pages/Home";
-import { Single } from "./pages/Single";
-import { Demo } from "./pages/Demo";
+import Landing from "./pages/Landing";
+import Register from "./components/Register";
+import Feed from "./pages/Feed";
+import AboutUs from "./pages/About_us";
+import ChatApp from "./components/ChatApp";
+import Perfil from "./pages/Perfil";
+import SupportPage from "./pages/Soporte";
+import Projects from "./pages/Projects";
+import PrivateRoute from "./components/PrivateRoute";
 
 export const router = createBrowserRouter(
-    createRoutesFromElements(
-    // CreateRoutesFromElements function allows you to build route elements declaratively.
-    // Create your routes here, if you want to keep the Navbar and Footer in all views, add your new routes inside the containing Route.
-    // Root, on the contrary, create a sister Route, if you have doubts, try it!
-    // Note: keep in mind that errorElement will be the default page when you don't get a route, customize that page to make your project more attractive.
-    // Note: The child paths of the Layout element replace the Outlet component with the elements contained in the "element" attribute of these child paths.
+  createRoutesFromElements(
+    <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>}>
 
-      // Root Route: All navigation will start from here.
-      <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
+      {/* Rutas públicas */}
+      <Route index element={<Landing />} />
+      <Route path="register" element={<Register />} />
 
-        {/* Nested Routes: Defines sub-routes within the BaseHome component. */}
-        <Route path= "/" element={<Home />} />
-        <Route path="/single/:theId" element={ <Single />} />  {/* Dynamic route for single items */}
-        <Route path="/demo" element={<Demo />} />
+      {/* Rutas privadas */}
+      <Route element={<PrivateRoute />}>
+        <Route path="feed" element={<Feed />} />
+        <Route path="about_us" element={<AboutUs />} />
+        <Route path="chat" element={<ChatApp />} />
+        <Route path="perfil" element={<Perfil />} />
+        <Route path="soporte" element={<SupportPage />} />
+        <Route path="proyectos" element={<Projects />} />
       </Route>
-    )
+    </Route>
+  )
 );
