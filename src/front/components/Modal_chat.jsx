@@ -6,7 +6,17 @@ export default function ModalChat({ open, onClose, currentUser, friend }) {
         <Dialog
             open={open}
             handler={onClose}
-            className="fixed bottom-0 right-0 left-0 top-0 sm:bottom-6 sm:right-4 sm:left-auto sm:top-auto w-full sm:w-auto max-w-full sm:max-w-[450px] bg-[#1e293b] rounded-none sm:rounded-2xl p-2 sm:p-4 m-0 sm:m-0"
+            className={`
+                fixed bottom-0 right-0 left-0 top-0
+                sm:bottom-6 sm:right-4 sm:left-auto sm:top-auto
+                w-full sm:w-auto
+                max-w-full sm:max-w-[450px]
+                h-full sm:h-[500px] sm:max-h-[90vh]
+                bg-[#1e293b]
+                rounded-none sm:rounded-2xl
+                p-2 sm:p-4 m-0
+                shadow-lg border border-gray-700
+            `}
         >
             <IconButton
                 size="sm"
@@ -17,13 +27,13 @@ export default function ModalChat({ open, onClose, currentUser, friend }) {
                 ✕
             </IconButton>
 
-            <DialogBody className="p-0 h-full sm:h-auto overflow-hidden">
+            <DialogBody className="p-0 h-full overflow-hidden">
                 {friend ? (
                     <ChatApp currentUser={currentUser} friend={friend} />
                 ) : (
-                    <p className="text-white text-center py-10">
+                    <div className="text-white text-center py-10">
                         Selecciona un amigo para chatear
-                    </p>
+                    </div>
                 )}
             </DialogBody>
         </Dialog>

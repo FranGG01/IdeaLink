@@ -9,7 +9,6 @@ import useGlobalReducer from "../../hooks/useGlobalReducer";
 
 export default function SidebarRight() {
   const { store } = useGlobalReducer();
-
   const [friend, setFriend] = useState(null);
   const [open, setOpen] = useState(false);
   const [friends, setFriends] = useState([]);
@@ -18,17 +17,23 @@ export default function SidebarRight() {
 
   useEffect(() => {
     if (token) {
-      getFriends(token).then(setFriends);
+      getFriends(token)
+        .then((res) => {
+          if (Array.isArray(res)) setFriends(res);
+          else setFriends([]);
+        })
+        .catch((err) => {
+          console.error("Error fetching friends:", err);
+          setFriends([]);
+        });
     }
   }, [token]);
 
   const currentUser = store.user;
-  console.log("SidebarRight - currentUser:", currentUser);
 
   return (
     <>
-      <aside className="chat_sidebar w-[300px] bg-[#1e293b] p-2 text-white border border-gray-500 max-h-[360px] overflow-y-auto rounded-md">
-
+      <aside className="chat_sidebar w-full sm:w-[300px] bg-[#1e293b] p-2 text-white border border-gray-500 max-h-[360px] overflow-y-auto rounded-md hidden xl:block">
         <FriendRequests />
 
         <div className="space-y-4 text-sm mt-4">
@@ -58,7 +63,11 @@ export default function SidebarRight() {
                   </p>
                 </div>
                 <span
-                  className={`w-2 h-2 rounded-full ${idx === 0 ? "bg-green-400" : idx === 1 ? "bg-yellow-400" : "bg-gray-400"
+                  className={`w-2 h-2 rounded-full ${idx === 0
+                      ? "bg-green-400"
+                      : idx === 1
+                        ? "bg-yellow-400"
+                        : "bg-gray-400"
                     }`}
                 />
               </div>
@@ -66,14 +75,20 @@ export default function SidebarRight() {
           ))}
         </div>
       </aside>
+
       <SendFriendRequestTest />
 
-      <ModalChat
-        open={open}
-        onClose={() => setOpen(false)}
-        currentUser={currentUser}
-        friend={friend}
-      />
+      {friend && (
+        <ModalChat
+          open={open}
+          onClose={() => {
+            setOpen(false);
+            setFriend(null);
+          }}
+          currentUser={currentUser}
+          friend={friend}
+        />
+      )}
     </>
   );
 }

@@ -5,7 +5,7 @@
 
 export const initialStore = () => ({
   message: null,
-  user: null,
+  user: JSON.parse(localStorage.getItem("user-profile")) || null,
   projects: [],
   todos: [
     { id: 1, title: "Make the bed", background: null },
@@ -61,7 +61,7 @@ export const register = async (email, password, username) => {
   }
 };
 
-// Login con email+password → devuelve objeto usuario COMPLETO con token
+// Login con email+password → devuelve objeto usuario con token
 export const login = async (email, password) => {
   const res = await fetch("http://127.0.0.1:5000/api/token", {
     method: "POST",
@@ -128,5 +128,3 @@ export const createProject = async (formData, user) => {
   const data = await res.json();
   return data;
 };
-
-
