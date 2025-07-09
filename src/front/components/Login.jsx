@@ -1,4 +1,3 @@
-// Login.jsx
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { login, getProfile } from "../store";
@@ -32,8 +31,6 @@ export default function Login() {
       alert("Error al iniciar sesión: " + err.message);
     }
   };
-
-
 
   return (
     <div className="Login w-full flex justify-center bg-gray-900 text-white pe-5">
@@ -82,4 +79,3 @@ export default function Login() {
     </div>
   );
 }
-

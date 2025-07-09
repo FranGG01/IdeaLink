@@ -78,7 +78,6 @@ export default function SidebarRight() {
 
       <SendFriendRequestTest />
 
-      {/* Renderiza solo si hay un amigo seleccionado */}
       {friend && (
         <ModalChat
           open={open}

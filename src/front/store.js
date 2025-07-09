@@ -1,3 +1,7 @@
+// store.js
+// ───────────────────────────────────────────────────────────
+// Estado y reducer global + helpers de API
+// ───────────────────────────────────────────────────────────
 
 export const initialStore = () => ({
   message: null,
@@ -8,7 +12,6 @@ export const initialStore = () => ({
     { id: 2, title: "Do my homework", background: null }
   ]
 });
-
 
 export default function storeReducer(store, action = {}) {
   switch (action.type) {
@@ -58,6 +61,7 @@ export const register = async (email, password, username) => {
   }
 };
 
+// Login con email+password → devuelve objeto usuario con token
 export const login = async (email, password) => {
   const res = await fetch("http://127.0.0.1:5000/api/token", {
     method: "POST",
@@ -75,6 +79,7 @@ export const login = async (email, password) => {
   return data;
 };
 
+// Devuelve perfil (requiere token en localStorage)
 export const getProfile = async () => {
   const token = localStorage.getItem("jwt-token");
   const res = await fetch("http://127.0.0.1:5000/api/profile", {
@@ -123,5 +128,3 @@ export const createProject = async (formData, user) => {
   const data = await res.json();
   return data;
 };
-
-

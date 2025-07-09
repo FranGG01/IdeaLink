@@ -1,4 +1,3 @@
-// src/router.jsx
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -19,7 +18,6 @@ import PrivateRoute from "./components/PrivateRoute";
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>}>
-
       {/* Rutas públicas */}
       <Route index element={<Landing />} />
       <Route path="register" element={<Register />} />

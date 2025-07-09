@@ -18,7 +18,6 @@ export default function ModalChat({ open, onClose, currentUser, friend }) {
                 shadow-lg border border-gray-700
             `}
         >
-            {/* Botón de cerrar */}
             <IconButton
                 size="sm"
                 color="blue-gray"
@@ -28,7 +27,6 @@ export default function ModalChat({ open, onClose, currentUser, friend }) {
                 ✕
             </IconButton>
 
-            {/* Contenido del chat */}
             <DialogBody className="p-0 h-full overflow-hidden">
                 {friend ? (
                     <ChatApp currentUser={currentUser} friend={friend} />

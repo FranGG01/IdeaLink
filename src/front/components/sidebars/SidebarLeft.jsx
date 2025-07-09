@@ -31,8 +31,8 @@ export default function SidebarLeft() {
               to={to}
               key={label}
               className={`w-full flex items-center space-x-3 text-left p-2 rounded-md transition-colors duration-200 cursor-pointer ${location.pathname === to
-                ? "bg-purple-700"
-                : "hover:bg-purple-500/20"
+                  ? "bg-purple-700"
+                  : "hover:bg-purple-500/20"
                 }`}
             >
               <Icon className="w-4 h-4" />
@@ -46,14 +46,13 @@ export default function SidebarLeft() {
           <Separator />
         </div>
         <div className="mt-4">
-          <AIChatModal /> {/* ✅ Aquí va el botón */}
+          <AIChatModal /> {/* ✅ Botón que abre el chat IA */}
         </div>
       </div>
 
       {/* Bottom: Cerrar sesión */}
       <div className="mt-8">
         <button
-
           onClick={() => navigate("/")}
           className="bg-gray-700 hover:bg-gray-600 text-white mb-3 px-4 py-2 rounded-md text-sm w-full"
         >
