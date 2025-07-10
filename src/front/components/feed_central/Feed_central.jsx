@@ -74,7 +74,7 @@ const Feed_central = () => {
             </div>
 
 
-            <div className="mt-4 px-4 ms-25 flex-row items-center overflow-y-auto space-y-4 max-h-[calc(100vh-150px)] ocultar-scroll">
+            <div className="mt-4 px-4  flex flex-col items-center justify-center min-h-[calc(100vh-150px)] space-y-4 ocultar-scroll">
                 {store.projects && store.projects.map((project, index) => (
                     <Tarjeta key={index} project={project} />
                 ))}

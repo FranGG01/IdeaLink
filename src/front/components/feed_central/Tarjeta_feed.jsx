@@ -8,7 +8,7 @@ import { Card, CardHeader, CardBody, CardFooter, Typography } from "@material-ta
 
 export default function Tarjeta({ project }) {
     if (!project || !project.owner) return null;
-
+    console.log("🧪 image_url:", project.image_url);
     return (
         <Card className="w-full max-w-[48rem] rounded-[1vw] bg-gray-600 text-white shadow-lg px-6 py-4">
             {/* HEADER */}
@@ -37,11 +37,12 @@ export default function Tarjeta({ project }) {
                 <p className="text-base">{project.description}</p>
                 {project.image_url && (
                     <img
-                        src={project.image_url}
+                        src={`http://127.0.0.1:5000${project.image_url}`}
                         alt="imagen del proyecto"
                         className="mt-4 w-full max-h-[250px] object-cover rounded-xl"
                     />
                 )}
+
             </CardBody>
 
 
