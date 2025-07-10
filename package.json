@@ -63,6 +63,8 @@
 		"@material-tailwind/react": "^2.1.10",
 		"@stackblitz/sdk": "^1.11.0",
 		"@tailwindcss/vite": "^4.1.11",
+		"axios": "^1.10.0",
+		"dotenv": "^17.2.0",
 		"framer-motion": "^12.23.0",
 		"iconoir-react": "^7.11.0",
 		"lucide-react": "^0.525.0",
