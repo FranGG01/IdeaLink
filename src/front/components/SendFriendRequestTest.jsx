@@ -54,14 +54,14 @@ function AddFriendByUsername() {
                     onClick={() => setShowInput(true)}
                     className="bg-purple-600 px-4 py-2 rounded hover:bg-purple-700 cursor-pointer"
                 >
-                    Agregar amigo por username
+                    Agregar amigo
                 </button>
             ) : (
                 <>
-                    <h2 className="text-xl mb-4">Enviar solicitud por username</h2>
+                    <h2 className="text-xl mb-4">Enviar solicitud de amistad</h2>
                     <input
                         type="text"
-                        placeholder="Nombre de usuario del receptor"
+                        placeholder="Nombre de usuario"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         className="w-full p-2 mb-2 rounded bg-gray-700"

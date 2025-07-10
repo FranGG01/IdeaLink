@@ -18,21 +18,21 @@ export default function SidebarLeft() {
   ];
 
   return (
-    <aside className="w-64 bg-[#1e293b] p-5 pt-4 text-white h-screen flex flex-col justify-between">
+    <aside className="w-64 bg-[#1e293b] p-5 pt-0 text-white h-screen flex flex-col justify-between">
       {/* Top Logo y Menú */}
       <div>
-        <div className="mb-4">
+        <div className="h-35 flex items-start p-0 ">
           <LogoBombilla />
         </div>
 
-        <nav className="space-y-3">
+        <nav className="space-y-3 ">
           {navItems.map(({ label, icon: Icon, to }) => (
             <Link
               to={to}
               key={label}
               className={`w-full flex items-center space-x-3 text-left p-2 rounded-md transition-colors duration-200 cursor-pointer ${location.pathname === to
-                  ? "bg-purple-700"
-                  : "hover:bg-purple-500/20"
+                ? "bg-purple-700"
+                : "hover:bg-purple-500/20"
                 }`}
             >
               <Icon className="w-4 h-4" />
