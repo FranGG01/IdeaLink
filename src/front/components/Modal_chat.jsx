@@ -1,7 +1,7 @@
 import { Dialog, DialogBody, IconButton } from "@material-tailwind/react";
 import ChatApp from "./ChatApp";
 
-export default function ModalChat({ open, onClose, currentUser, friend }) {
+export default function ModalChat({ open, onClose, friend }) {
     return (
         <Dialog
             open={open}
@@ -29,7 +29,7 @@ export default function ModalChat({ open, onClose, currentUser, friend }) {
 
             <DialogBody className="p-0 h-full overflow-hidden">
                 {friend ? (
-                    <ChatApp currentUser={currentUser} friend={friend} />
+                    <ChatApp friend={friend} />
                 ) : (
                     <div className="text-white text-center py-10">
                         Selecciona un amigo para chatear

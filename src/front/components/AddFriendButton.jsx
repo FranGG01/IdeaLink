@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { sendFriendRequest } from "../../api/routes/friendService";
+import { sendFriendRequestByUsername } from "../../api/routes/friendService";
 
-function AddFriendButton({ receiverId }) {
-    const token = localStorage.getItem("token");
+function AddFriendButton({ username }) {
+    const token = localStorage.getItem("jwt-token");
     const [sent, setSent] = useState(false);
     const [error, setError] = useState(null);
 
     const handleClick = async () => {
         try {
-            const res = await sendFriendRequest(receiverId, token);
+            const res = await sendFriendRequestByUsername(username, token);
             if (res.error) {
                 setError(res.error);
             } else {
@@ -32,4 +32,6 @@ function AddFriendButton({ receiverId }) {
         </>
     );
 }
+
 export default AddFriendButton;
+

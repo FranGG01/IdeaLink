@@ -1,15 +1,26 @@
 const API = "http://127.0.0.1:5000/api";
 
-export async function sendFriendRequest(receiverId, token) {
-  return fetch(`${API}/friend-request`, {
+export async function sendFriendRequestByUsername(username, token) {
+  return fetch(`${API}/friend-request-by-username`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ receiver_id: receiverId }),
+    body: JSON.stringify({ receiver_username: username }),
   }).then((res) => res.json());
 }
+
+export async function deleteFriend(friendId, token) {
+  const res = await fetch(`/api/friend/${friendId}`, {
+      method: "DELETE",
+      headers: {
+          "Authorization": `Bearer ${token}`,
+      },
+  });
+  return res.json();
+}
+
 
 export async function respondFriendRequest(id, action, token) {
   return fetch(`${API}/friend-request/${id}`, {

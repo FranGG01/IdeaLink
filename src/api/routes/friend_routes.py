@@ -7,7 +7,7 @@ import os, logging
 
 friend_bp = Blueprint("friend_bp", __name__, url_prefix="/api")
 
-# ──────────────── Config Stream ────────────────
+# ──────────────── Config Stream ────────────────
 STREAM_API_KEY    = os.getenv("STREAM_API_KEY", "2pks7t76xeqd")
 STREAM_API_SECRET = os.getenv("STREAM_API_SECRET")            # export STREAM_API_SECRET=...
 if not STREAM_API_SECRET:
@@ -42,6 +42,7 @@ def send_request():
     db.session.commit()
     return jsonify({"message": "Solicitud enviada", "request_id": fr.id}), 201
 
+
 # ───────────────────── 2. Aceptar / rechazar ─────────────────────
 @friend_bp.route("/friend-request/<int:req_id>", methods=["POST"])
 @jwt_required()
@@ -64,6 +65,7 @@ def respond_request(req_id):
     db.session.commit()
     return jsonify({"message": f"Solicitud {action}ed"}), 200
 
+
 # ───────────────────── 3. Solicitudes pendientes ─────────────────────
 @friend_bp.route("/friend-requests", methods=["GET"])
 @jwt_required()
@@ -78,6 +80,7 @@ def pending_requests():
         } for fr in pendings
     ]), 200
 
+
 # ───────────────────── 4. Lista de amigos ─────────────────────
 @friend_bp.route("/friends", methods=["GET"])
 @jwt_required()
@@ -85,6 +88,7 @@ def list_friends():
     me = get_jwt_identity()
     user = User.query.get(me)
     return jsonify([u.serialize() for u in user.friends]), 200
+
 
 # ───────────────────── 5. Token + alta de usuarios en Stream ─────────────────────
 @friend_bp.route("/stream-token", methods=["POST"])
@@ -140,3 +144,62 @@ def stream_token():
         logging.exception("Error al conectar con Stream")
         print("EXCEPCION en /stream-token:", e)
         return jsonify({"error": "Error al conectar con Stream", "detail": str(e)}), 500
+
+
+# ───────────────────── 1b. Enviar solicitud por username ─────────────────────
+@friend_bp.route("/friend-request-by-username", methods=["POST"])
+@jwt_required()
+def send_request_by_username():
+    me = get_jwt_identity()
+    data = request.get_json() or {}
+    receiver_username = data.get("receiver_username")
+
+    if not receiver_username:
+        return jsonify({"error": "receiver_username requerido"}), 400
+
+    receiver = User.query.filter_by(username=receiver_username).first()
+    if not receiver:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+
+    if receiver.id == me:
+        return jsonify({"error": "No puedes enviarte solicitud"}), 400
+
+    exists = FriendRequest.query.filter(
+        or_(
+            (FriendRequest.sender_id == me) & (FriendRequest.receiver_id == receiver.id),
+            (FriendRequest.sender_id == receiver.id) & (FriendRequest.receiver_id == me),
+        )
+    ).first()
+    if exists:
+        return jsonify({"error": "Ya existe solicitud o amistad"}), 400
+
+    fr = FriendRequest(sender_id=me, receiver_id=receiver.id)
+    db.session.add(fr)
+    db.session.commit()
+    return jsonify({"message": "Solicitud enviada", "request_id": fr.id}), 201
+
+
+# ───────────────────── 6. Eliminar amigo ─────────────────────
+@friend_bp.route("/friend/<int:friend_id>", methods=["DELETE"])
+@jwt_required()
+def delete_friend(friend_id):
+    me = get_jwt_identity()
+
+    # Buscar solicitud de amistad aceptada en cualquier dirección
+    fr = FriendRequest.query.filter(
+        or_(
+            (FriendRequest.sender_id == me) & (FriendRequest.receiver_id == friend_id),
+            (FriendRequest.sender_id == friend_id) & (FriendRequest.receiver_id == me),
+        ),
+        FriendRequest.status == "accepted"
+    ).first()
+
+    if not fr:
+        return jsonify({"error": "Amistad no encontrada"}), 404
+
+    db.session.delete(fr)
+    db.session.commit()
+    return jsonify({"message": "Amistad eliminada"}), 200
+
+
+
