@@ -38,7 +38,7 @@ export default function LogoBombilla() {
                         key="bombilla"
                         src={Bombilla}
                         alt="Logo"
-                        className="w-full h-full object-contain"
+                        className="w-[200px] h-[150px] object-cover pb-22 "
                         initial={{ scale: 1 }}
                         animate={{ scale: 1 }}
                         exit={{ scale: 0, opacity: 0, rotate: 90 }}
