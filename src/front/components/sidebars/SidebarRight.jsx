@@ -107,7 +107,7 @@ export default function SidebarRight() {
                       e.stopPropagation();
                       handleDeleteFriend(u.id);
                     }}
-                    className="text-red-500 text-sm opacity-0 group-hover:opacity-100 transition"
+                    className="text-red-500 text-sm opacity-0 group-hover:opacity-100 transition cursor-pointer"
                     title="Eliminar amigo"
                   >
                     🗑️

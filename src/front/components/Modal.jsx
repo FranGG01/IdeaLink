@@ -91,7 +91,7 @@ export default function Modal1() {
             >
                 <DialogHeader className="flex justify-between items-center">
                     <Typography variant="h6">Crea tu idea</Typography>
-                    <Button className="text-white" variant="text" size="sm" onClick={() => setOpen(false)}>
+                    <Button className="text-white cursor-pointer" variant="text" size="sm" onClick={() => setOpen(false)}>
                         ✕
                     </Button>
                 </DialogHeader>
@@ -150,7 +150,7 @@ export default function Modal1() {
                     </div>
 
                     <div className="flex flex-col space-y-1.5">
-                        <label htmlFor="stackblitz_url" className="text-sm font-semibold">Pega aquí la URL final de StackBlitz</label>
+                        <label htmlFor="stackblitz_url" className="text-sm font-semibold ">Pega aquí la URL final de StackBlitz</label>
                         <Input
                             id="stackblitz_url"
                             name="stackblitz_url"
@@ -166,14 +166,14 @@ export default function Modal1() {
                     <Button
                         variant="outlined"
                         onClick={handleSubmit}
-                        className="rounded-md border-gray-500 text-gray-500 mr-2"
+                        className="rounded-md border-gray-500 text-gray-500 mr-2 cursor-pointer"
                     >
                         Abrir StackBlitz
                     </Button>
                     <Button
                         variant="filled"
                         onClick={handleFinalSubmit}
-                        className="rounded-md bg-purple-700 py-2 px-4 text-white text-sm shadow-sm hover:bg-purple-800"
+                        className="rounded-md bg-purple-700 py-2 px-4 text-white text-sm shadow-sm hover:bg-purple-800 cursor-pointer"
                     >
                         Guardar Proyecto
                     </Button>
