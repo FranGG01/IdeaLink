@@ -14,21 +14,42 @@ def get_project(id):
     return jsonify(project.serialize()), 200
 
 @project_api.route('/projects', methods=['POST'])
+@jwt_required()
 def create_project():
-    data = request.get_json()
+    from flask import current_app
+    import os  # Asegúrate de tenerlo
+
+    user_id = get_jwt_identity()
+    title = request.form.get('title')
+    description = request.form.get('description')
+    hashtags = request.form.get('hashtags')
+    stackblitz_url = request.form.get('stackblitz_url')
+    image = request.files.get('image_file')
+
+    image_url = None
+    if image:
+        filename = image.filename
+        save_path = os.path.join("src", "static", "uploads", filename)
+        image.save(save_path)
+        image_url = f"/static/uploads/{filename}"
+
     project = Project(
-        title = data['title'],
-        description = data['description'],
-        image_url = data.get('image_url'),
-        hashtags = data.get('hashtags'),
-        is_accepting_applications=data.get('is_accepting_applications', True),
-        owner_id = data['owner_id'],
-        stackblitz_url = data.get('stackblitz_url'),
-        code_files=data.get('code_files')
+        title=title,
+        description=description,
+        hashtags=hashtags,
+        stackblitz_url=stackblitz_url,
+        image_url=image_url,
+        is_accepting_applications=True,
+        owner_id=user_id,
+        code_files=None
     )
+
     db.session.add(project)
     db.session.commit()
+
     return jsonify(project.serialize()), 200
+
+
 
 
 @project_api.route('/projects/<int:id>', methods=['PUT'])

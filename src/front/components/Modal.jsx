@@ -4,19 +4,20 @@ import {
 } from "@material-tailwind/react";
 import { useState } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer";
-import { createProject } from "../store";
 import sdk from "@stackblitz/sdk";
 
 export default function Modal1() {
     const [open, setOpen] = useState(false);
     const { store, dispatch } = useGlobalReducer();
+    const [imagePreview, setImagePreview] = useState(null);
+
     const user = store.user;
 
     const [formData, setFormData] = useState({
         title: "",
         description: "",
         hashtags: "",
-        image_url: "",
+        image_file: null,
         stackblitz_url: ""
     });
 
@@ -63,9 +64,36 @@ export default function Modal1() {
 
     const handleFinalSubmit = async () => {
         try {
-            const newProject = await createProject(formData, user);
+            const formDataToSend = new FormData();
+            formDataToSend.append("title", formData.title);
+            formDataToSend.append("description", formData.description);
+            formDataToSend.append("hashtags", formData.hashtags);
+            formDataToSend.append("stackblitz_url", formData.stackblitz_url);
+            formDataToSend.append("image_file", formData.image_file);
+
+            const token = localStorage.getItem("jwt-token");
+
+            const response = await fetch("http://127.0.0.1:5000/api/projects", {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                body: formDataToSend
+            });
+
+            if (!response.ok) throw new Error("Error al crear proyecto");
+
+            const newProject = await response.json();
             dispatch({ type: "add_project", payload: newProject });
-            setFormData({ title: "", description: "", hashtags: "", image_url: "", stackblitz_url: "" });
+
+            setFormData({
+                title: "",
+                description: "",
+                hashtags: "",
+                image_file: null,
+                stackblitz_url: ""
+            });
+            setImagePreview(null);
             setOpen(false);
         } catch (err) {
             console.error("Error al guardar proyecto:", err);
@@ -91,7 +119,7 @@ export default function Modal1() {
             >
                 <DialogHeader className="flex justify-between items-center">
                     <Typography variant="h6">Crea tu idea</Typography>
-                    <Button className="text-white" variant="text" size="sm" onClick={() => setOpen(false)}>
+                    <Button className="text-white cursor-pointer" variant="text" size="sm" onClick={() => setOpen(false)}>
                         ✕
                     </Button>
                 </DialogHeader>
@@ -138,18 +166,6 @@ export default function Modal1() {
                     </div>
 
                     <div className="flex flex-col space-y-1.5">
-                        <label htmlFor="image_url" className="text-sm font-semibold">URL de imagen</label>
-                        <Input
-                            id="image_url"
-                            name="image_url"
-                            value={formData.image_url}
-                            onChange={handleChange}
-                            className="rounded-md"
-                            placeholder="https://example.com/imagen.jpg"
-                        />
-                    </div>
-
-                    <div className="flex flex-col space-y-1.5">
                         <label htmlFor="stackblitz_url" className="text-sm font-semibold">Pega aquí la URL final de StackBlitz</label>
                         <Input
                             id="stackblitz_url"
@@ -160,20 +176,43 @@ export default function Modal1() {
                             placeholder="https://stackblitz.com/edit/..."
                         />
                     </div>
+
+                    <div className="flex flex-col space-y-2">
+                        <label htmlFor="image_file" className="text-sm font-semibold">Subir imagen</label>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                                const file = e.target.files[0];
+                                if (file) {
+                                    setFormData({ ...formData, image_file: file });
+                                    setImagePreview(URL.createObjectURL(file));
+                                }
+                            }}
+                            className="text-sm text-white file:bg-purple-600 file:text-white file:border-none file:px-3 file:py-1 file:rounded-md file:cursor-pointer"
+                        />
+                        {imagePreview && (
+                            <img
+                                src={imagePreview}
+                                alt="Preview"
+                                className="w-32 h-32 object-cover rounded-lg border border-gray-400"
+                            />
+                        )}
+                    </div>
                 </DialogBody>
 
                 <DialogFooter>
                     <Button
                         variant="outlined"
                         onClick={handleSubmit}
-                        className="rounded-md border-gray-500 text-gray-500 mr-2"
+                        className="rounded-md border-gray-500 text-gray-500 mr-2 cursor-pointer"
                     >
                         Abrir StackBlitz
                     </Button>
                     <Button
                         variant="filled"
                         onClick={handleFinalSubmit}
-                        className="rounded-md bg-purple-700 py-2 px-4 text-white text-sm shadow-sm hover:bg-purple-800"
+                        className="rounded-md bg-purple-700 py-2 px-4 text-white text-sm shadow-sm hover:bg-purple-800 cursor-pointer"
                     >
                         Guardar Proyecto
                     </Button>

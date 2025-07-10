@@ -18,7 +18,7 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from stream_chat import StreamChat
 from api.routes.friend_routes import friend_bp   # ← ahora ya es seguro importarlo
-
+from flask import send_from_directory
 
 STREAM_API_KEY = os.getenv("STREAM_API_KEY", "2pks7t76xeqd")
 STREAM_API_SECRET = os.getenv("STREAM_API_SECRET", "egfuhcyva6qbngb29zun8ru46v5ruaq7xy2kbfqse885vbfsrs7chgk42pnse5y5")  
@@ -92,6 +92,10 @@ def serve_any_other_file(path):
     response.cache_control.max_age = 0  # avoid cache memory
     return response
 
+@app.route('/static/uploads/<path:filename>')
+def uploaded_file(filename):
+    uploads_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'uploads')
+    return send_from_directory(uploads_dir, filename)
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':

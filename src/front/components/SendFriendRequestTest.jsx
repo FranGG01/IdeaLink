@@ -52,7 +52,7 @@ function AddFriendByUsername() {
             {!showInput ? (
                 <button
                     onClick={() => setShowInput(true)}
-                    className="bg-purple-600 px-4 py-2 rounded hover:bg-purple-700"
+                    className="bg-purple-600 px-4 py-2 rounded hover:bg-purple-700 cursor-pointer"
                 >
                     Agregar amigo por username
                 </button>
