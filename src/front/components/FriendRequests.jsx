@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { sendFriendRequest, respondFriendRequest, getPendingRequests } from "../../api/routes/friendService";
+import { sendFriendRequestByUsername, respondFriendRequest, getPendingRequests } from "../../api/routes/friendService";
 
 export default function FriendRequests() {
     const [requests, setRequests] = useState([]);
@@ -40,10 +40,10 @@ export default function FriendRequests() {
     if (requests.length === 0) return <p>No tienes solicitudes pendientes.</p>;
 
     return (
-        <div className="bg-gray-800 text-white p-4 rounded-lg max-w-md mx-auto">
+        <div className="bg-gray-800 text-white p-4 rounded-lg max-w-md mx-auto flex-wrap">
             <h3 className="text-xl font-bold mb-4">Solicitudes de amistad pendientes</h3>
             {requests.map((req) => (
-                <div key={req.id} className="flex justify-between items-center border-b border-gray-600 py-2">
+                <div key={req.id} className="flex-wrap justify-between items-center border-b border-gray-600 py-2 ">
                     <div className="flex items-center space-x-2">
                         <img
                             src={req.sender.avatar_url || `https://ui-avatars.com/api/?name=${req.sender.username}`}
@@ -52,7 +52,7 @@ export default function FriendRequests() {
                         />
                         <span>{req.sender.username || req.sender.email || "Usuario"}</span>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 mt-3">
                         <button
                             onClick={() => handleResponse(req.id, "accept")}
                             className="bg-green-600 px-3 py-1 rounded hover:bg-green-700"
