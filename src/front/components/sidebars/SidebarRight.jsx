@@ -57,7 +57,16 @@ export default function SidebarRight() {
   return (
     <>
       <aside className="chat_sidebar w-full sm:w-[300px] bg-[#1e293b] p-2 text-white border border-gray-500 max-h-[360px] overflow-y-auto rounded-md hidden xl:block">
-        <FriendRequests />
+        <FriendRequests
+          onFriendAccepted={(newFriend) => {
+            // Solo agregamos si no está ya en la lista (evita duplicados)
+            setFriends((prev) =>
+              prev.some((f) => f.id === newFriend.id)
+                ? prev
+                : [...prev, newFriend]
+            );
+          }}
+        />
 
         <div className="space-y-4 text-sm mt-4">
           {friends.length === 0 && <p>No tienes amigos aún</p>}
@@ -96,10 +105,10 @@ export default function SidebarRight() {
                 <div className="flex items-center gap-2">
                   <span
                     className={`w-2 h-2 rounded-full ${idx === 0
-                      ? "bg-green-400"
-                      : idx === 1
-                        ? "bg-yellow-400"
-                        : "bg-gray-400"
+                        ? "bg-green-400"
+                        : idx === 1
+                          ? "bg-yellow-400"
+                          : "bg-gray-400"
                       }`}
                   />
                   <button
@@ -135,4 +144,5 @@ export default function SidebarRight() {
     </>
   );
 }
+
 

@@ -56,6 +56,35 @@ export function StoreProvider({ children }) {
         // No desconectamos para mantener sesión activa
     }, [store.user]);
 
+    // Agregado: pedir permiso y escuchar mensajes nuevos globalmente para notificaciones
+    useEffect(() => {
+        if (!ready) return;
+
+        if ("Notification" in window && Notification.permission !== "granted") {
+            Notification.requestPermission();
+        }
+
+        const handleNewMessage = (event) => {
+            const message = event.message;
+            if (String(message.user.id) === String(store.user.id)) {
+                // Mensaje propio, no notifico
+                return;
+            }
+
+            if (Notification.permission === "granted") {
+                new Notification(message.user.name || message.user.id, {
+                    body: message.text,
+                });
+            }
+        };
+
+        client.on("message.new", handleNewMessage);
+
+        return () => {
+            client.off("message.new", handleNewMessage);
+        };
+    }, [ready, store.user]);
+
     return (
         <StoreContext.Provider value={{ store, dispatch, client, ready }}>
             {children}

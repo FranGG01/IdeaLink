@@ -184,8 +184,8 @@ def send_request_by_username():
 @jwt_required()
 def delete_friend(friend_id):
     me = get_jwt_identity()
+    print(f"Intentando eliminar amistad entre {me} y {friend_id}")
 
-    # Buscar solicitud de amistad aceptada en cualquier dirección
     fr = FriendRequest.query.filter(
         or_(
             (FriendRequest.sender_id == me) & (FriendRequest.receiver_id == friend_id),
@@ -195,11 +195,14 @@ def delete_friend(friend_id):
     ).first()
 
     if not fr:
+        print("No se encontró amistad aceptada")
         return jsonify({"error": "Amistad no encontrada"}), 404
 
+    print(f"Eliminando amistad con id de solicitud: {fr.id}")
     db.session.delete(fr)
     db.session.commit()
     return jsonify({"message": "Amistad eliminada"}), 200
+
 
 
 
