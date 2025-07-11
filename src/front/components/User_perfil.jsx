@@ -8,6 +8,8 @@ const User_perfil = () => {
     const user = store.user;
 
     const [userProjects, setUserProjects] = useState([]);
+    const [favorites, setFavorites] = useState([]);
+    const [activeTab, setActiveTab] = useState("projects");
     const [editMode, setEditMode] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -21,7 +23,6 @@ const User_perfil = () => {
         banner_url: user?.banner_url || "",
     });
 
-    // Función para obtener proyectos del usuario (mejorada con manejo de errores)
     const fetchUserProjects = useCallback(async () => {
         const token = localStorage.getItem("jwt-token");
         setLoading(true);
@@ -34,9 +35,7 @@ const User_perfil = () => {
                 },
             });
 
-            if (!res.ok) {
-                throw new Error(`Error ${res.status}: ${res.statusText}`);
-            }
+            if (!res.ok) throw new Error(`Error ${res.status}: ${res.statusText}`);
 
             const data = await res.json();
             setUserProjects(data);
@@ -48,33 +47,50 @@ const User_perfil = () => {
         }
     }, []);
 
-    useEffect(() => {
-        fetchUserProjects();
-    }, [fetchUserProjects]);
+    const fetchFavorites = useCallback(async () => {
+        const token = localStorage.getItem("jwt-token");
+        try {
+            const res = await fetch("http://127.0.0.1:5000/api/my-favorites", {
+                headers: { Authorization: `Bearer ${token}` },
+            });
 
-    // Función para manejar cambios en los campos del formulario
-    const handleInputChange = useCallback((field, value) => {
-        setFormData(prev => ({
-            ...prev,
-            [field]: value
-        }));
+            if (!res.ok) throw new Error("Error al cargar favoritos");
+
+            const data = await res.json();
+            setFavorites(data);
+        } catch (err) {
+            console.error("❌ Error al cargar favoritos:", err);
+            setFavorites([]);
+        }
     }, []);
 
-    // Función para manejar la carga de archivos del avatar
+    useEffect(() => {
+        fetchUserProjects();
+        fetchFavorites();
+    }, [fetchUserProjects, fetchFavorites]);
+
+    const handleInputChange = useCallback((field, value) => {
+        setFormData(prev => ({ ...prev, [field]: value }));
+    }, []);
+
     const handleFileUpload = useCallback((file) => {
         if (!file) return;
-
         const reader = new FileReader();
         reader.onloadend = () => {
-            setFormData(prev => ({
-                ...prev,
-                avatar_url: reader.result
-            }));
+            setFormData(prev => ({ ...prev, avatar_url: reader.result }));
         };
         reader.readAsDataURL(file);
     }, []);
 
-    // Función para guardar cambios del perfil (idéntica a la original)
+    const handleBannerUpload = useCallback((file) => {
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setFormData(prev => ({ ...prev, banner_url: reader.result }));
+        };
+        reader.readAsDataURL(file);
+    }, []);
+
     const handleSaveProfile = useCallback(async () => {
         const token = localStorage.getItem("jwt-token");
         setLoading(true);
@@ -85,7 +101,7 @@ const User_perfil = () => {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`,
+                    Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(formData),
             });
@@ -105,7 +121,6 @@ const User_perfil = () => {
         }
     }, [formData, dispatch]);
 
-    // Función para cancelar la edición
     const handleCancelEdit = useCallback(() => {
         setEditMode(false);
         setError(null);
@@ -119,23 +134,8 @@ const User_perfil = () => {
         });
     }, [user]);
 
-    // Validación básica del formulario
-    const isFormValid = useMemo(() => {
-        return formData.username.trim().length > 0;
-    }, [formData.username]);
+    const isFormValid = useMemo(() => formData.username.trim().length > 0, [formData.username]);
 
-    const handleBannerUpload = useCallback((file) => {
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setFormData(prev => ({
-                ...prev,
-                banner_url: reader.result
-            }));
-        };
-        reader.readAsDataURL(file);
-    }, []);
     return (
         <>
             <div className="flex flex-col items-center bg-[#1e293b] text-white p-6 rounded-2xl w-full max-w-4xl mx-auto">
@@ -337,9 +337,20 @@ const User_perfil = () => {
                 </div>
             )}
 
+
             <div className="flex gap-6 mt-6 border-b border-gray-700 w-full px-6">
-                <button className="pb-2 border-b-2 border-white">Mis Ideas</button>
-                <button className="pb-2 text-gray-400 hover:text-white">Favoritos</button>
+                <button
+                    className={`pb-2 ${activeTab === "projects" ? "border-b-2 border-white text-white" : "text-gray-400 hover:text-white"}, cursor-pointer`}
+                    onClick={() => setActiveTab("projects")}
+                >
+                    Mis Ideas
+                </button>
+                <button
+                    className={`pb-2 ${activeTab === "favorites" ? "border-b-2 border-white text-white" : "text-gray-400 hover:text-white"},cursor-pointer`}
+                    onClick={() => setActiveTab("favorites")}
+                >
+                    Favoritos
+                </button>
             </div>
 
             <div className="mt-8 space-y-4 px-4 flex flex-col items-center">
@@ -355,12 +366,22 @@ const User_perfil = () => {
                             Reintentar
                         </button>
                     </div>
-                ) : userProjects.length === 0 ? (
-                    <p className="text-white">Aún no tienes proyectos publicados.</p>
+                ) : activeTab === "projects" ? (
+                    userProjects.length === 0 ? (
+                        <p className="text-white">Aún no tienes proyectos publicados.</p>
+                    ) : (
+                        userProjects.map((project, index) => (
+                            <Tarjeta key={index} project={project} />
+                        ))
+                    )
                 ) : (
-                    userProjects.map((project, index) => (
-                        <Tarjeta key={index} project={project} />
-                    ))
+                    favorites.length === 0 ? (
+                        <p className="text-white">No tienes proyectos marcados como favoritos.</p>
+                    ) : (
+                        favorites.map((project, index) => (
+                            <Tarjeta key={index} project={project} />
+                        ))
+                    )
                 )}
             </div>
         </>

@@ -1,13 +1,23 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import String, Boolean, Text,ForeignKey, DateTime
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy import String, Boolean, Text, ForeignKey, DateTime, UniqueConstraint, JSON
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import datetime
-from sqlalchemy.orm import relationship
-from sqlalchemy import UniqueConstraint
-from sqlalchemy import JSON
 
 db = SQLAlchemy()
 
+# 🔁 Relación de favoritos (muchos a muchos)
+favorites = db.Table(
+    'favorites',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+    db.Column('project_id', db.Integer, db.ForeignKey('project.id'), primary_key=True)
+)
+
+# 🔁 Relación de colaboradores (muchos a muchos)
+project_collaborators = db.Table(
+    'project_collaborators',
+    db.Column('project_id', db.Integer, db.ForeignKey('project.id'), primary_key=True),
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True)
+)
 
 
 class FriendRequest(db.Model):
@@ -38,15 +48,16 @@ class User(db.Model):
     sent_requests = relationship("FriendRequest", foreign_keys=[FriendRequest.sender_id], back_populates="sender", lazy="dynamic")
     received_requests = relationship("FriendRequest", foreign_keys=[FriendRequest.receiver_id], back_populates="receiver", lazy="dynamic")
 
+    # ✅ Favoritos
+    favorite_projects = db.relationship("Project", secondary=favorites, backref="favorited_by")
+
     @property
     def friends(self):
         # Amigos que enviaron solicitud aceptada
         sent = FriendRequest.query.filter_by(sender_id=self.id, status='accepted').all()
         # Amigos que recibieron solicitud aceptada
         received = FriendRequest.query.filter_by(receiver_id=self.id, status='accepted').all()
-        # Lista combinada de usuarios amigos
-        friends_list = [fr.receiver for fr in sent] + [fr.sender for fr in received]
-        return friends_list
+        return [fr.receiver for fr in sent] + [fr.sender for fr in received]
 
     def serialize(self):
         return {
@@ -60,66 +71,65 @@ class User(db.Model):
             "bio": self.bio
         }
 
-        
-
-
-project_collaborators = db.Table(
-    'project_collaborators',
-    db.Column('project_id', db.Integer, db.ForeignKey('project.id'), primary_key=True),
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True)
-)
 
 class Project(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(String(120), nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=False)
-    image_url:Mapped[str] = mapped_column(String(255), nullable=True)
-    hashtags:Mapped[str] = mapped_column(String(255), nullable=True)
-    is_accepting_applications:Mapped[bool] = mapped_column(default=True)
+    image_url: Mapped[str] = mapped_column(String(255), nullable=True)
+    hashtags: Mapped[str] = mapped_column(String(255), nullable=True)
+    is_accepting_applications: Mapped[bool] = mapped_column(default=True)
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
-    owner_id: Mapped[int] = mapped_column(ForeignKey('user.id'),nullable=False)
+    owner_id: Mapped[int] = mapped_column(ForeignKey('user.id'), nullable=False)
     owner = relationship("User")
 
-    collaborators = db.relationship('User', secondary='project_collaborators')
+    # Relaciones
+    collaborators = db.relationship('User', secondary=project_collaborators)
     stackblitz_url = db.Column(db.String, nullable=True)
     code_files: Mapped[dict] = mapped_column(JSON, nullable=True)
 
-    def serialize(self):
-        return{
-            'id':self.id,
-            'title':self.title,
-            'description':self.description,
-            'image_url':self.image_url,
-            'hashtags':self.hashtags,
-            'is_accepting_applications':self.is_accepting_applications,
-            'created_at':self.created_at.isoformat(),
-            'owner_id':self.owner_id,
+    def serialize(self, current_user_id=None):
+        is_favorite = False
+        if current_user_id:
+            is_favorite = any(user.id == current_user_id for user in self.favorited_by)
+
+        return {
+            'id': self.id,
+            'title': self.title,
+            'description': self.description,
+            'image_url': self.image_url,
+            'hashtags': self.hashtags,
+            'is_accepting_applications': self.is_accepting_applications,
+            'created_at': self.created_at.isoformat(),
+            'owner_id': self.owner_id,
             'stackblitz_url': self.stackblitz_url,
             'code_files': self.code_files,
-            "owner": {
-            "username": getattr(self.owner, "username", "Anónimo"),
-            "avatar_url": getattr(self.owner, "avatar_url", "https://ui-avatars.com/api/?name=User")
+            'is_favorite': is_favorite,
+            'owner': {
+                'username': getattr(self.owner, "username", "Anónimo"),
+                'avatar_url': getattr(self.owner, "avatar_url", "https://ui-avatars.com/api/?name=User")
+            }
         }
-        }
-    
-    
+
+
 class Postularse(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     message: Mapped[str] = mapped_column(Text, nullable=True)
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
-    
+
     user_id: Mapped[int] = mapped_column(ForeignKey('user.id'), nullable=False)
     project_id: Mapped[int] = mapped_column(ForeignKey('project.id'), nullable=False)
     user = relationship("User")
     project = relationship("Project")
+
     def serialize(self):
-        return{
-            'id':self.id,
-            'message':self.message,
-            'created_at':self.created_at.isoformat(),
-            'user_id':self.user_id,
-            'project_id':self.project_id,
-             'user': {
+        return {
+            'id': self.id,
+            'message': self.message,
+            'created_at': self.created_at.isoformat(),
+            'user_id': self.user_id,
+            'project_id': self.project_id,
+            'user': {
                 'username': getattr(self.user, "username", "Anónimo"),
                 'avatar_url': getattr(self.user, "avatar_url", "https://ui-avatars.com/api/?name=User")
             }
