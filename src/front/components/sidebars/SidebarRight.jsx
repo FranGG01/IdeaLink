@@ -69,6 +69,7 @@ export default function SidebarRight() {
         />
 
         <div className="space-y-4 text-sm mt-4">
+          <h1 className="text-md font-bold mb-4">Amigos</h1>
           {friends.length === 0 && <p>No tienes amigos aún</p>}
           {friends.map((u, idx) => (
             <div key={u.id}>
@@ -105,10 +106,10 @@ export default function SidebarRight() {
                 <div className="flex items-center gap-2">
                   <span
                     className={`w-2 h-2 rounded-full ${idx === 0
-                        ? "bg-green-400"
-                        : idx === 1
-                          ? "bg-yellow-400"
-                          : "bg-gray-400"
+                      ? "bg-green-400"
+                      : idx === 1
+                        ? "bg-yellow-400"
+                        : "bg-gray-400"
                       }`}
                   />
                   <button

@@ -1,0 +1,494 @@
+/* Contenedor principal */
+.tarjeta-container {
+    position: relative;
+    width: 100%;
+    max-width: 48rem;
+}
+
+/* Efecto de aura exterior */
+.tarjeta-aura {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #ec4899, #8b5cf6, #06b6d4);
+    border-radius: 1rem;
+    filter: blur(4px);
+    opacity: 0.2;
+    transition: opacity 0.5s ease;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.tarjeta-container:hover .tarjeta-aura {
+    opacity: 0.4;
+}
+
+/* Partículas flotantes */
+.tarjeta-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    border-radius: 1rem;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: bounce 2s infinite;
+}
+
+.particle-1 {
+    top: 25%;
+    left: 25%;
+    width: 8px;
+    height: 8px;
+    background-color: #a855f7;
+    opacity: 0.3;
+    animation-delay: 0s;
+}
+
+.particle-2 {
+    top: 50%;
+    right: 25%;
+    width: 4px;
+    height: 4px;
+    background-color: #06b6d4;
+    opacity: 0.4;
+    animation-delay: 1s;
+}
+
+.particle-3 {
+    bottom: 25%;
+    left: 33%;
+    width: 6px;
+    height: 6px;
+    background-color: #ec4899;
+    opacity: 0.25;
+    animation-delay: 2s;
+}
+
+/* Tarjeta principal */
+.tarjeta-card {
+    position: relative;
+    width: 100%;
+    background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a) !important;
+    color: white !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+    border: none !important;
+    backdrop-filter: blur(16px);
+    transition: all 0.7s ease-out;
+    overflow: hidden;
+    border-radius: 1rem !important;
+}
+
+.tarjeta-container:hover .tarjeta-card {
+    transform: scale(1.02);
+    box-shadow: 0 25px 50px -12px rgba(236, 72, 153, 0.2) !important;
+}
+
+/* Brillo superior */
+.tarjeta-top-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #8b5cf6, transparent);
+    opacity: 0.6;
+}
+
+/* Patrón de fondo */
+.tarjeta-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.05;
+    background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0);
+    background-size: 20px 20px;
+}
+
+/* Header */
+.tarjeta-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    background: transparent !important;
+    padding: 1.5rem 1.5rem 0 1.5rem !important;
+}
+
+.tarjeta-user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.tarjeta-avatar-container {
+    position: relative;
+}
+
+.tarjeta-avatar-aura {
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    background: linear-gradient(45deg, #8b5cf6, #ec4899);
+    border-radius: 50%;
+    filter: blur(4px);
+    opacity: 0.3;
+    transition: opacity 0.5s ease;
+}
+
+.tarjeta-container:hover .tarjeta-avatar-aura {
+    opacity: 0.6;
+}
+
+.tarjeta-avatar {
+    position: relative;
+    width: 3rem !important;
+    height: 3rem !important;
+    border-radius: 50% !important;
+    border: 2px solid rgba(168, 85, 247, 0.5) !important;
+    transition: all 0.3s ease !important;
+}
+
+.tarjeta-avatar:hover {
+    border-color: #a855f7 !important;
+    transform: scale(1.1);
+}
+
+.tarjeta-status-indicator {
+    position: absolute;
+    bottom: -4px;
+    right: -4px;
+    width: 1rem;
+    height: 1rem;
+    background-color: #10b981;
+    border-radius: 50%;
+    border: 2px solid #0f172a;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.tarjeta-username {
+    font-weight: 600 !important;
+    color: white !important;
+    background: linear-gradient(45deg, white, #ddd6fe) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+}
+
+.tarjeta-status {
+    color: #94a3b8 !important;
+    font-size: 0.75rem !important;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.tarjeta-online-dot {
+    width: 4px;
+    height: 4px;
+    background-color: #10b981;
+    border-radius: 50%;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Hashtags */
+.tarjeta-hashtags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.tarjeta-hashtag {
+    position: relative;
+    border-radius: 9999px;
+    background: linear-gradient(45deg, #7c3aed, #db2777, #2563eb);
+    color: white;
+    font-size: 0.75rem;
+    padding: 0.375rem 0.75rem;
+    font-weight: 500;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.tarjeta-hashtag:hover {
+    transform: scale(1.1);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.tarjeta-hashtag-shine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.tarjeta-hashtag:hover .tarjeta-hashtag-shine {
+    transform: translateX(100%);
+}
+
+.tarjeta-hashtag-text {
+    position: relative;
+    z-index: 10;
+}
+
+/* Body */
+.tarjeta-body {
+    text-align: left;
+    padding: 1rem 1.5rem !important;
+    position: relative;
+    z-index: 10;
+}
+
+.tarjeta-description {
+    font-size: 1rem;
+    color: #f1f5f9;
+    line-height: 1.625;
+    margin-bottom: 1rem;
+    font-weight: 300;
+    transition: color 0.3s ease;
+}
+
+.tarjeta-description:hover {
+    color: white;
+}
+
+/* Imagen */
+.tarjeta-image-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.tarjeta-image-frame {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #8b5cf6, #ec4899);
+    border-radius: 0.75rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.tarjeta-image-container:hover .tarjeta-image-frame {
+    opacity: 0.6;
+}
+
+.tarjeta-image {
+    position: relative;
+    width: 100%;
+    max-height: 280px;
+    object-fit: cover;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: all 0.5s ease-out;
+}
+
+.tarjeta-image-container:hover .tarjeta-image {
+    transform: scale(1.05);
+}
+
+.tarjeta-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent, rgba(139, 92, 246, 0.1));
+    border-radius: 0.75rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.tarjeta-image-container:hover .tarjeta-image-overlay {
+    opacity: 1;
+}
+
+/* Partículas de imagen */
+.tarjeta-image-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.tarjeta-image-container:hover .tarjeta-image-particles {
+    opacity: 1;
+}
+
+.image-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background-color: white;
+    border-radius: 50%;
+    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.image-particle-1 {
+    top: 25%;
+    left: 25%;
+    animation-delay: 0.5s;
+}
+
+.image-particle-2 {
+    top: 75%;
+    right: 33%;
+    background-color: #a855f7;
+    animation-delay: 1s;
+}
+
+.image-particle-3 {
+    bottom: 25%;
+    left: 66%;
+    background-color: #ec4899;
+    animation-delay: 1.5s;
+}
+
+/* Footer */
+.tarjeta-footer {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 1rem 1.5rem !important;
+    border-top: 1px solid rgba(71, 85, 105, 0.5) !important;
+    background: rgba(30, 41, 59, 0.3) !important;
+    backdrop-filter: blur(8px);
+}
+
+.tarjeta-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.tarjeta-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #94a3b8;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.tarjeta-action-btn:hover {
+    transform: scale(1.1);
+}
+
+.tarjeta-like-btn:hover {
+    color: #ec4899;
+}
+
+.tarjeta-like-btn:hover .tarjeta-icon {
+    animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.tarjeta-comment-btn:hover {
+    color: #06b6d4;
+}
+
+.tarjeta-comment-btn:hover .tarjeta-icon {
+    animation: bounce 1s infinite;
+}
+
+.tarjeta-share-btn:hover {
+    color: #8b5cf6;
+}
+
+.tarjeta-share-btn:hover .tarjeta-icon {
+    animation: spin 1s linear infinite;
+}
+
+.tarjeta-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.tarjeta-count {
+    font-weight: 500;
+}
+
+.tarjeta-like-count {
+    background: linear-gradient(45deg, #ec4899, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.tarjeta-comment-count {
+    background: linear-gradient(45deg, #06b6d4, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.tarjeta-modal-container {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Animaciones */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+        animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    50% {
+        transform: translateY(-25%);
+        animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+}
+
+@keyframes ping {
+    75%, 100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

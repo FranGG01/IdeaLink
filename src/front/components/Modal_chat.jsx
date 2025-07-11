@@ -22,7 +22,7 @@ export default function ModalChat({ open, onClose, friend }) {
                 size="sm"
                 color="blue-gray"
                 onClick={onClose}
-                className="!absolute top-2 right-2 bg-gray-700 text-white z-50"
+                className="!absolute top-2 right-2 bg-gray-700 text-white z-50 cursor-pointer"
             >
                 ✕
             </IconButton>
