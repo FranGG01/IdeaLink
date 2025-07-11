@@ -63,7 +63,7 @@ export default function Login() {
           />
           <button
             type="submit"
-            className="w-full rounded-md bg-purple-600 py-1.5 font-semibold hover:bg-purple-500"
+            className="w-full rounded-md bg-purple-600 py-1.5 font-semibold hover:bg-purple-500 cursor-pointer"
           >
             Iniciar sesión
           </button>
