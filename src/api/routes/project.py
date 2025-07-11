@@ -18,7 +18,7 @@ def get_project(id):
 @jwt_required()
 def create_project():
     from flask import current_app
-    import os  # Asegúrate de tenerlo
+    import os  
 
     user_id = get_jwt_identity()
     title = request.form.get('title')

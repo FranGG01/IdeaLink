@@ -20,6 +20,7 @@ from stream_chat import StreamChat
 from api.routes.friend_routes import friend_bp  
 from api.routes.ia_routes import ia_bp            
 from flask import send_from_directory
+from api.routes.favorites_routes import favorites_bp
 
 STREAM_API_KEY = os.getenv("STREAM_API_KEY", "2pks7t76xeqd")
 STREAM_API_SECRET = os.getenv("STREAM_API_SECRET", "egfuhcyva6qbngb29zun8ru46v5ruaq7xy2kbfqse885vbfsrs7chgk42pnse5y5")  
@@ -29,8 +30,8 @@ stream_client = StreamChat(api_key=STREAM_API_KEY, api_secret=STREAM_API_SECRET)
 app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = 'supersecreto123'
 jwt = JWTManager(app)
+CORS(app, supports_credentials=True, expose_headers=["Authorization"], allow_headers=["Content-Type", "Authorization"])
 
-CORS(app, supports_credentials=True)
 # Configura CORS para los orígenes que usas (añade los que necesites)
 CORS(app, origins=[
     "https://potential-chainsaw-97j7q96jxvv4cxx6v-3000.app.github.dev",
@@ -64,6 +65,7 @@ setup_commands(app)
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
 app.register_blueprint(friend_bp)
+app.register_blueprint(favorites_bp, url_prefix='/api')
 
 # Handle/serialize errors like a JSON object
 @app.errorhandler(Exception)
