@@ -54,7 +54,7 @@ const AIChatSidebar = () => {
     <div className="w-full h-full bg-[#1e1e2f] text-white flex flex-col rounded-xl overflow-hidden">
       {/* Header */}
       <div className="px-3 py-2 sm:px-4 sm:py-3 border-b border-gray-600/50 shrink-0">
-        <h3 className="text-base sm:text-lg font-semibold">Chat IA</h3>
+        <h3 className="text-base sm:text-lg font-semibold">IdeaGenie</h3>
       </div>
 
       {/* Messages Container */}
