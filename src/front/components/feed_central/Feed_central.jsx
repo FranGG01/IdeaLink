@@ -2,40 +2,56 @@ import Modal1 from '../Modal';
 import './Feed_central.css'
 import Tarjeta from './Tarjeta_feed'
 import useGlobalReducer from '../../hooks/useGlobalReducer';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const Feed_central = () => {
     const { store, dispatch } = useGlobalReducer();
+    const [userFavorites, setUserFavorites] = useState([]);
+
+    const fetchProjects = async () => {
+        const token = localStorage.getItem("jwt-token");
+        try {
+            const res = await fetch("http://127.0.0.1:5000/api/projects", {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            if (!res.ok) {
+                const errorText = await res.text();
+                console.error("❌ Error en proyectos:", errorText);
+                return;
+            }
+            const data = await res.json();
+            dispatch({ type: 'set_projects', payload: data });
+        } catch (err) {
+            console.error("❌ Error de red al obtener ideas:", err);
+        }
+    };
+
+    const fetchFavorites = async () => {
+        const token = localStorage.getItem("jwt-token");
+        try {
+            const res = await fetch("http://127.0.0.1:5000/api/my-favorites", {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+            const text = await res.text();
+
+            const data = JSON.parse(text);
+            setUserFavorites(data.map(fav => fav.id));
+        } catch (err) {
+            console.error("❌ Error de red al obtener favoritos:", err);
+        }
+    };
+
 
     useEffect(() => {
-        const fetchProjects = async () => {
-            const token = localStorage.getItem("jwt-token");
-
-            try {
-                const res = await fetch("http://127.0.0.1:5000/api/projects", {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`
-                    }
-                });
-
-                if (!res.ok) {
-                    const errorText = await res.text();
-                    console.error("❌ Error en proyectos:", errorText);
-                    return;
-                }
-
-                const data = await res.json();
-                dispatch({ type: 'set_projects', payload: data });
-            } catch (err) {
-                console.error("❌ Error de red al obtener ideas:", err);
-            }
-        };
-
         fetchProjects();
-    }, [dispatch]);
-
-
+        fetchFavorites();
+    }, []);
     return (
         <>
             <div className="w-full flex justify-center mt-2  ">
@@ -76,7 +92,14 @@ const Feed_central = () => {
 
             <div className="mt-4 px-4  flex flex-col items-center justify-center min-h-[calc(100vh-150px)] space-y-4 ocultar-scroll">
                 {store.projects && store.projects.map((project, index) => (
-                    <Tarjeta key={index} project={project} />
+                    <Tarjeta
+                        key={project.id}
+                        project={project}
+                        setUserFavorites={setUserFavorites}
+                        userFavorites={userFavorites}
+                    />
+
+
                 ))}
 
             </div>

@@ -13,6 +13,7 @@ const User_perfil = () => {
     const [editMode, setEditMode] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [favoriteIds, setFavoriteIds] = useState([]);
 
     const [formData, setFormData] = useState({
         username: user?.username || "",
@@ -58,6 +59,7 @@ const User_perfil = () => {
 
             const data = await res.json();
             setFavorites(data);
+            setFavoriteIds(data.map(p => p.id));
         } catch (err) {
             console.error("❌ Error al cargar favoritos:", err);
             setFavorites([]);
@@ -317,7 +319,6 @@ const User_perfil = () => {
                         </div>
                     </div>
 
-                    {/* Botones */}
                     <div className="flex justify-end gap-4 pt-4 border-t border-gray-700">
                         <button
                             onClick={handleCancelEdit}
@@ -370,17 +371,31 @@ const User_perfil = () => {
                     userProjects.length === 0 ? (
                         <p className="text-white">Aún no tienes proyectos publicados.</p>
                     ) : (
-                        userProjects.map((project, index) => (
-                            <Tarjeta key={index} project={project} />
+                        userProjects.map((project) => (
+                            <Tarjeta
+                                key={project.id}
+                                project={project}
+                                userFavorites={favoriteIds}
+                                setUserFavorites={setFavoriteIds}
+                            />
+
                         ))
+
                     )
                 ) : (
                     favorites.length === 0 ? (
                         <p className="text-white">No tienes proyectos marcados como favoritos.</p>
                     ) : (
-                        favorites.map((project, index) => (
-                            <Tarjeta key={index} project={project} />
+                        favorites.map((project) => (
+                            <Tarjeta
+                                key={project.id}
+                                project={project}
+                                userFavorites={favoriteIds}
+                                setUserFavorites={setFavoriteIds}
+                            />
+
                         ))
+
                     )
                 )}
             </div>
