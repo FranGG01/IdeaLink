@@ -15,7 +15,7 @@ import "./Sidebar.css";
 import { getPendingRequests } from "../../../api/routes/friendService";
 
 export default function SidebarRight() {
-  const { store, client } = useGlobalReducer();
+  const { store, client, ready } = useGlobalReducer();
   const [friend, setFriend] = useState(null);
   const [open, setOpen] = useState(false);
   const [friends, setFriends] = useState([]);
