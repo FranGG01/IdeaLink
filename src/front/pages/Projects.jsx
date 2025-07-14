@@ -1,6 +1,6 @@
 import Sidebarleft from "../components/sidebars/SidebarLeft"
 import SidebarRight from "../components/sidebars/SidebarRight"
-import Collaborations from "../components/Colaboraciones"
+import Collaborations from "../components/colaboraciones/Colaboraciones"
 const Projects = () => {
     return (
         <>
