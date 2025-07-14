@@ -3,29 +3,31 @@ import './Tarjeta.css'
 import { Avatar } from "@material-tailwind/react";
 import Modal_postularse from './Modal_postularse';
 import { Card, CardHeader, CardBody, CardFooter, Typography } from "@material-tailwind/react";
-import { useState } from 'react'
 
-export default function Tarjeta({ project }) {
-
-    const [isFavorite, setIsFavorite] = useState(project.is_favorite)
+export default function Tarjeta({ project, userFavorites, setUserFavorites }) {
+    const isFavorite = Array.isArray(userFavorites) && userFavorites.includes(project.id);
 
     const handleLike = async () => {
         const token = localStorage.getItem("jwt-token");
+
+        const method = isFavorite ? "DELETE" : "POST";
         const response = await fetch(`http://127.0.0.1:5000/api/favorites/${project.id}`, {
-            method: isFavorite ? "DELETE" : "POST",
+            method,
             headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
+                "Authorization": `Bearer ${token}`
             }
         });
 
-        if (response.ok) {
-            setIsFavorite(!isFavorite)
-        }
-    }
+        if (!response.ok) return;
+
+        setUserFavorites(prev =>
+            isFavorite
+                ? prev.filter(id => id !== project.id)
+                : [...prev, project.id]
+        );
+    };
 
     if (!project || !project.owner) return null;
-    console.log("🧪 image_url:", project.image_url);
 
     return (
         <div className="tarjeta-container">
@@ -39,7 +41,6 @@ export default function Tarjeta({ project }) {
 
             <Card className="tarjeta-card">
                 <div className="tarjeta-top-glow"></div>
-
                 <div className="tarjeta-pattern"></div>
 
                 <CardHeader floated={false} shadow={false} className="tarjeta-header">
@@ -58,16 +59,11 @@ export default function Tarjeta({ project }) {
                             <Typography variant="h6" className="tarjeta-username">
                                 {project.owner?.username || "Anónimo"}
                             </Typography>
-
                         </div>
                     </div>
                     <div className="tarjeta-hashtags">
                         {project.hashtags?.split(',').map((tag, i) => (
-                            <span
-                                key={i}
-                                className="tarjeta-hashtag"
-                                style={{ animationDelay: `${i * 0.1}s` }}
-                            >
+                            <span key={i} className="tarjeta-hashtag" style={{ animationDelay: `${i * 0.1}s` }}>
                                 <div className="tarjeta-hashtag-shine"></div>
                                 <span className="tarjeta-hashtag-text">#{tag.trim()}</span>
                             </span>
@@ -113,9 +109,7 @@ export default function Tarjeta({ project }) {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                                     d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                             </svg>
-
                         </button>
-
                     </div>
                     <div className="tarjeta-modal-container">
                         <Modal_postularse />
