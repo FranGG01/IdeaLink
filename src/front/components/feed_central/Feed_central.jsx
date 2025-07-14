@@ -86,7 +86,7 @@ const Feed_central = () => {
             </div>
 
             {/* Contenedor scrollable de tarjetas */}
-            <div className="mt-4 ms-20 w-full max-w-4xl h-[calc(110vh-200px)] overflow-y-auto px-4 space-y-4 ocultar-scroll">
+            <div className="mt-4 ms-20 w-full max-w-4xl h-[calc(110vh-200px)] overflow-y-auto px-4 pt-4 space-y-4 ocultar-scroll">
                 {filteredProjects.length > 0 ? (
                     filteredProjects.map((project, index) => (
                         <Tarjeta key={index} project={project} />
