@@ -112,7 +112,7 @@ export default function Tarjeta({ project, userFavorites, setUserFavorites }) {
                         </button>
                     </div>
                     <div className="tarjeta-modal-container">
-                        <Modal_postularse />
+                        <Modal_postularse projectId={project.id} />
                     </div>
                 </CardFooter>
             </Card>
