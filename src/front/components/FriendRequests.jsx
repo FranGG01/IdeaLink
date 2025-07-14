@@ -5,17 +5,28 @@ import {
     getFriends,
 } from "../../api/routes/friendService";
 
-export default function FriendRequests({ onFriendAccepted }) {
-    const [requests, setRequests] = useState([]);
+export default function FriendRequests({
+    requests,
+    setRequests,
+    onFriendAccepted,
+    onPendingCountChange, // agregado para manejar contador externo
+}) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const token = localStorage.getItem("jwt-token");
+
+    const updateCount = (newRequests) => {
+        setRequests(newRequests);
+        if (typeof onPendingCountChange === "function") {
+            onPendingCountChange(newRequests.length);
+        }
+    };
 
     useEffect(() => {
         const fetchRequests = async () => {
             try {
                 const data = await getPendingRequests(token);
-                setRequests(data);
+                updateCount(data);
             } catch (err) {
                 setError("Error cargando solicitudes");
             } finally {
@@ -35,17 +46,16 @@ export default function FriendRequests({ onFriendAccepted }) {
             }
 
             if (action === "accept" && typeof onFriendAccepted === "function") {
-                // Obtener lista actualizada de amigos
                 const updatedFriends = await getFriends(token);
                 const newFriend = updatedFriends[updatedFriends.length - 1];
 
                 if (newFriend) {
-                    onFriendAccepted(newFriend); // Notificar al padre
+                    onFriendAccepted(newFriend);
                 }
             }
 
-            // Eliminar la solicitud respondida
-            setRequests((prev) => prev.filter((req) => req.id !== id));
+            const updatedRequests = requests.filter((req) => req.id !== id);
+            updateCount(updatedRequests);
         } catch (err) {
             alert("Error al responder solicitud");
         }
@@ -93,5 +103,4 @@ export default function FriendRequests({ onFriendAccepted }) {
         </div>
     );
 }
-
 
