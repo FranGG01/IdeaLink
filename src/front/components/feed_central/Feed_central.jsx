@@ -1,11 +1,12 @@
 import Modal1 from '../Modal';
-import './Feed_central.css'
-import Tarjeta from './Tarjeta_feed'
+import './Feed_central.css';
+import Tarjeta from './Tarjeta_feed';
 import useGlobalReducer from '../../hooks/useGlobalReducer';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const Feed_central = () => {
     const { store, dispatch } = useGlobalReducer();
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -35,14 +36,25 @@ const Feed_central = () => {
         fetchProjects();
     }, [dispatch]);
 
+    const filteredProjects = store.projects?.filter(project => {
+        const term = searchTerm.toLowerCase();
+        return (
+            project.name?.toLowerCase().includes(term) ||
+            project.description?.toLowerCase().includes(term)
+        );
+    }) || [];
 
     return (
-        <>
-            <div className="w-full flex justify-center mt-2  ">
-                <div className="w-full  flex flex-col items-center gap-4 ">
+        <div className="feed_central">
+            {/* Sección superior: búsqueda y filtros */}
+            <div className="w-full flex justify-center mt-2">
+                <div className="w-full flex flex-col items-center gap-4 px-4 max-w-4xl">
 
+                    {/* Input de búsqueda */}
                     <div className="relative w-full">
                         <input
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
                             className="w-full bg-transparent placeholder:text-white text-sm border border-gray-100 rounded-md pl-3 py-2 transition duration-300 focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow text-white"
                             placeholder="UI Kits, Dashboards..."
                         />
@@ -57,7 +69,7 @@ const Feed_central = () => {
                         </button>
                     </div>
 
-
+                    {/* Filtros Trending */}
                     <div className="flex flex-wrap justify-center gap-2">
                         <span className="text-white">🔥 Trending</span>
                         {['IA', 'Startup', 'Sostenible', 'Recientes', 'Populares', 'Siguiendo'].map((item, i) => (
@@ -73,15 +85,22 @@ const Feed_central = () => {
                 </div>
             </div>
 
-
-            <div className="mt-4 px-4  flex flex-col items-center justify-center min-h-[calc(100vh-150px)] space-y-4 ocultar-scroll">
-                {store.projects && store.projects.map((project, index) => (
-                    <Tarjeta key={index} project={project} />
-                ))}
-
+            {/* Contenedor scrollable de tarjetas */}
+            <div className="mt-4 ms-20 w-full max-w-4xl h-[calc(110vh-200px)] overflow-y-auto px-4 space-y-4 ocultar-scroll">
+                {filteredProjects.length > 0 ? (
+                    filteredProjects.map((project, index) => (
+                        <Tarjeta key={index} project={project} />
+                    ))
+                ) : (
+                    <p className="text-white text-center">No se encontraron proyectos que coincidan.</p>
+                )}
             </div>
-        </>
+        </div>
     );
-}
+};
 
 export default Feed_central;
+
+
+
+

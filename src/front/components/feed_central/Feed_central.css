@@ -2,7 +2,7 @@
 .feed_central{
   display: flex;
   justify-content: flex-start;
-  background-color: #111d40;
+  background-color: transparent;
   min-height: 100vh;
   flex-wrap: wrap;
   align-content: center;
