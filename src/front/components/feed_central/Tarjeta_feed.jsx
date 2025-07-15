@@ -62,13 +62,14 @@ export default function Tarjeta({ project, userFavorites, setUserFavorites }) {
                         </div>
                     </div>
                     <div className="tarjeta-hashtags">
-                        {project.hashtags?.split(',').map((tag, i) => (
+                        {project.hashtags?.map((tag, i) => (
                             <span key={i} className="tarjeta-hashtag" style={{ animationDelay: `${i * 0.1}s` }}>
                                 <div className="tarjeta-hashtag-shine"></div>
                                 <span className="tarjeta-hashtag-text">#{tag.trim()}</span>
                             </span>
                         ))}
                     </div>
+
                 </CardHeader>
 
                 <CardBody className="tarjeta-body">
