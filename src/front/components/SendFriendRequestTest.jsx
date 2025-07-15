@@ -47,12 +47,12 @@ function AddFriendByUsername() {
     return (
         <div
             ref={wrapperRef}
-            className="p-4 bg-gray-800 text-white rounded max-w-md mx-auto"
+            className="pt-0 bg-gray-800 text-white rounded max-w-md mb-2 ms-18 "
         >
             {!showInput ? (
                 <button
                     onClick={() => setShowInput(true)}
-                    className="bg-purple-600 px-4 py-2 rounded hover:bg-purple-700 cursor-pointer"
+                    className="flex items-center rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 py-3 px-6 text-sm font-medium text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
                 >
                     Agregar amigo
                 </button>
@@ -68,7 +68,7 @@ function AddFriendByUsername() {
                     />
                     <button
                         onClick={handleSendRequest}
-                        className="bg-purple-600 px-4 py-2 rounded hover:bg-purple-700"
+                        className="flex items-center rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 py-3 px-6 text-sm font-medium text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
                     >
                         Enviar solicitud
                     </button>

@@ -81,7 +81,7 @@ export default function ChatApp({ friend }) {
     if (!ready || !channel) return <p className="text-center text-white p-4">Cargando chat…</p>;
 
     return (
-        <div className="rounded-2xl overflow-hidden border border-gray-700 h-[460px]">
+        <div className="rounded-2xl overflow-hidden border border-gray-700 h-[460px] ">
             <Chat client={client} theme="str-chat__theme-dark">
                 <Channel channel={channel}>
                     <Window>

@@ -53,9 +53,7 @@ class User(db.Model):
 
     @property
     def friends(self):
-        # Amigos que enviaron solicitud aceptada
         sent = FriendRequest.query.filter_by(sender_id=self.id, status='accepted').all()
-        # Amigos que recibieron solicitud aceptada
         received = FriendRequest.query.filter_by(receiver_id=self.id, status='accepted').all()
         return [fr.receiver for fr in sent] + [fr.sender for fr in received]
 
@@ -83,7 +81,6 @@ class Project(db.Model):
     owner_id: Mapped[int] = mapped_column(ForeignKey('user.id'), nullable=False)
     owner = relationship("User")
 
-    # Relaciones
     collaborators = db.relationship('User', secondary=project_collaborators)
     stackblitz_url = db.Column(db.String, nullable=True)
     code_files: Mapped[dict] = mapped_column(JSON, nullable=True)
@@ -93,12 +90,16 @@ class Project(db.Model):
         if current_user_id:
             is_favorite = any(user.id == current_user_id for user in self.favorited_by)
 
+        hashtags_list = []
+        if self.hashtags:
+            hashtags_list = [tag.strip().lstrip('#') for tag in self.hashtags.split(',') if tag.strip()]
+
         return {
             'id': self.id,
             'title': self.title,
             'description': self.description,
             'image_url': self.image_url,
-            'hashtags': self.hashtags,
+            'hashtags': hashtags_list,
             'is_accepting_applications': self.is_accepting_applications,
             'created_at': self.created_at.isoformat(),
             'owner_id': self.owner_id,
@@ -134,3 +135,4 @@ class Postularse(db.Model):
                 'avatar_url': getattr(self.user, "avatar_url", "https://ui-avatars.com/api/?name=User")
             }
         }
+
