@@ -152,7 +152,7 @@ export default function SidebarRight() {
       <div className="relative mb-4 me-0 w-[100px] h-[32px]">
         <button
           onClick={() => setShowRequests(!showRequests)}
-          className="bg-blue-600 px-3 py-1.5 rounded-md hover:bg-blue-700 transition text-white text-sm"
+          className="flex items-center rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 py-3 px-6 text-sm font-medium text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
         >
           Solicitudes
         </button>
