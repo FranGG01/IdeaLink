@@ -30,6 +30,22 @@ const Feed_central = () => {
         }
     };
 
+    const [trendingHashtags, setTrendingHashtags] = useState([]);
+
+    const fetchTrendingHashtags = async () => {
+        try {
+            const res = await fetch("http://127.0.0.1:5000/api/trending-hashtags");
+            if (!res.ok) {
+                console.error("Error al obtener hashtags trending");
+                return;
+            }
+            const data = await res.json();
+            setTrendingHashtags(data);
+        } catch (err) {
+            console.error("Error de red al obtener hashtags trending:", err);
+        }
+    };
+
     const fetchFavorites = async () => {
         const token = localStorage.getItem("jwt-token");
         try {
@@ -49,13 +65,15 @@ const Feed_central = () => {
     useEffect(() => {
         fetchProjects();
         fetchFavorites();
+        fetchTrendingHashtags();
     }, []);
 
     const filteredProjects = store.projects?.filter(project => {
         const term = searchTerm.toLowerCase();
         return (
             project.name?.toLowerCase().includes(term) ||
-            project.description?.toLowerCase().includes(term)
+            project.description?.toLowerCase().includes(term) ||
+            project.hashtags?.some(tag => tag.toLowerCase().includes(term)) // ✅ filtrar por hashtags
         );
     }) || [];
 
@@ -85,21 +103,25 @@ const Feed_central = () => {
                         </div>
                     </div>
 
-                    {/* Filtros Trending */}
+                    {/* Filtros Trending actualizados dinámicamente */}
                     <div className="flex flex-wrap justify-center gap-2">
                         <span className="text-white font-semibold text-lg mr-4">🔥 Trending</span>
                         <div className="flex flex-wrap gap-2">
-                            {['IA', 'Startup', 'Sostenible', 'Recientes', 'Populares', 'Siguiendo'].map((item, i) => (
-                                <button
-                                    key={i}
-                                    className="relative inline-flex items-center justify-center rounded-full border border-purple-500 bg-gradient-to-br from-slate-800 to-slate-900 text-sm text-white font-medium px-4 py-2 shadow-md hover:scale-105 hover:from-purple-700 hover:to-purple-800 hover:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 cursor-pointer"
-                                >
-                                    <span className="z-10">{item}</span>
-                                    <span className="absolute inset-0 rounded-full bg-purple-500 opacity-10 blur-sm"></span>
-                                </button>
-                            ))}
+                            {trendingHashtags.length > 0 ? (
+                                trendingHashtags.map((tag, i) => (
+                                    <button
+                                        key={i}
+                                        onClick={() => setSearchTerm(tag)}
+                                        className="relative inline-flex items-center justify-center rounded-full border border-purple-500 bg-gradient-to-br from-slate-800 to-slate-900 text-sm text-white font-medium px-4 py-2 shadow-md hover:scale-105 hover:from-purple-700 hover:to-purple-800 hover:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 cursor-pointer"
+                                    >
+                                        <span className="z-10">#{tag}</span>
+                                        <span className="absolute inset-0 rounded-full bg-purple-500 opacity-10 blur-sm"></span>
+                                    </button>
+                                ))
+                            ) : (
+                                <p className="text-white">Cargando hashtags...</p>
+                            )}
                         </div>
-
 
                         <Modal1 />
                     </div>
@@ -107,45 +129,22 @@ const Feed_central = () => {
             </div>
 
             {/* Lista de tarjetas filtradas */}
-            <div className="mt-15 px-4 flex flex-col items-center justify-center min-h-[calc(100vh-150px)] space-y-4 ocultar-scroll">
-                {filteredProjects.length > 0 ? (
-                    filteredProjects.map((project) => (
-                        <Tarjeta
-                            key={project.id}
-                            project={project}
-                            setUserFavorites={setUserFavorites}
-                            userFavorites={userFavorites}
-                        />
-                    ))
-                ) : (
-                    <p className="text-white text-center">No se encontraron proyectos que coincidan.</p>
-                )}
+            <div className="mt-6 px-4 flex justify-center">
+                <div className="w-full max-w-4xl h-[90vh] overflow-y-auto space-y-4 pr-2 ocultar-scroll ps-15 pt-4">
+                    {filteredProjects.length > 0 ? (
+                        filteredProjects.map((project) => (
+                            <Tarjeta
+                                key={project.id}
+                                project={project}
+                                setUserFavorites={setUserFavorites}
+                                userFavorites={userFavorites}
+                            />
+                        ))
+                    ) : (
+                        <p className="text-white text-center">No se encontraron proyectos que coincidan.</p>
+                    )}
+                </div>
             </div>
-
-            <style jsx>{`
-                /* Scrollbar personalizada */
-                .ocultar-scroll {
-                    scrollbar-width: thin;
-                    scrollbar-color: rgba(139, 92, 246, 0.3) transparent;
-                }
-                
-                .ocultar-scroll::-webkit-scrollbar {
-                    width: 6px;
-                }
-                
-                .ocultar-scroll::-webkit-scrollbar-track {
-                    background: transparent;
-                }
-                
-                .ocultar-scroll::-webkit-scrollbar-thumb {
-                    background: rgba(139, 92, 246, 0.3);
-                    border-radius: 3px;
-                }
-                
-                .ocultar-scroll::-webkit-scrollbar-thumb:hover {
-                    background: rgba(139, 92, 246, 0.5);
-                }
-            `}</style>
         </>
     );
 };
