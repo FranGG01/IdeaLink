@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Logo_dark from '../assets/img/Logo_dark.png';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -22,13 +25,15 @@ const Register = () => {
       const data = await response.json();
 
       if (response.ok) {
-        alert('Usuario registrado correctamente');
-        navigate("/");
+        toast.success('🎉 Usuario registrado correctamente', {
+          onClose: () => navigate("/"),
+        });
       } else {
-        alert(data.msg || 'Error al registrar usuario');
+        toast.error(data.msg || '❌ Error al registrar usuario');
       }
+
     } catch (error) {
-      console.error('Error en el registro:', error);
+      toast.error("❌ Error de red al registrar usuario");
     }
   };
 
@@ -103,14 +108,24 @@ const Register = () => {
           <div>
             <button
               type="submit"
-              className="w-full rounded-md bg-purple-600 px-4 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+              className="w-full rounded-md bg-purple-600 px-4 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 cursor-pointer"
             >
               Regístrate
             </button>
           </div>
         </form>
       </motion.div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={2000}
+        pauseOnFocusLoss
+        pauseOnHover
+        draggable
+        theme="dark"
+      />
+
     </div>
+
   );
 };
 

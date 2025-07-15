@@ -6,6 +6,8 @@ import { router } from "./routes";  // Import the router configuration
 import { StoreProvider } from './hooks/useGlobalReducer';  // Import the StoreProvider for global state management
 import './index.css';
 import { LoadingProvider } from "../context/LoadingContext";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Main = () => {
@@ -15,11 +17,17 @@ const Main = () => {
         <React.StrictMode>
             <LoadingProvider>
                 <StoreProvider>
-                    <RouterProvider router={router}>
-                    </RouterProvider>
+                    <RouterProvider router={router} />
+                    <ToastContainer
+                        position="bottom-right"
+                        autoClose={3000}
+                        pauseOnHover
+                        theme="dark"
+                    />
                 </StoreProvider>
             </LoadingProvider>
         </React.StrictMode>
+
     );
 }
 

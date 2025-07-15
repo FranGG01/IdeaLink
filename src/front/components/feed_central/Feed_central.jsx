@@ -8,6 +8,7 @@ const Feed_central = () => {
     const { store, dispatch } = useGlobalReducer();
     const [userFavorites, setUserFavorites] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const [trendingHashtags, setTrendingHashtags] = useState([]);
 
     const fetchProjects = async () => {
         const token = localStorage.getItem("jwt-token");
@@ -29,8 +30,6 @@ const Feed_central = () => {
             console.error("❌ Error de red al obtener ideas:", err);
         }
     };
-
-    const [trendingHashtags, setTrendingHashtags] = useState([]);
 
     const fetchTrendingHashtags = async () => {
         try {
@@ -73,7 +72,7 @@ const Feed_central = () => {
         return (
             project.name?.toLowerCase().includes(term) ||
             project.description?.toLowerCase().includes(term) ||
-            project.hashtags?.some(tag => tag.toLowerCase().includes(term)) // ✅ filtrar por hashtags
+            project.hashtags?.some(tag => tag.toLowerCase().includes(term))
         );
     }) || [];
 
@@ -81,7 +80,7 @@ const Feed_central = () => {
         <>
             <div className="w-full flex justify-center mt-2">
                 <div className="w-full flex flex-col items-center gap-4 px-4 max-w-4xl">
-                    {/* Barra de búsqueda modernizada */}
+                    {/* Buscador */}
                     <div className="relative w-full max-w-2xl group">
                         <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-2xl blur-xl opacity-75 group-hover:opacity-100 transition-all duration-500"></div>
                         <div className="relative backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-1 shadow-2xl">
@@ -103,7 +102,7 @@ const Feed_central = () => {
                         </div>
                     </div>
 
-                    {/* Filtros Trending actualizados dinámicamente */}
+                    {/* Trending Hashtags */}
                     <div className="flex flex-wrap justify-center gap-2">
                         <span className="text-white font-semibold text-lg mr-4">🔥 Trending</span>
                         <div className="flex flex-wrap gap-2">
@@ -128,7 +127,7 @@ const Feed_central = () => {
                 </div>
             </div>
 
-            {/* Lista de tarjetas filtradas */}
+            {/* Lista de proyectos */}
             <div className="mt-6 px-4 flex justify-center">
                 <div className="w-full max-w-4xl h-[90vh] overflow-y-auto space-y-4 pr-2 ocultar-scroll ps-15 pt-4">
                     {filteredProjects.length > 0 ? (
@@ -145,6 +144,30 @@ const Feed_central = () => {
                     )}
                 </div>
             </div>
+
+            <style>{`
+                .ocultar-scroll {
+                    scrollbar-width: thin;
+                    scrollbar-color: rgba(139, 92, 246, 0.3) transparent;
+                }
+                
+                .ocultar-scroll::-webkit-scrollbar {
+                    width: 6px;
+                }
+                
+                .ocultar-scroll::-webkit-scrollbar-track {
+                    background: transparent;
+                }
+                
+                .ocultar-scroll::-webkit-scrollbar-thumb {
+                    background: rgba(139, 92, 246, 0.3);
+                    border-radius: 3px;
+                }
+                
+                .ocultar-scroll::-webkit-scrollbar-thumb:hover {
+                    background: rgba(139, 92, 246, 0.5);
+                }
+            `}</style>
         </>
     );
 };

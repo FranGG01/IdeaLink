@@ -1,0 +1,159 @@
+/* Botón de postularse */
+.postularse-modal-btn {
+    border-radius: 0.375rem !important;
+    margin-left: 0.5rem !important;
+    margin-right: 0.5rem !important;
+    padding: 0.5rem 1rem !important;
+    color: white !important;
+    font-size: 0.875rem !important;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+    background-color: rgb(126, 34, 206) !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+    border: none !important;
+    outline: none !important;
+}
+
+.postularse-modal-btn:hover {
+    background-color: rgb(168, 85, 247) !important;
+}
+
+.postularse-modal-btn:active {
+    transform: scale(0.98) !important;
+}
+
+/* Modal dialog */
+.postularse-modal-dialog {
+    z-index: 9999 !important;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 90vw !important;
+    max-width: 800px !important;
+    border-radius: 0.75rem !important;
+    background-color: rgb(17, 24, 39) !important;
+    color: white !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Header del modal */
+.postularse-modal-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 1rem !important;
+    border-bottom: 1px solid rgb(55, 65, 81) !important;
+    padding-bottom: 1rem !important;
+}
+
+/* Contenedor del icono de usuario */
+.postularse-user-icon-container {
+    background: linear-gradient(to bottom right, rgb(168, 85, 247), rgb(59, 130, 246)) !important;
+    padding: 0.25rem !important;
+    border-radius: 50% !important;
+}
+
+/* Icono de usuario */
+.postularse-user-icon {
+    width: 3rem !important;
+    height: 3rem !important;
+    color: white !important;
+}
+
+/* Título del modal */
+.postularse-modal-title {
+    font-size: 1.125rem !important;
+    font-weight: 600 !important;
+    color: white !important;
+}
+
+/* Subtítulo del modal */
+.postularse-modal-subtitle {
+    color: rgb(156, 163, 175) !important;
+}
+
+/* Cuerpo del modal */
+.postularse-modal-body {
+    padding-top: 1.5rem !important;
+}
+
+.postularse-modal-body > * + * {
+    margin-top: 1rem !important;
+}
+
+/* Campo del formulario */
+.postularse-form-field {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.postularse-form-field > * + * {
+    margin-top: 0.5rem !important;
+}
+
+/* Etiqueta del formulario */
+.postularse-form-label {
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    color: rgb(229, 231, 235) !important;
+}
+
+/* Textarea del formulario */
+.postularse-form-textarea {
+    padding: 0.5rem !important;
+    border-radius: 0.375rem !important;
+    border: 1px solid rgb(55, 65, 81) !important;
+    min-height: 120px !important;
+    transition: all 0.2s ease !important;
+    background-color: rgb(31, 41, 55) !important;
+    color: white !important;
+}
+
+.postularse-form-textarea:focus {
+    border-color: rgb(168, 85, 247) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 1px rgb(168, 85, 247) !important;
+}
+
+.postularse-form-textarea::placeholder {
+    color: rgb(156, 163, 175) !important;
+}
+
+/* Footer del modal */
+.postularse-modal-footer {
+    padding-top: 1rem !important;
+    border-top: 1px solid rgb(55, 65, 81) !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+}
+
+/* Botón de envío - usando div para evitar conflictos */
+.postularse-submit-btn {
+    background-color: rgb(126, 34, 206) !important;
+    color: white !important;
+    border-radius: 0.375rem !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+    border: none !important;
+    outline: none !important;
+    user-select: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 120px !important;
+}
+
+.postularse-submit-btn:hover {
+    background-color: rgb(147, 51, 234) !important;
+}
+
+.postularse-submit-btn:active {
+    transform: scale(0.98) !important;
+}
+
+.postularse-submit-btn:focus {
+    box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.5) !important;
+}
