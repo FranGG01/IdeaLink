@@ -47,7 +47,7 @@ function AddFriendByUsername() {
     return (
         <div
             ref={wrapperRef}
-            className="p-4 bg-gray-800 text-white rounded max-w-md mx-auto"
+            className="pt-0 bg-gray-800 text-white rounded max-w-md mb-2 ms-18 "
         >
             {!showInput ? (
                 <button

@@ -16,8 +16,9 @@
 
   .chat_sidebar{
     
-    background: linear-gradient(45deg, #ec4899, #8b5cf6, #06b6d4);
+    background: linear-gradient(45deg, #8b5cf6, #ec4899);
     border-radius: 1rem;
-    border: linear-gradient(45deg, #ec4899, #8b5cf6, #06b6d4);
+    border-width: 2px;
+   border: 2px solid rgba(168, 85, 247, 0.5)
   
   }

@@ -148,19 +148,22 @@ export default function SidebarRight() {
 
   return (
     <>
+      <SendFriendRequestTest />
       {/* Botón con contador de solicitudes */}
-      <div className="relative mb-4 me-0 w-[100px] h-[32px]">
+      <div className="relative flex mb-2 me-0 w-[100px] h-[32px]">
+
         <button
           onClick={() => setShowRequests(!showRequests)}
-          className="flex items-center rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 py-3 px-6 text-sm font-medium text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
+          className="flex ms-18 items-center rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 py-3 px-6 text-sm font-medium text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
         >
           Solicitudes
         </button>
         {pendingCount > 0 && (
-          <span className="absolute -top-1 -right-0 bg-red-600 text-white text-xs px-1.5 py-0.5 rounded-full">
+          <span className="absolute -top-1 -right-7 bg-red-600 text-white text-xs px-1.5 py-0.5 rounded-full">
             {pendingCount}
           </span>
         )}
+
       </div>
 
       {showRequests && (
@@ -180,7 +183,7 @@ export default function SidebarRight() {
         </div>
       )}
 
-      <aside className="chat_sidebar w-full sm:w-[300px] bg-[#1e293b] p-2 text-white border border-gray-500 max-h-[360px] overflow-y-auto rounded-md hidden xl:block relative">
+      <aside className="chat_sidebar w-full sm:w-[300px] bg-[#1e293b] p-2  text-white border border-gray-500 max-h-[360px] overflow-y-auto rounded-md hidden xl:block relative ms-18">
         <div className="space-y-4 text-sm mt-4 pe-4">
           <h1 className="text-md font-bold mb-4">Amigos</h1>
           {friends.length === 0 && <p>No tienes amigos aún</p>}
@@ -245,7 +248,7 @@ export default function SidebarRight() {
         </div>
       </aside>
 
-      <SendFriendRequestTest />
+
 
       {friend && (
         <ModalChat
