@@ -10,6 +10,7 @@ import {
 import { useState } from "react";
 import { UserCircle } from "lucide-react";
 import { toast } from "react-toastify";
+import "./Modal_postularse.css";
 
 export default function Modal_postularse({ projectId }) {
     const [open, setOpen] = useState(false);
@@ -49,7 +50,7 @@ export default function Modal_postularse({ projectId }) {
         <>
             <Button
                 onClick={handleOpen}
-                className="rounded-md mx-2 py-2 px-4 text-white text-sm shadow-sm bg-purple-700 hover:bg-purple-500 transition cursor-pointer"
+                className="postularse-modal-btn"
             >
                 Postularse
             </Button>
@@ -58,47 +59,75 @@ export default function Modal_postularse({ projectId }) {
                 open={open}
                 handler={handleOpen}
                 size="md"
-                className="z-[9999] fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[800px] rounded-xl bg-white dark:bg-gray-900 text-gray-900 dark:text-white shadow-2xl"
+                className="postularse-modal-dialog"
+                animate={{
+                    mount: { scale: 1, y: 0 },
+                    unmount: { scale: 0.9, y: -100 },
+                }}
             >
-                <DialogHeader className="flex items-center gap-4 border-b border-gray-200 dark:border-gray-700 pb-4">
-                    <div className="bg-gradient-to-br from-purple-500 to-blue-500 p-1 rounded-full">
-                        <UserCircle className="w-12 h-12 text-white" />
+                <DialogHeader className="postularse-modal-header">
+                    <div className="postularse-user-icon-container">
+                        <UserCircle className="postularse-user-icon" />
                     </div>
                     <div>
-                        <Typography variant="h5" className="text-lg font-semibold">
+                        <Typography variant="h5" className="postularse-modal-title">
                             ¿Quieres unirte al proyecto?
                         </Typography>
-                        <Typography variant="small" className="text-gray-500 dark:text-gray-400">
+                        <Typography variant="small" className="postularse-modal-subtitle">
                             Cuéntale al creador por qué deberías formar parte.
                         </Typography>
                     </div>
                 </DialogHeader>
 
-                <DialogBody className="pt-6 space-y-4">
-                    <div className="flex flex-col space-y-2">
-                        <label htmlFor="descripcion" className="text-sm font-medium text-gray-800 dark:text-gray-200">
+                <DialogBody className="postularse-modal-body">
+                    <div className="postularse-form-field">
+                        <label htmlFor="postularse-descripcion" className="postularse-form-label">
                             ¿Qué puedes aportar?
                         </label>
                         <Textarea
-                            id="descripcion"
+                            id="postularse-descripcion"
                             autoFocus
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
-                            className="p-2 rounded-md border border-gray-300 dark:border-gray-700 min-h-[120px] focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+                            className="postularse-form-textarea"
                             placeholder="Ej: Soy frontend con experiencia en React y me encantaría ayudar con la interfaz."
                         />
                     </div>
                 </DialogBody>
 
-                <DialogFooter className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                    <Button
-                        type="button"
-                        onClick={handleSubmit}
-                        className="bg-purple-700 hover:bg-purple-600 text-white rounded-md py-2 px-4 text-sm font-medium transition cursor-pointer"
+                <DialogFooter className="postularse-modal-footer">
+                    <div
+                        style={{
+                            backgroundColor: 'rgb(126, 34, 206)',
+                            color: 'white',
+                            borderRadius: '0.375rem',
+                            padding: '0.5rem 1rem',
+                            fontSize: '0.875rem',
+                            fontWeight: '500',
+                            cursor: 'pointer',
+                            userSelect: 'none',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            minWidth: '120px',
+                            zIndex: 10000,
+                            position: 'relative'
+                        }}
+                        onMouseDown={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            console.log("🔥 Botón mousedown!");
+                            handleSubmit();
+                        }}
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = 'rgb(147, 51, 234)';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = 'rgb(126, 34, 206)';
+                        }}
                     >
                         Enviar postulación
-                    </Button>
-
+                    </div>
                 </DialogFooter>
             </Dialog>
         </>

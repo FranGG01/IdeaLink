@@ -122,7 +122,7 @@ const Feed_central = () => {
                 )}
             </div>
 
-            <style jsx>{`
+            <style>{`
                 /* Scrollbar personalizada */
                 .ocultar-scroll {
                     scrollbar-width: thin;
