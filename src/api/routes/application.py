@@ -15,15 +15,23 @@ def get_applications_for_project(project_id):
     return jsonify([a.serialize() for a in applications]), 200
 
 @application_api.route('/applications', methods=['POST'])
+@jwt_required()  
 def apply_to_project():
-    data = request.get_json()
-    user_id = get_jwt_identity() 
-    
-    application = Postularse(
-        message = data.get('message'),
-        user_id = data['user_id'],
-        project_id = data['project_id']
-    )
-    db.session.add(application)
-    db.session.commit()
-    return jsonify(application.serialize()), 201
+    try:
+        data = request.get_json()
+        user_id = get_jwt_identity()  
+
+        application = Postularse(
+            message=data.get('message'),
+            user_id=user_id,  
+            project_id=data.get('project_id')
+        )
+
+        db.session.add(application)
+        db.session.commit()
+        return jsonify(application.serialize()), 201
+
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
