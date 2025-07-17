@@ -11,7 +11,7 @@ const Landing = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setInitialLoading(false);
-    }, 5500);
+    }, 3500);
 
     return () => clearTimeout(timer);
   }, []);
