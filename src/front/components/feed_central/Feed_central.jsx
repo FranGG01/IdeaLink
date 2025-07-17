@@ -98,6 +98,19 @@ const Feed_central = () => {
                                 className="w-full bg-transparent placeholder:text-white/60 text-white text-base border-none rounded-xl pl-6 pr-28 py-4 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:bg-white/5"
                                 placeholder="Buscar UI Kits, Dashboards, Proyectos..."
                             />
+                            {searchTerm && (
+                                <button
+                                    onClick={() => setSearchTerm('')}
+                                    className="absolute top-1/2 right-36 transform -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white/70 hover:text-white transition-all duration-200 cursor-pointer"
+                                    type="button"
+                                    aria-label="Limpiar búsqueda"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            )}
+
                             <button
                                 className="absolute top-2 right-2 flex items-center rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 py-3 px-6 text-sm font-medium text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
                                 type="button"

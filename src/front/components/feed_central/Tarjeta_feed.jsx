@@ -67,7 +67,7 @@ export default function Tarjeta({ project, userFavorites, setUserFavorites, onHa
                                 key={i}
                                 className="tarjeta-hashtag"
                                 style={{ animationDelay: `${i * 0.1}s`, cursor: 'pointer' }}
-                                onClick={() => onHashtagClick?.(tag.trim())} // nuevo onClick aquí
+                                onClick={() => onHashtagClick?.(tag.trim())}
                             >
                                 <div className="tarjeta-hashtag-shine"></div>
                                 <span className="tarjeta-hashtag-text">#{tag.trim()}</span>
