@@ -61,9 +61,9 @@ export default function FriendRequests({
         }
     };
 
-    if (loading) return <p>Cargando solicitudes...</p>;
+    if (loading) return <p className="ms-18">Cargando solicitudes...</p>;
     if (error) return <p className="text-red-500">{error}</p>;
-    if (requests.length === 0) return <p>No tienes solicitudes pendientes.</p>;
+    if (requests.length === 0) return <p className="ms-18">No tienes solicitudes pendientes.</p>;
 
     return (
         <div className="bg-gray-800 text-white p-4 rounded-lg max-w-md mx-auto flex-wrap">

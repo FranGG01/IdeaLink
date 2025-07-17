@@ -61,6 +61,14 @@ const Feed_central = () => {
         }
     };
 
+    const [activeHashtag, setActiveHashtag] = useState(null);
+
+    const handleHashtagClick = (tag) => {
+        setSearchTerm(tag); // actualiza el campo de búsqueda también
+        setActiveHashtag(tag);
+    };
+
+
     useEffect(() => {
         fetchProjects();
         fetchFavorites();
@@ -129,7 +137,7 @@ const Feed_central = () => {
 
             {/* Lista de proyectos */}
             <div className="mt-6 px-4 flex justify-center">
-                <div className="w-full max-w-4xl h-[90vh] overflow-y-auto space-y-4 pr-2 ocultar-scroll ps-15 pt-4">
+                <div className="w-full max-w-4xl  2xl:h-[78vh]  overflow-y-auto space-y-4 pr-2 ocultar-scroll ps-15 pt-4">
                     {filteredProjects.length > 0 ? (
                         filteredProjects.map((project) => (
                             <Tarjeta
@@ -137,6 +145,7 @@ const Feed_central = () => {
                                 project={project}
                                 setUserFavorites={setUserFavorites}
                                 userFavorites={userFavorites}
+                                onHashtagClick={handleHashtagClick}
                             />
                         ))
                     ) : (
@@ -145,29 +154,6 @@ const Feed_central = () => {
                 </div>
             </div>
 
-            <style>{`
-                .ocultar-scroll {
-                    scrollbar-width: thin;
-                    scrollbar-color: rgba(139, 92, 246, 0.3) transparent;
-                }
-                
-                .ocultar-scroll::-webkit-scrollbar {
-                    width: 6px;
-                }
-                
-                .ocultar-scroll::-webkit-scrollbar-track {
-                    background: transparent;
-                }
-                
-                .ocultar-scroll::-webkit-scrollbar-thumb {
-                    background: rgba(139, 92, 246, 0.3);
-                    border-radius: 3px;
-                }
-                
-                .ocultar-scroll::-webkit-scrollbar-thumb:hover {
-                    background: rgba(139, 92, 246, 0.5);
-                }
-            `}</style>
         </>
     );
 };
