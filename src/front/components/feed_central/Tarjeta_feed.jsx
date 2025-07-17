@@ -4,7 +4,7 @@ import { Avatar } from "@material-tailwind/react";
 import Modal_postularse from './Modal_postularse';
 import { Card, CardHeader, CardBody, CardFooter, Typography } from "@material-tailwind/react";
 
-export default function Tarjeta({ project, userFavorites, setUserFavorites }) {
+export default function Tarjeta({ project, userFavorites, setUserFavorites, onHashtagClick }) {
     const isFavorite = Array.isArray(userFavorites) && userFavorites.includes(project.id);
 
     const handleLike = async () => {
@@ -63,12 +63,18 @@ export default function Tarjeta({ project, userFavorites, setUserFavorites }) {
                     </div>
                     <div className="tarjeta-hashtags">
                         {project.hashtags?.map((tag, i) => (
-                            <span key={i} className="tarjeta-hashtag" style={{ animationDelay: `${i * 0.1}s` }}>
+                            <span
+                                key={i}
+                                className="tarjeta-hashtag"
+                                style={{ animationDelay: `${i * 0.1}s`, cursor: 'pointer' }}
+                                onClick={() => onHashtagClick?.(tag.trim())} // nuevo onClick aquí
+                            >
                                 <div className="tarjeta-hashtag-shine"></div>
                                 <span className="tarjeta-hashtag-text">#{tag.trim()}</span>
                             </span>
                         ))}
                     </div>
+
 
                 </CardHeader>
 
@@ -97,6 +103,9 @@ export default function Tarjeta({ project, userFavorites, setUserFavorites }) {
 
                 <CardFooter className='tarjeta-footer'>
                     <div className="tarjeta-actions">
+                        <div className="tarjeta-modal-container">
+                            <Modal_postularse projectId={project.id} />
+                        </div>
                         <button
                             className="tarjeta-action-btn tarjeta-like-btn"
                             onClick={handleLike}
@@ -112,9 +121,7 @@ export default function Tarjeta({ project, userFavorites, setUserFavorites }) {
                             </svg>
                         </button>
                     </div>
-                    <div className="tarjeta-modal-container">
-                        <Modal_postularse projectId={project.id} />
-                    </div>
+
                 </CardFooter>
             </Card>
         </div>

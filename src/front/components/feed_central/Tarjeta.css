@@ -374,7 +374,7 @@
 /* Footer */
 .tarjeta-footer {
     display: flex !important;
-    justify-content: space-between !important;
+    justify-content: end !important;
     align-items: center !important;
     padding: 1rem 1.5rem !important;
     border-top: 1px solid rgba(71, 85, 105, 0.5) !important;

@@ -12,7 +12,7 @@ const Feed = () => {
                 </aside>
 
                 <main className="flex-1 p-0 bg-gray-900 overflow-hidden">
-                    <div className="h-full overflow-y-auto p-4 scroll-hidden">
+                    <div className="h-full overflow-y-hidden p-4 pt-4 scroll-hidden">
                         <Feed_central />
                     </div>
                 </main>
