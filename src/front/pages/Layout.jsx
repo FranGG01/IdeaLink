@@ -22,6 +22,7 @@ export const Layout = () => {
                     console.warn("⚠️ Token inválido o expirado");
                     localStorage.removeItem("jwt-token");
                     localStorage.removeItem("user-profile");
+                    localStorage.removeItem("hasVisitedFeed");
                     dispatch({ type: "set_user", payload: null });
                 }
             } else {

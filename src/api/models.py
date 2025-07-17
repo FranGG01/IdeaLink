@@ -5,18 +5,10 @@ from datetime import datetime
 
 db = SQLAlchemy()
 
-# 🔁 Relación de favoritos (muchos a muchos)
 favorites = db.Table(
     'favorites',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
     db.Column('project_id', db.Integer, db.ForeignKey('project.id'), primary_key=True)
-)
-
-# 🔁 Relación de colaboradores (muchos a muchos)
-project_collaborators = db.Table(
-    'project_collaborators',
-    db.Column('project_id', db.Integer, db.ForeignKey('project.id'), primary_key=True),
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True)
 )
 
 
@@ -81,7 +73,7 @@ class Project(db.Model):
     owner_id: Mapped[int] = mapped_column(ForeignKey('user.id'), nullable=False)
     owner = relationship("User")
 
-    collaborators = db.relationship('User', secondary=project_collaborators)
+    collaborators = db.relationship('ProjectCollaborator', back_populates='project', cascade='all, delete-orphan')
     stackblitz_url = db.Column(db.String, nullable=True)
     code_files: Mapped[dict] = mapped_column(JSON, nullable=True)
 
@@ -134,5 +126,23 @@ class Postularse(db.Model):
                 'username': getattr(self.user, "username", "Anónimo"),
                 'avatar_url': getattr(self.user, "avatar_url", "https://ui-avatars.com/api/?name=User")
             }
+        }
+
+
+
+class ProjectCollaborator(db.Model):
+    __tablename__ = 'project_collaborators'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
+
+    user = db.relationship('User')
+    project = db.relationship('Project')
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "project_id": self.project_id
         }
 

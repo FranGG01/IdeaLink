@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Users, MailPlus, Handshake, Code, ExternalLink, GitBranch, Clock } from "lucide-react";
 import "./Colaboraciones.css";
 import ProyectoEmbed from "../StackblitzEmbed";
+import SolicitudesButton from "./SolicitudesButton";
+
 
 export default function Collaborations() {
     const [collabs, setCollabs] = useState([]);
@@ -52,6 +54,8 @@ export default function Collaborations() {
                         <div className="collaborations-section-icon">
                             <GitBranch className="w-5 h-5 text-emerald-400" />
                         </div>
+                        <h2 className="collaborations-section-title">Mis Solicitudes</h2>
+                        <SolicitudesButton />
                         <h2 className="collaborations-section-title">Mis colaboraciones</h2>
                         <div className="collaborations-section-line"></div>
                     </div>

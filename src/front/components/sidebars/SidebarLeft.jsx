@@ -3,11 +3,18 @@ import { Home, Folder, User, HelpCircle } from "lucide-react";
 import Separator from "./Separator";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import LogoBombilla from "../LogoBombilla";
-import AIChatModal from "./AIChatModal"; // ✅ Usa el modal, no el sidebar
+import AIChatModal from "./AIChatModal";
 
 export default function SidebarLeft() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("jwt-token");
+    localStorage.removeItem("user-profile");
+    localStorage.removeItem("hasVisitedFeed");
+    navigate("/");
+  };
 
   const navItems = [
     { label: "Dashboard", icon: Home, to: "/feed" },
@@ -53,7 +60,7 @@ export default function SidebarLeft() {
       {/* Bottom: Cerrar sesión */}
       <div className="mt-8">
         <button
-          onClick={() => navigate("/")}
+          onClick={handleLogout}
           className="bg-gray-700 hover:bg-gray-600 text-white mb-3 px-4 py-2 rounded-md text-sm w-full cursor-pointer"
         >
           Cerrar sesión
