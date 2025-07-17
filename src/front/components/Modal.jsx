@@ -110,114 +110,121 @@ export default function Modal1() {
             >
                 CREA TU IDEA
             </Button>
+            {open && (
+                <>
+                    <div className="fixed inset-0 z-40 backdrop-blur-md bg-black/40"></div>
 
-            <Dialog
-                open={open}
-                handler={setOpen}
-                size="md"
-                className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-[800px] rounded-[1vw] bg-white dark:bg-gray-900 text-gray-900 dark:text-white shadow-sm shadow-white"
-            >
-                <DialogHeader className="flex justify-between items-center">
-                    <Typography variant="h6">Crea tu idea</Typography>
-                    <Button className="text-white cursor-pointer" variant="text" size="sm" onClick={() => setOpen(false)}>
-                        ✕
-                    </Button>
-                </DialogHeader>
-
-                <DialogBody className="space-y-4">
-                    <Typography>Ingresa los datos de tu idea</Typography>
-
-                    <div className="flex flex-wrap gap-4">
-                        <div className="flex flex-col flex-1">
-                            <label htmlFor="title" className="text-sm font-semibold">Título</label>
-                            <Input
-                                id="title"
-                                name="title"
-                                value={formData.title}
-                                onChange={handleChange}
-                                className="rounded-md"
-                                placeholder="Título aquí"
-                            />
-                        </div>
-
-                        <div className="flex flex-col flex-1">
-                            <label htmlFor="hashtags" className="text-sm font-semibold">Hashtags #</label>
-                            <Input
-                                id="hashtags"
-                                name="hashtags"
-                                value={formData.hashtags}
-                                onChange={handleChange}
-                                className="rounded-md"
-                                placeholder="IA, Developer, FullStack"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col space-y-1.5">
-                        <label htmlFor="description" className="text-sm font-semibold">Descripción</label>
-                        <Textarea
-                            id="description"
-                            name="description"
-                            value={formData.description}
-                            onChange={handleChange}
-                            className="rounded-md"
-                            placeholder="Descripción aquí…"
-                        />
-                    </div>
-
-                    <div className="flex flex-col space-y-1.5">
-                        <label htmlFor="stackblitz_url" className="text-sm font-semibold">Pega aquí la URL final de StackBlitz</label>
-                        <Input
-                            id="stackblitz_url"
-                            name="stackblitz_url"
-                            value={formData.stackblitz_url}
-                            onChange={handleChange}
-                            className="rounded-md"
-                            placeholder="https://stackblitz.com/edit/..."
-                        />
-                    </div>
-
-                    <div className="flex flex-col space-y-2">
-                        <label htmlFor="image_file" className="text-sm font-semibold">Subir imagen</label>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => {
-                                const file = e.target.files[0];
-                                if (file) {
-                                    setFormData({ ...formData, image_file: file });
-                                    setImagePreview(URL.createObjectURL(file));
-                                }
-                            }}
-                            className="text-sm text-white file:bg-purple-600 file:text-white file:border-none file:px-3 file:py-1 file:rounded-md file:cursor-pointer"
-                        />
-                        {imagePreview && (
-                            <img
-                                src={imagePreview}
-                                alt="Preview"
-                                className="w-32 h-32 object-cover rounded-lg border border-gray-400"
-                            />
-                        )}
-                    </div>
-                </DialogBody>
-
-                <DialogFooter>
-                    <Button
-                        variant="outlined"
-                        onClick={handleSubmit}
-                        className="rounded-md border-gray-500 text-gray-500 mr-2 cursor-pointer"
+                    <Dialog
+                        open={open}
+                        handler={setOpen}
+                        size="md"
+                        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-[800px] rounded-[1vw] bg-white dark:bg-gray-900 text-gray-900 dark:text-white shadow-lg"
                     >
-                        Abrir StackBlitz
-                    </Button>
-                    <Button
-                        variant="filled"
-                        onClick={handleFinalSubmit}
-                        className="rounded-md bg-purple-700 py-2 px-4 text-white text-sm shadow-sm hover:bg-purple-800 cursor-pointer"
-                    >
-                        Guardar Proyecto
-                    </Button>
-                </DialogFooter>
-            </Dialog>
+
+                        <DialogHeader className="flex justify-between items-center">
+                            <Typography variant="h6">Crea tu idea</Typography>
+                            <Button className="text-white cursor-pointer" variant="text" size="sm" onClick={() => setOpen(false)}>
+                                ✕
+                            </Button>
+                        </DialogHeader>
+
+                        <DialogBody className="space-y-4">
+                            <Typography>Ingresa los datos de tu idea</Typography>
+
+                            <div className="flex flex-wrap gap-4">
+                                <div className="flex flex-col flex-1">
+                                    <label htmlFor="title" className="text-sm font-semibold">Título</label>
+                                    <Input
+                                        id="title"
+                                        name="title"
+                                        value={formData.title}
+                                        onChange={handleChange}
+                                        className="rounded-md"
+                                        placeholder="Título aquí"
+                                    />
+                                </div>
+
+                                <div className="flex flex-col flex-1">
+                                    <label htmlFor="hashtags" className="text-sm font-semibold">Hashtags #</label>
+                                    <Input
+                                        id="hashtags"
+                                        name="hashtags"
+                                        value={formData.hashtags}
+                                        onChange={handleChange}
+                                        className="rounded-md"
+                                        placeholder="IA, Developer, FullStack"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col space-y-1.5">
+                                <label htmlFor="description" className="text-sm font-semibold">Descripción</label>
+                                <Textarea
+                                    id="description"
+                                    name="description"
+                                    value={formData.description}
+                                    onChange={handleChange}
+                                    className="rounded-md"
+                                    placeholder="Descripción aquí…"
+                                />
+                            </div>
+
+                            <div className="flex flex-col space-y-1.5">
+                                <label htmlFor="stackblitz_url" className="text-sm font-semibold">Pega aquí la URL final de StackBlitz</label>
+                                <Input
+                                    id="stackblitz_url"
+                                    name="stackblitz_url"
+                                    value={formData.stackblitz_url}
+                                    onChange={handleChange}
+                                    className="rounded-md"
+                                    placeholder="https://stackblitz.com/edit/..."
+                                />
+                            </div>
+
+                            <div className="flex flex-col space-y-2">
+                                <label htmlFor="image_file" className="text-sm font-semibold">Subir imagen</label>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={(e) => {
+                                        const file = e.target.files[0];
+                                        if (file) {
+                                            setFormData({ ...formData, image_file: file });
+                                            setImagePreview(URL.createObjectURL(file));
+                                        }
+                                    }}
+                                    className="text-sm text-white file:bg-purple-600 file:text-white file:border-none file:px-3 file:py-1 file:rounded-md file:cursor-pointer"
+                                />
+                                {imagePreview && (
+                                    <img
+                                        src={imagePreview}
+                                        alt="Preview"
+                                        className="w-32 h-32 object-cover rounded-lg border border-gray-400"
+                                    />
+                                )}
+                            </div>
+                        </DialogBody>
+
+                        <DialogFooter>
+                            <Button
+                                variant="outlined"
+                                onClick={handleSubmit}
+                                className="rounded-md border-gray-500 text-gray-500 mr-2 cursor-pointer"
+                            >
+                                Abrir StackBlitz
+                            </Button>
+                            <Button
+                                variant="filled"
+                                onClick={handleFinalSubmit}
+                                className="rounded-md bg-purple-700 py-2 px-4 text-white text-sm shadow-sm hover:bg-purple-800 cursor-pointer"
+                            >
+                                Guardar Proyecto
+                            </Button>
+                        </DialogFooter>
+
+                    </Dialog>
+                </>
+            )}
         </>
     );
 }
