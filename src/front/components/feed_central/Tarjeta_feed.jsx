@@ -1,8 +1,12 @@
-import './Feed_central.css'
-import './Tarjeta.css'
+import './Feed_central.css';
+import './Tarjeta.css';
 import { Avatar } from "@material-tailwind/react";
 import Modal_postularse from './Modal_postularse';
 import { Card, CardHeader, CardBody, CardFooter, Typography } from "@material-tailwind/react";
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import { Navigation } from 'swiper/modules';
 
 export default function Tarjeta({ project, userFavorites, setUserFavorites, onHashtagClick }) {
     const isFavorite = Array.isArray(userFavorites) && userFavorites.includes(project.id);
@@ -28,6 +32,12 @@ export default function Tarjeta({ project, userFavorites, setUserFavorites, onHa
     };
 
     if (!project || !project.owner) return null;
+
+    const images = Array.isArray(project.image_urls) && project.image_urls.length > 0
+        ? project.image_urls
+        : project.image_url
+            ? [project.image_url]
+            : [];
 
     return (
         <div className="tarjeta-container">
@@ -74,30 +84,40 @@ export default function Tarjeta({ project, userFavorites, setUserFavorites, onHa
                             </span>
                         ))}
                     </div>
-
-
                 </CardHeader>
 
                 <CardBody className="tarjeta-body">
                     <p className="tarjeta-description">
                         {project.description}
                     </p>
-                    {project.image_url && (
-                        <div className="tarjeta-image-container">
-                            <div className="tarjeta-image-frame"></div>
-                            <img
-                                src={`http://127.0.0.1:5000${project.image_url}`}
-                                alt="imagen del proyecto"
-                                className="tarjeta-image"
-                            />
-                            <div className="tarjeta-image-overlay"></div>
 
-                            <div className="tarjeta-image-particles">
-                                <div className="image-particle image-particle-1"></div>
-                                <div className="image-particle image-particle-2"></div>
-                                <div className="image-particle image-particle-3"></div>
-                            </div>
-                        </div>
+                    {images.length > 0 && (
+                        <Swiper
+                            modules={[Navigation]}
+                            navigation
+                            spaceBetween={10}
+                            slidesPerView={1}
+                            className="tarjeta-swiper"
+                        >
+                            {images.map((img, index) => (
+                                <SwiperSlide key={index}>
+                                    <div className="tarjeta-image-container">
+                                        <div className="tarjeta-image-frame"></div>
+                                        <img
+                                            src={`http://127.0.0.1:5000${img}`}
+                                            alt={`imagen ${index + 1}`}
+                                            className="tarjeta-image"
+                                        />
+                                        <div className="tarjeta-image-overlay"></div>
+                                        <div className="tarjeta-image-particles">
+                                            <div className="image-particle image-particle-1"></div>
+                                            <div className="image-particle image-particle-2"></div>
+                                            <div className="image-particle image-particle-3"></div>
+                                        </div>
+                                    </div>
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
                     )}
                 </CardBody>
 
@@ -109,6 +129,8 @@ export default function Tarjeta({ project, userFavorites, setUserFavorites, onHa
                         <button
                             className="tarjeta-action-btn tarjeta-like-btn"
                             onClick={handleLike}
+                            aria-pressed={isFavorite}
+                            aria-label={isFavorite ? "Quitar favorito" : "Agregar a favoritos"}
                         >
                             <svg
                                 className="tarjeta-icon"
@@ -121,9 +143,11 @@ export default function Tarjeta({ project, userFavorites, setUserFavorites, onHa
                             </svg>
                         </button>
                     </div>
-
                 </CardFooter>
             </Card>
         </div>
     );
 }
+
+
+

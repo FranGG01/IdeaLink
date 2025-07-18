@@ -79,10 +79,10 @@ export default function SolicitudesButton() {
         };
     }
     return (
-        <div className="relative flex mb-2 me-0 w-[100px] h-[32px]">
+        <div className="flex">
             <button
                 onClick={() => setShowRequests(!showRequests)}
-                className="flex ms-18 items-center rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 py-3 px-6 text-sm font-medium text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
+                className="flex  items-center rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 py-3 px-6 text-sm font-medium text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
             >
                 Solicitudes
             </button>

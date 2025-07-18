@@ -17,7 +17,7 @@ export default function Modal1() {
         title: "",
         description: "",
         hashtags: "",
-        image_file: null,
+        image_files: [],
         stackblitz_url: ""
     });
 
@@ -69,7 +69,10 @@ export default function Modal1() {
             formDataToSend.append("description", formData.description);
             formDataToSend.append("hashtags", formData.hashtags);
             formDataToSend.append("stackblitz_url", formData.stackblitz_url);
-            formDataToSend.append("image_file", formData.image_file);
+            formData.image_files.forEach((file) => {
+                formDataToSend.append("image_files", file);
+            });
+
 
             const token = localStorage.getItem("jwt-token");
 
@@ -106,7 +109,7 @@ export default function Modal1() {
             <Button
                 onClick={() => setOpen(true)}
                 variant="filled"
-                className="rounded-md bg-purple-700 mx-2 py-2 px-4 text-white text-sm shadow-sm shadow-white hover:bg-purple-500 hover:shadow-md cursor-pointer"
+                className="flex  items-center rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 py-3 px-6 text-sm font-medium text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
             >
                 CREA TU IDEA
             </Button>
@@ -186,15 +189,19 @@ export default function Modal1() {
                                 <input
                                     type="file"
                                     accept="image/*"
+                                    multiple
                                     onChange={(e) => {
-                                        const file = e.target.files[0];
-                                        if (file) {
-                                            setFormData({ ...formData, image_file: file });
-                                            setImagePreview(URL.createObjectURL(file));
+                                        const files = Array.from(e.target.files);
+                                        setFormData({ ...formData, image_files: files });
+
+                                        // Mostrar la primera imagen como preview opcional
+                                        if (files.length > 0) {
+                                            setImagePreview(URL.createObjectURL(files[0]));
                                         }
                                     }}
                                     className="text-sm text-white file:bg-purple-600 file:text-white file:border-none file:px-3 file:py-1 file:rounded-md file:cursor-pointer"
                                 />
+
                                 {imagePreview && (
                                     <img
                                         src={imagePreview}
