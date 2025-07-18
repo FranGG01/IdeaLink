@@ -56,7 +56,8 @@ export default function Collaborations() {
                         </div>
                         <h2 className="collaborations-section-title">Mis Solicitudes</h2>
                         <SolicitudesButton />
-                        <h2 className="collaborations-section-title">Mis colaboraciones</h2>
+                        <h2 className="collaborations-section-title  ">Mis colaboraciones</h2>
+
                         <div className="collaborations-section-line"></div>
                     </div>
 
