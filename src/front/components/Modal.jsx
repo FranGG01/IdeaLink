@@ -106,7 +106,7 @@ export default function Modal1() {
             <Button
                 onClick={() => setOpen(true)}
                 variant="filled"
-                className="rounded-md bg-purple-700 mx-2 py-2 px-4 text-white text-sm shadow-sm shadow-white hover:bg-purple-500 hover:shadow-md cursor-pointer"
+                className="flex  items-center rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 py-3 px-6 text-sm font-medium text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
             >
                 CREA TU IDEA
             </Button>
