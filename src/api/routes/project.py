@@ -32,21 +32,23 @@ def create_project():
     )
 
     stackblitz_url = request.form.get('stackblitz_url')
-    image = request.files.get('image_file')
+    image_files = request.files.getlist('image_files')
+    image_urls = []
 
-    image_url = None
-    if image:
-        filename = image.filename
-        save_path = os.path.join("src", "static", "uploads", filename)
-        image.save(save_path)
-        image_url = f"/static/uploads/{filename}"
+    for image in image_files:
+        if image and image.filename:
+            filename = image.filename
+            save_path = os.path.join("src", "static", "uploads", filename)
+            os.makedirs(os.path.dirname(save_path), exist_ok=True)
+            image.save(save_path)
+            image_urls.append(f"/static/uploads/{filename}")
 
     project = Project(
         title=title,
         description=description,
         hashtags=hashtags,
         stackblitz_url=stackblitz_url,
-        image_url=image_url,
+        image_urls=image_urls,
         is_accepting_applications=True,
         owner_id=user_id,
         code_files=None
@@ -56,6 +58,7 @@ def create_project():
     db.session.commit()
 
     return jsonify(project.serialize()), 200
+
 
 
 @project_api.route('/projects/<int:id>', methods=['PUT'])
