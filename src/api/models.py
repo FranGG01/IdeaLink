@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import String, Boolean, Text, ForeignKey, DateTime, UniqueConstraint, JSON
+from sqlalchemy import String, Boolean, Text, ForeignKey, DateTime, UniqueConstraint, JSON, PickleType
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import datetime
 
@@ -66,7 +66,7 @@ class Project(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(String(120), nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=False)
-    image_url: Mapped[str] = mapped_column(String(255), nullable=True)
+    image_urls: Mapped[list] = mapped_column(PickleType, nullable=True)
     hashtags: Mapped[str] = mapped_column(String(255), nullable=True)
     is_accepting_applications: Mapped[bool] = mapped_column(default=True)
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
@@ -90,7 +90,7 @@ class Project(db.Model):
             'id': self.id,
             'title': self.title,
             'description': self.description,
-            'image_url': self.image_url,
+            'image_urls': self.image_urls or [],
             'hashtags': hashtags_list,
             'is_accepting_applications': self.is_accepting_applications,
             'created_at': self.created_at.isoformat(),
