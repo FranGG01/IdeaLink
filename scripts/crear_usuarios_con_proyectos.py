@@ -2,6 +2,7 @@ import requests
 from faker import Faker
 from io import BytesIO
 import random
+
 fake = Faker()
 
 BASE_URL = "http://127.0.0.1:5000/api"
@@ -10,23 +11,25 @@ TOKEN_URL = f"{BASE_URL}/token"
 PROFILE_URL = f"{BASE_URL}/profile"
 PROJECT_URL = f"{BASE_URL}/projects"
 
-# Descargar imagen real aleatoria de Picsum
+hashtags_pool = [
+    "javascript", "react", "python", "flask", "css", "frontend",
+    "backend", "api", "tailwind", "vite", "docker", "jwt", "postgres"
+]
 
-def get_random_image():
-    image_id = random.randint(0, 1084)
-    # Paso 1: obtener la URL final tras redirección
-    redirect_url = f"https://picsum.photos/id/{image_id}/600/400"
-    response = requests.get(redirect_url, stream=True, allow_redirects=True)
-
-    if response.status_code == 200 and "image" in response.headers.get("Content-Type", ""):
-        img = BytesIO(response.content)
-        img.name = f"{image_id}.jpg"
-        return img
-    else:
-        print(f"⚠️ Error al obtener imagen con id {image_id} - {response.status_code}")
-        return None
-
-
+# Descargar múltiples imágenes reales aleatorias
+def get_multiple_images(count=2):
+    images = []
+    tries = 0
+    while len(images) < count and tries < count * 3:
+        tries += 1
+        image_id = random.randint(0, 1084)
+        url = f"https://picsum.photos/id/{image_id}/600/400"
+        res = requests.get(url, stream=True)
+        if res.status_code == 200 and "image" in res.headers.get("Content-Type", ""):
+            img = BytesIO(res.content)
+            img.name = f"{image_id}.jpg"
+            images.append(img)
+    return images
 
 num_users = 16
 
@@ -72,24 +75,27 @@ for i in range(num_users):
         headers={"Authorization": f"Bearer {token}"}
     )
 
-    # 4. Crear proyecto con imagen real
-    image_file = get_random_image()
-    if not image_file:
-        print("⚠️ No se pudo descargar la imagen")
+    # 4. Crear hashtags aleatorios
+    random_hashtags = random.sample(hashtags_pool, k=random.randint(2, 4))
+    hashtags_str = ", ".join(f"#{tag}" for tag in random_hashtags)
+
+    # 5. Descargar múltiples imágenes
+    images = get_multiple_images(count=random.randint(2, 3))
+    if not images:
+        print("⚠️ No se pudieron descargar imágenes")
         continue
 
+    # 6. Crear proyecto
     project_data = {
         "title": fake.catch_phrase(),
         "description": fake.text(max_nb_chars=120),
-        "hashtags": "#demo #faker",
+        "hashtags": hashtags_str,
         "stackblitz_url": "https://stackblitz.com/edit/placeholder"
     }
 
-    unique_filename = f"{username}_{i}.jpg"
-    files = {
-        "image_file": (unique_filename, image_file, "image/jpeg")
-    }
-
+    files = []
+    for idx, img in enumerate(images):
+        files.append(("image_files", (f"{username}_{i}_img{idx+1}.jpg", img, "image/jpeg")))
 
     project_res = requests.post(
         PROJECT_URL,

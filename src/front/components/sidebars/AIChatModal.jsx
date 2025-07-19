@@ -38,7 +38,7 @@ const AIChatModal = () => {
     } catch {
       setMessages((prev) => [
         ...prev,
-        { sender: "bot", text: "Error al contactar con la IA." },
+        { sender: "bot", text: "🤖 Estamos entrenando a nuestra IA para ayudarte muy pronto." },
       ]);
     }
 
