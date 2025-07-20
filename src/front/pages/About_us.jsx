@@ -41,7 +41,7 @@ export default function AboutUs() {
             <div className="max-w-5xl mx-auto text-center">
                 <button
                     onClick={() => navigate("/feed")}
-                    className="self-start mb-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition"
+                    className="self-start mb-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition cursor-pointer"
                 >
                     ← Volver
                 </button>

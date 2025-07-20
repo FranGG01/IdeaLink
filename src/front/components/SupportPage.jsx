@@ -21,7 +21,7 @@ export default function SupportPage() {
         <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center px-4">
             <button
                 onClick={() => navigate("/feed")}
-                className="mb-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition self-center"
+                className="mb-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition self-center cursor-pointer"
             >
                 ← Volver
             </button>
