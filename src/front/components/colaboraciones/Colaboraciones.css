@@ -946,3 +946,34 @@
   outline: 2px solid #a855f7;
   outline-offset: 2px;
 }
+.collab-editor-dots {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.collab-editor-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.collab-editor-dot:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+}
+
+.collab-dot-red {
+  background-color: #f87171; /* red-400 */
+}
+
+.collab-dot-yellow {
+  background-color: #facc15; /* yellow-400 */
+}
+
+.collab-dot-green {
+  background-color: #4ade80; /* green-400 */
+}

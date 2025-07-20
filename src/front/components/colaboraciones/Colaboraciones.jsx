@@ -28,6 +28,7 @@ export default function Collaborations() {
     const [searchQuery, setSearchQuery] = useState("");
     const [filterType, setFilterType] = useState("all");
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [isMinimized, setIsMinimized] = useState(false);
 
     const itemsPerPage = 4;
     const totalSlides = Math.ceil(filteredCollabs.length / itemsPerPage);
@@ -340,11 +341,30 @@ export default function Collaborations() {
                             <div className="collab-editor-wrapper">
                                 <div className="collab-editor-toolbar">
                                     <div className="collab-editor-dots">
-                                        <div className="collab-editor-dot collab-dot-red"></div>
-                                        <div className="collab-editor-dot collab-dot-yellow"></div>
-                                        <div className="collab-editor-dot collab-dot-green"></div>
+                                        {/* 🔴 Cerrar */}
+                                        <div
+                                            className="collab-editor-dot collab-dot-red"
+                                            title="Cerrar"
+                                            onClick={() => setSelectedProject(null)}
+                                        ></div>
+
+                                        {/* 🟡 Minimizar/Restaurar */}
+                                        <div
+                                            className="collab-editor-dot collab-dot-yellow"
+                                            title={isMinimized ? "Restaurar" : "Minimizar"}
+                                            onClick={() => setIsMinimized(prev => !prev)}
+                                        ></div>
+
+                                        {/* 🟢 Abrir en nueva pestaña */}
+                                        <div
+                                            className="collab-editor-dot collab-dot-green"
+                                            title="Abrir en StackBlitz"
+                                            onClick={() => window.open(selectedProject.stackblitz_url, "_blank")}
+                                        ></div>
                                     </div>
+
                                     <span className="collab-editor-name">{selectedProject.title}</span>
+
                                     <a
                                         href={selectedProject.stackblitz_url}
                                         target="_blank"
@@ -355,15 +375,19 @@ export default function Collaborations() {
                                         Abrir en nueva pestaña
                                     </a>
                                 </div>
-                                <ProyectoEmbed
-                                    className="collab-embed"
-                                    stackblitzUrl={selectedProject.stackblitz_url}
-                                    title={selectedProject.title}
-                                />
+
+                                {!isMinimized && (
+                                    <ProyectoEmbed
+                                        className="collab-embed"
+                                        stackblitzUrl={selectedProject.stackblitz_url}
+                                        title={selectedProject.title}
+                                    />
+                                )}
                             </div>
                         </div>
                     </section>
                 )}
+
             </div>
         </div>
     );
