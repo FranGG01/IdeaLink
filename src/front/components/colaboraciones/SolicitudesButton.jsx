@@ -111,13 +111,13 @@ export default function SolicitudesButton() {
                                 <div className="mt-2 flex gap-2">
                                     <button
                                         onClick={() => handleAccept(app.id)}
-                                        className="bg-green-600 hover:bg-green-700 px-2 py-1 rounded text-xs"
+                                        className="bg-green-600 hover:bg-green-700 px-2 py-1 rounded text-xs cursor-pointer"
                                     >
                                         Aceptar
                                     </button>
                                     <button
                                         onClick={() => handleReject(app.id)}
-                                        className="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-xs"
+                                        className="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-xs cursor-pointer"
                                     >
                                         Rechazar
                                     </button>

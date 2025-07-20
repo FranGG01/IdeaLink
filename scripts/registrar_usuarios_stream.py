@@ -8,10 +8,7 @@ STREAM_TOKEN_URL = "http://127.0.0.1:5000/api/stream-token"
 # Lista de correos de usuarios ya creados
 emails = [
     # 👇 Reemplaza estos por los emails que se crearon
-    "normanhoover@example.org	",
-    "qcooper@example.net	",
-    "dleon@example.net",
-    "dhowell@example.org"
+    "david07@example.org"
 ]
 
 password = "123456"

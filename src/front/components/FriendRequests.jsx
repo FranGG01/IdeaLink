@@ -87,13 +87,13 @@ export default function FriendRequests({
                     <div className="flex gap-2 mt-3">
                         <button
                             onClick={() => handleResponse(req.id, "accept")}
-                            className="bg-green-600 px-3 py-1 rounded hover:bg-green-700"
+                            className="bg-green-600 px-3 py-1 rounded hover:bg-green-700 cursor-pointer"
                         >
                             Aceptar
                         </button>
                         <button
                             onClick={() => handleResponse(req.id, "reject")}
-                            className="bg-red-600 px-3 py-1 rounded hover:bg-red-700"
+                            className="bg-red-600 px-3 py-1 rounded hover:bg-red-700 cursor-pointer"
                         >
                             Rechazar
                         </button>
