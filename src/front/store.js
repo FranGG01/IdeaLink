@@ -10,7 +10,8 @@ export const initialStore = () => ({
   todos: [
     { id: 1, title: "Make the bed", background: null },
     { id: 2, title: "Do my homework", background: null }
-  ]
+  ],
+  pendingApplications: 0, // <-- nuevo estado para solicitudes pendientes
 });
 
 export default function storeReducer(store, action = {}) {
@@ -37,10 +38,14 @@ export default function storeReducer(store, action = {}) {
     case "set_projects":
       return { ...store, projects: action.payload };
 
+    case "set_pending_applications":  // <-- nuevo caso para actualizar solicitudes
+      return { ...store, pendingApplications: action.payload };
+
     default:
       throw Error("Unknown action.");
   }
-}
+};
+
 
 /*───────────────────────────────────────────────────────────
   Helpers de API

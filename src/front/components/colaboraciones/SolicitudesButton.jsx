@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Users } from "lucide-react";
+import useGlobalReducer from "../../hooks/useGlobalReducer"; // 👈 IMPORTANTE
 
 export default function SolicitudesButton() {
     const [applications, setApplications] = useState([]);
@@ -8,6 +9,8 @@ export default function SolicitudesButton() {
     const [pendingCount, setPendingCount] = useState(0);
     const buttonRef = useRef(null);
     const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
+
+    const { dispatch } = useGlobalReducer(); // 👈 ACCESO AL DISPATCH GLOBAL
 
     const fetchApplications = async () => {
         try {
@@ -19,6 +22,7 @@ export default function SolicitudesButton() {
             const data = await res.json();
             setApplications(data);
             setPendingCount(data.length);
+            dispatch({ type: "set_pending_applications", payload: data.length }); // 👈 ACTUALIZA GLOBAL
         } catch (error) {
             console.error(error);
         }
@@ -32,7 +36,7 @@ export default function SolicitudesButton() {
         if (showRequests && buttonRef.current) {
             const rect = buttonRef.current.getBoundingClientRect();
             setModalPosition({
-                top: rect.bottom + window.scrollY + 8,  // 8px debajo del botón
+                top: rect.bottom + window.scrollY + 8,
                 left: rect.left + window.scrollX
             });
         }
@@ -49,8 +53,13 @@ export default function SolicitudesButton() {
                 }
             });
             if (!res.ok) throw new Error("Error al aceptar postulación");
-            setApplications((prev) => prev.filter((a) => a.id !== appId));
-            setPendingCount((prev) => prev - 1);
+
+            setApplications((prev) => {
+                const updated = prev.filter((a) => a.id !== appId);
+                setPendingCount(updated.length);
+                dispatch({ type: "set_pending_applications", payload: updated.length }); // 👈 ACTUALIZA GLOBAL
+                return updated;
+            });
         } catch (error) {
             console.error("❌ Error aceptando postulación:", error);
         }
@@ -67,8 +76,13 @@ export default function SolicitudesButton() {
                 }
             });
             if (!res.ok) throw new Error("Error al rechazar postulación");
-            setApplications((prev) => prev.filter((a) => a.id !== appId));
-            setPendingCount((prev) => prev - 1);
+
+            setApplications((prev) => {
+                const updated = prev.filter((a) => a.id !== appId);
+                setPendingCount(updated.length);
+                dispatch({ type: "set_pending_applications", payload: updated.length }); // 👈 ACTUALIZA GLOBAL
+                return updated;
+            });
         } catch (error) {
             console.error("❌ Error rechazando postulación:", error);
         }
