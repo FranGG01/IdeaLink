@@ -31,6 +31,15 @@ export default function Collaborations() {
 
     const itemsPerPage = 4;
     const totalSlides = Math.ceil(filteredCollabs.length / itemsPerPage);
+    useEffect(() => {
+        const token = localStorage.getItem("jwt-token");
+
+        fetch("http://127.0.0.1:5000/api/profile", {
+            headers: { Authorization: `Bearer ${token}` }
+        })
+            .then((res) => res.json())
+            .then((data) => console.log("🧠 Usuario autenticado:", data));
+    }, []);
 
     useEffect(() => {
         const fetchCollaborations = async () => {
@@ -45,6 +54,7 @@ export default function Collaborations() {
                 if (!res.ok) throw new Error("Error al cargar colaboraciones");
 
                 const data = await res.json();
+                console.log("✅ Datos de colaboraciones:", JSON.stringify(data, null, 2));
                 setCollabs(data);
                 setFilteredCollabs(data);
                 setError(null);
