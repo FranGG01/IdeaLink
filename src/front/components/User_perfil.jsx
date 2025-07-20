@@ -347,7 +347,10 @@ const User_perfil = () => {
                     Mis Ideas
                 </button>
                 <button
-                    className={`pb-2 ${activeTab === "favorites" ? "border-b-2 border-white text-white" : "text-gray-400 hover:text-white"},cursor-pointer`}
+                    className={`pb-2 cursor-pointer ${activeTab === "favorites"
+                            ? "border-b-2 border-white text-white"
+                            : "text-gray-400 hover:text-white"
+                        }`}
                     onClick={() => setActiveTab("favorites")}
                 >
                     Favoritos
