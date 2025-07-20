@@ -3,7 +3,7 @@ import Sidebarleft from "../components/sidebars/SidebarLeft"
 import SidebarRight from "../components/sidebars/SidebarRight"
 import { useEffect, useState } from "react";
 import { useLoading } from '../../context/LoadingContext';
-import RotatingText from "../components/Loader/RotatingText";
+import CircularText from '../components/Loader/CircularText';
 
 const Feed = () => {
     const [initialLoading, setInitialLoading] = useState(false);
@@ -28,31 +28,13 @@ const Feed = () => {
 
     if (initialLoading || isLoading) {
         return (
-            <div className="fixed inset-0 flex flex-col items-center justify-center bg-black z-50 text-center p-4">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-200 mb-2">
-                    CREATIVE
-                </h1>
-                <span className="text-xl sm:text-2xl md:text-3xl bg-cyan-700 text-white px-3 py-1 sm:py-2 rounded-lg">
-                    <RotatingText
-                        texts={[
-                            "Components!",
-                            "Thinking!",
-                            "Coding!",
-                            "Desings!",
-                            "Webs!",
-                            "Applications!",
-                        ]}
-                        mainClassName="overflow-hidden justify-center"
-                        staggerFrom="last"
-                        initial={{ y: "100%" }}
-                        animate={{ y: 0 }}
-                        exit={{ y: "-120%" }}
-                        staggerDuration={0.025}
-                        splitLevelClassName="overflow-hidden"
-                        transition={{ type: "spring", damping: 30, stiffness: 400 }}
-                        rotationInterval={2000}
-                    />
-                </span>
+            <div className="flex items-center justify-center h-screen bg-black">
+                <CircularText
+                    text="Loading*Big*Dreams*"
+                    onHover="speedUp"
+                    spinDuration={20}
+                    className="custom-class"
+                />
             </div>
         );
     }

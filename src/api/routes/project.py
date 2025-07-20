@@ -5,18 +5,19 @@ from collections import Counter
 
 project_api = Blueprint('project_api', __name__)
 
+# Obtener todos los proyectos
 @project_api.route('/projects', methods=['GET'])
 def get_all_projects():
     projects = Project.query.order_by(Project.created_at.desc()).all()
     return jsonify([p.serialize() for p in projects]), 200
 
-
+# Obtener un proyecto específico por ID
 @project_api.route('/projects/<int:id>', methods=['GET'])
 def get_project(id):
     project = Project.query.get_or_404(id)
     return jsonify(project.serialize()), 200
 
-
+# Crear un nuevo proyecto
 @project_api.route('/projects', methods=['POST'])
 @jwt_required()
 def create_project():
@@ -57,10 +58,9 @@ def create_project():
     db.session.add(project)
     db.session.commit()
 
-    return jsonify(project.serialize()), 200
+    return jsonify(project.serialize(current_user_id=user_id)), 200
 
-
-
+# Actualizar un proyecto existente
 @project_api.route('/projects/<int:id>', methods=['PUT'])
 def update_project(id):
     project = Project.query.get_or_404(id)
@@ -84,7 +84,7 @@ def update_project(id):
     db.session.commit()
     return jsonify(project.serialize()), 200
 
-
+# Eliminar un proyecto
 @project_api.route('/projects/<int:id>', methods=['DELETE'])
 def delete_project(id):
     project = Project.query.get_or_404(id)
@@ -92,38 +92,49 @@ def delete_project(id):
     db.session.commit()
     return '', 204
 
-
+# Obtener los proyectos propios del usuario autenticado
 @project_api.route('/my-projects', methods=['GET'])
 @jwt_required()
 def get_my_projects():
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity()) 
     projects = Project.query.filter_by(owner_id=user_id).all()
-    return jsonify([p.serialize() for p in projects]), 200
+    return jsonify([p.serialize(current_user_id=user_id) for p in projects]), 200
 
-
+# Obtener colaboraciones (como colaborador o como dueño)
 @project_api.route('/my-collaborations', methods=['GET'])
 @jwt_required()
 def get_my_collaborations():
-    user_id = get_jwt_identity()
-    projects = Project.query.filter(
-        (Project.collaborators.any(id=user_id)) | (Project.owner_id == user_id)
-    ).all()
-    return jsonify([p.serialize() for p in projects]), 200
+    user_id = int(get_jwt_identity()) 
+
+    # proyectos donde soy dueño
+    own_projects = Project.query.filter_by(owner_id=user_id).all()
+
+    # proyectos donde colaboro
+    from api.models import ProjectCollaborator  # asegúrate de importar esto arriba
+    collab_links = ProjectCollaborator.query.filter_by(user_id=user_id).all()
+    collab_projects = [link.project for link in collab_links]
+
+    # unir y eliminar duplicados
+    all_projects = {p.id: p for p in own_projects + collab_projects}.values()
+
+    result = [p.serialize(current_user_id=user_id) for p in all_projects]
+    print(f"🔎 user_id actual: {user_id}")
+    print(f"🔍 Serializando: {[ (p.title, p.owner_id, user_id, p.serialize(current_user_id=user_id)['is_owner']) for p in all_projects ]}")
+
+    return jsonify(result), 200
 
 
 
+# Obtener los hashtags más usados
 @project_api.route('/trending-hashtags', methods=['GET'])
 def trending_hashtags():
     projects = Project.query.all()
     hashtags_all = []
     for p in projects:
         if p.hashtags:
-            # Convierte string separado por comas a lista, limpiando #
             tags = [tag.strip().lstrip('#') for tag in p.hashtags.split(',') if tag.strip()]
             hashtags_all.extend(tags)
 
     counter = Counter(hashtags_all)
     most_common = [tag for tag, count in counter.most_common(6)]
     return jsonify(most_common), 200
-
-

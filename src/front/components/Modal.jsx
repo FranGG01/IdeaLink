@@ -112,8 +112,7 @@ export default function Modal1() {
             </Button>
             {open && (
                 <>
-                    <div className="fixed inset-0 z-40 backdrop-blur-md bg-black/40"></div>
-
+                    {open && <div className="fixed inset-0 z-40 backdrop-blur-md bg-black/40"></div>}
                     <Dialog
                         open={open}
                         handler={setOpen}

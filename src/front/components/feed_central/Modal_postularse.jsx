@@ -19,7 +19,6 @@ export default function Modal_postularse({ projectId }) {
     const handleOpen = () => setOpen((prev) => !prev);
 
     const handleSubmit = async () => {
-        console.log("🧪 Enviando postulación para projectId:", projectId);
         const token = localStorage.getItem("jwt-token");
 
         try {
@@ -50,7 +49,7 @@ export default function Modal_postularse({ projectId }) {
         <>
             <Button
                 onClick={handleOpen}
-                className="flex  items-center rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 py-3 px-6 text-sm font-medium text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
+                className="flex items-center rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 py-3 px-6 text-sm font-medium text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
             >
                 Postularse
             </Button>
@@ -59,7 +58,10 @@ export default function Modal_postularse({ projectId }) {
                 open={open}
                 handler={handleOpen}
                 size="md"
-                className="postularse-modal-dialog"
+                className="postularse-modal-dialog relative z-[9999]"
+                overlayProps={{
+                    className: "backdrop-blur-md bg-black/40",
+                }}
                 animate={{
                     mount: { scale: 1, y: 0 },
                     unmount: { scale: 0.9, y: -100 },
@@ -98,32 +100,31 @@ export default function Modal_postularse({ projectId }) {
                 <DialogFooter className="postularse-modal-footer">
                     <div
                         style={{
-                            backgroundColor: 'rgb(126, 34, 206)',
-                            color: 'white',
-                            borderRadius: '0.375rem',
-                            padding: '0.5rem 1rem',
-                            fontSize: '0.875rem',
-                            fontWeight: '500',
-                            cursor: 'pointer',
-                            userSelect: 'none',
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            minWidth: '120px',
+                            backgroundColor: "rgb(126, 34, 206)",
+                            color: "white",
+                            borderRadius: "0.375rem",
+                            padding: "0.5rem 1rem",
+                            fontSize: "0.875rem",
+                            fontWeight: "500",
+                            cursor: "pointer",
+                            userSelect: "none",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            minWidth: "120px",
                             zIndex: 10000,
-                            position: 'relative'
+                            position: "relative",
                         }}
                         onMouseDown={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
-                            console.log("🔥 Botón mousedown!");
                             handleSubmit();
                         }}
                         onMouseEnter={(e) => {
-                            e.target.style.backgroundColor = 'rgb(147, 51, 234)';
+                            e.target.style.backgroundColor = "rgb(147, 51, 234)";
                         }}
                         onMouseLeave={(e) => {
-                            e.target.style.backgroundColor = 'rgb(126, 34, 206)';
+                            e.target.style.backgroundColor = "rgb(126, 34, 206)";
                         }}
                     >
                         Enviar postulación

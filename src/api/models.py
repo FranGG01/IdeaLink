@@ -11,7 +11,6 @@ favorites = db.Table(
     db.Column('project_id', db.Integer, db.ForeignKey('project.id'), primary_key=True)
 )
 
-
 class FriendRequest(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     sender_id: Mapped[int] = mapped_column(ForeignKey('user.id'), nullable=False)
@@ -40,7 +39,6 @@ class User(db.Model):
     sent_requests = relationship("FriendRequest", foreign_keys=[FriendRequest.sender_id], back_populates="sender", lazy="dynamic")
     received_requests = relationship("FriendRequest", foreign_keys=[FriendRequest.receiver_id], back_populates="receiver", lazy="dynamic")
 
-    # ✅ Favoritos
     favorite_projects = db.relationship("Project", secondary=favorites, backref="favorited_by")
 
     @property
@@ -78,6 +76,7 @@ class Project(db.Model):
     code_files: Mapped[dict] = mapped_column(JSON, nullable=True)
 
     def serialize(self, current_user_id=None):
+        print("🔍 Comparando:", self.owner_id, "con", current_user_id)
         is_favorite = False
         if current_user_id:
             is_favorite = any(user.id == current_user_id for user in self.favorited_by)
@@ -98,6 +97,7 @@ class Project(db.Model):
             'stackblitz_url': self.stackblitz_url,
             'code_files': self.code_files,
             'is_favorite': is_favorite,
+            'is_owner': current_user_id == self.owner_id,
             'owner': {
                 'username': getattr(self.owner, "username", "Anónimo"),
                 'avatar_url': getattr(self.owner, "avatar_url", "https://ui-avatars.com/api/?name=User")
@@ -129,7 +129,6 @@ class Postularse(db.Model):
         }
 
 
-
 class ProjectCollaborator(db.Model):
     __tablename__ = 'project_collaborators'
     id = db.Column(db.Integer, primary_key=True)
@@ -145,4 +144,3 @@ class ProjectCollaborator(db.Model):
             "user_id": self.user_id,
             "project_id": self.project_id
         }
-
