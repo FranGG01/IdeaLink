@@ -50,7 +50,7 @@ export default function SidebarLeft() {
   ];
 
   return (
-    <aside className="w-64 bg-[#1e293b] p-5 pt-0 text-white h-screen flex flex-col justify-between">
+    <aside className="w-64 bg-[#1e2939] p-5 pt-0 text-white h-screen flex flex-col justify-between">
       <div>
         <div className="h-35 flex items-start p-0 ">
           <LogoBombilla />
@@ -71,9 +71,19 @@ export default function SidebarLeft() {
                 <Icon className="w-4 h-4" />
                 <span>{label}</span>
 
-                {/* 🔴 Notificación para "Colaboraciones" */}
+                {/* 🔴 Notificación mejorada para "Colaboraciones" */}
                 {isCollab && hasPending && (
-                  <span className="absolute right-10 top-4 w-2 h-2 bg-red-500 rounded-full animate-ping"></span>
+                  <div className="absolute -top-1 -right-1 flex items-center justify-center">
+                    {/* Círculo de fondo con animación de pulso */}
+                    <div className="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center animate-pulse shadow-lg">
+                      {/* Número de solicitudes pendientes */}
+                      <span className="text-white text-xs font-semibold leading-none">
+                        {store.pendingApplications > 99 ? '99+' : store.pendingApplications}
+                      </span>
+                    </div>
+                    {/* Anillo exterior con animación de ping */}
+                    <div className="absolute w-5 h-5 bg-red-400 rounded-full animate-ping opacity-75"></div>
+                  </div>
                 )}
               </Link>
             );

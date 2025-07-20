@@ -178,7 +178,7 @@ export default function Collaborations() {
                             >
                                 <option value="all">Todos los proyectos</option>
                                 <option value="own">Mis proyectos</option>
-                                <option value="collaborator">Colaboraciones</option>
+                                <option value="collaborator" >Colaboraciones</option>
                             </select>
 
                             <SolicitudesButton />
