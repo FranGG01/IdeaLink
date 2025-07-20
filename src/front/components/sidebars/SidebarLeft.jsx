@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Home, Folder, User, HelpCircle } from "lucide-react";
 import Separator from "./Separator";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import LogoBombilla from "../LogoBombilla";
 import AIChatModal from "./AIChatModal";
+import useGlobalReducer from "../../hooks/useGlobalReducer";
 
 export default function SidebarLeft() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const { store, dispatch } = useGlobalReducer();
+  const hasPending = store.pendingApplications > 0;
 
   const handleLogout = () => {
     localStorage.removeItem("jwt-token");
@@ -15,6 +19,27 @@ export default function SidebarLeft() {
     localStorage.removeItem("hasVisitedFeed");
     navigate("/");
   };
+
+  // Opcional: actualizar el conteo de solicitudes periódicamente si no se hace en otro lugar
+  useEffect(() => {
+    const fetchApplicationsCount = async () => {
+      try {
+        const token = localStorage.getItem("jwt-token");
+        const res = await fetch("http://127.0.0.1:5000/api/my-project-applications", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) throw new Error("Error al obtener postulaciones");
+        const data = await res.json();
+        dispatch({ type: "set_pending_applications", payload: data.length });
+      } catch (error) {
+        console.error("Error cargando solicitudes en sidebar:", error);
+      }
+    };
+
+    fetchApplicationsCount();
+    const interval = setInterval(fetchApplicationsCount, 30000); // cada 30 seg
+    return () => clearInterval(interval);
+  }, [dispatch]);
 
   const navItems = [
     { label: "Dashboard", icon: Home, to: "/feed" },
@@ -26,38 +51,43 @@ export default function SidebarLeft() {
 
   return (
     <aside className="w-64 bg-[#1e293b] p-5 pt-0 text-white h-screen flex flex-col justify-between">
-      {/* Top Logo y Menú */}
       <div>
         <div className="h-35 flex items-start p-0 ">
           <LogoBombilla />
         </div>
 
         <nav className="space-y-3 ">
-          {navItems.map(({ label, icon: Icon, to }) => (
-            <Link
-              to={to}
-              key={label}
-              className={`w-full flex items-center space-x-3 text-left p-2 rounded-md transition-colors duration-200 cursor-pointer ${location.pathname === to
-                ? "bg-purple-700"
-                : "hover:bg-purple-500/20"
-                }`}
-            >
-              <Icon className="w-4 h-4" />
-              <span>{label}</span>
-            </Link>
-          ))}
+          {navItems.map(({ label, icon: Icon, to }) => {
+            const isActive = location.pathname === to;
+            const isCollab = label === "Colaboraciones";
+
+            return (
+              <Link
+                to={to}
+                key={label}
+                className={`relative w-full flex items-center space-x-3 text-left p-2 rounded-md transition-colors duration-200 cursor-pointer ${isActive ? "bg-purple-700" : "hover:bg-purple-500/20"
+                  }`}
+              >
+                <Icon className="w-4 h-4" />
+                <span>{label}</span>
+
+                {/* 🔴 Notificación para "Colaboraciones" */}
+                {isCollab && hasPending && (
+                  <span className="absolute right-10 top-4 w-2 h-2 bg-red-500 rounded-full animate-ping"></span>
+                )}
+              </Link>
+            );
+          })}
         </nav>
 
-        {/* Separador + Botón Chat IA */}
         <div className="mt-6">
           <Separator />
         </div>
         <div className="mt-4">
-          <AIChatModal /> {/* ✅ Botón que abre el chat IA */}
+          <AIChatModal />
         </div>
       </div>
 
-      {/* Bottom: Cerrar sesión */}
       <div className="mt-8">
         <button
           onClick={handleLogout}

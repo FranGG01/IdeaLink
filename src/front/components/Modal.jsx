@@ -9,7 +9,7 @@ import sdk from "@stackblitz/sdk";
 export default function Modal1() {
     const [open, setOpen] = useState(false);
     const { store, dispatch } = useGlobalReducer();
-    const [imagePreview, setImagePreview] = useState(null);
+    const [imagePreview, setImagePreview] = useState([]);
 
     const user = store.user;
 
@@ -17,7 +17,7 @@ export default function Modal1() {
         title: "",
         description: "",
         hashtags: "",
-        image_file: null,
+        image_files: [],
         stackblitz_url: ""
     });
 
@@ -69,7 +69,10 @@ export default function Modal1() {
             formDataToSend.append("description", formData.description);
             formDataToSend.append("hashtags", formData.hashtags);
             formDataToSend.append("stackblitz_url", formData.stackblitz_url);
-            formDataToSend.append("image_file", formData.image_file);
+            formData.image_files.forEach((file) => {
+                formDataToSend.append("image_files", file);
+            });
+
 
             const token = localStorage.getItem("jwt-token");
 
@@ -185,21 +188,28 @@ export default function Modal1() {
                                 <input
                                     type="file"
                                     accept="image/*"
+                                    multiple
                                     onChange={(e) => {
-                                        const file = e.target.files[0];
-                                        if (file) {
-                                            setFormData({ ...formData, image_file: file });
-                                            setImagePreview(URL.createObjectURL(file));
-                                        }
+                                        const files = Array.from(e.target.files);
+                                        setFormData({ ...formData, image_files: files });
+
+                                        // Mostrar previews
+                                        const previews = files.map((file) => URL.createObjectURL(file));
+                                        setImagePreview(previews);
                                     }}
                                     className="text-sm text-white file:bg-purple-600 file:text-white file:border-none file:px-3 file:py-1 file:rounded-md file:cursor-pointer"
                                 />
-                                {imagePreview && (
-                                    <img
-                                        src={imagePreview}
-                                        alt="Preview"
-                                        className="w-32 h-32 object-cover rounded-lg border border-gray-400"
-                                    />
+                                {imagePreview.length > 0 && (
+                                    <div className="flex gap-2 flex-wrap">
+                                        {imagePreview.map((src, idx) => (
+                                            <img
+                                                key={idx}
+                                                src={src}
+                                                alt={`preview-${idx}`}
+                                                className="w-32 h-32 object-cover rounded-lg border border-gray-400"
+                                            />
+                                        ))}
+                                    </div>
                                 )}
                             </div>
                         </DialogBody>
