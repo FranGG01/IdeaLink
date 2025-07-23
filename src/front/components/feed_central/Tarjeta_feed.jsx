@@ -15,7 +15,7 @@ export default function Tarjeta({ project, userFavorites, setUserFavorites, onHa
         const token = localStorage.getItem("jwt-token");
 
         const method = isFavorite ? "DELETE" : "POST";
-        const response = await fetch(`http://127.0.0.1:5000/api/favorites/${project.id}`, {
+        const response = await fetch(`${API_BASE}/favorites/${project.id}`, {
             method,
             headers: {
                 "Authorization": `Bearer ${token}`
@@ -104,7 +104,7 @@ export default function Tarjeta({ project, userFavorites, setUserFavorites, onHa
                                     <div className="tarjeta-image-container">
                                         <div className="tarjeta-image-frame"></div>
                                         <img
-                                            src={`http://127.0.0.1:5000${img}`}
+                                            src={`https://sample-service-name-alvt.onrender.com${img}`}
                                             alt={`imagen ${index + 1}`}
                                             className="tarjeta-image"
                                         />

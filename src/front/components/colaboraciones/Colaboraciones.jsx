@@ -35,7 +35,7 @@ export default function Collaborations() {
     useEffect(() => {
         const token = localStorage.getItem("jwt-token");
 
-        fetch("http://127.0.0.1:5000/api/profile", {
+        fetch(`${API_BASE}/profile`, {
             headers: { Authorization: `Bearer ${token}` }
         })
             .then((res) => res.json())
@@ -47,7 +47,7 @@ export default function Collaborations() {
             setLoading(true);
             try {
                 const token = localStorage.getItem("jwt-token");
-                const res = await fetch("http://127.0.0.1:5000/api/my-collaborations", {
+                const res = await fetch(`${API_BASE}/my-collaborations`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

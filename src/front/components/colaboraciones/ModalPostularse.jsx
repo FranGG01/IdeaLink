@@ -10,7 +10,7 @@ export default function PostulacionesModal({ open, handleClose }) {
         setLoading(true);
         try {
             const token = localStorage.getItem("jwt-token");
-            const res = await fetch("http://127.0.0.1:5000/api/my-applications-received", {
+            const res = await fetch(`${API_BASE}/my-applications-received`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
@@ -34,7 +34,7 @@ export default function PostulacionesModal({ open, handleClose }) {
     const responderPostulacion = async (id, status) => {
         const token = localStorage.getItem("jwt-token");
         try {
-            const res = await fetch(`http://127.0.0.1:5000/api/applications/${id}`, {
+            const res = await fetch(`${API_BASE}/applications/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

@@ -53,7 +53,7 @@ export default function storeReducer(store, action = {}) {
 
 // Registro de usuario
 export const register = async (email, password, username) => {
-  const res = await fetch("http://127.0.0.1:5000/api/register", {
+  const res = await fetch(`${API_BASE}/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password, username })
@@ -68,7 +68,7 @@ export const register = async (email, password, username) => {
 
 // Login con email+password → devuelve objeto usuario con token
 export const login = async (email, password) => {
-  const res = await fetch("http://127.0.0.1:5000/api/token", {
+  const res = await fetch(`${API_BASE}/token`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password })
@@ -87,7 +87,7 @@ export const login = async (email, password) => {
 // Devuelve perfil (requiere token en localStorage)
 export const getProfile = async () => {
   const token = localStorage.getItem("jwt-token");
-  const res = await fetch("http://127.0.0.1:5000/api/profile", {
+  const res = await fetch(`${API_BASE}/profile`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -116,7 +116,7 @@ export const createProject = async (formData, user) => {
     is_accepting_applications: true,
   };
 
-  const res = await fetch("http://127.0.0.1:5000/api/projects", {
+  const res = await fetch(`${API_BASE}/projects`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

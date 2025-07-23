@@ -99,7 +99,7 @@ export default function useGlobalReducer() {
 }
 
 async function getStreamToken(user) {
-    const res = await fetch("http://127.0.0.1:5000/api/stream-token", {
+    const res = await fetch(`${API_BASE}/stream-token`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
