@@ -37,6 +37,8 @@ CORS(app, resources={r"/*": {"origins": [
     "https://sample-service-name-p531.onrender.com",
     "http://localhost:3000"
 ]}}, supports_credentials=True)
+print("🔥 CORS está activo:", app.after_request_funcs)
+
 
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
