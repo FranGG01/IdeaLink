@@ -4,7 +4,7 @@ from logging.config import fileConfig
 from flask import current_app
 from alembic import context
 
-from api.app import app  # <-- añade esto
+from app import app  # <-- añade esto
 app.app_context().push()  # <-- y esto
 
 # this is the Alembic Config object, which provides

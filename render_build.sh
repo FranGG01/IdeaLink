@@ -9,4 +9,4 @@ npm run build
 # Backend
 pipenv install
 
-PYTHONPATH=src pipenv run alembic -c migrations/alembic.ini upgrade head
+PYTHONPATH=$PYTHONPATH:$(pwd)/src pipenv run alembic -c migrations/alembic.ini upgrade head
