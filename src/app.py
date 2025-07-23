@@ -32,14 +32,16 @@ app.config['JWT_SECRET_KEY'] = 'supersecreto123'
 jwt = JWTManager(app)
 
 # Configura CORS para los orígenes que usas (añade los que necesites)
-CORS(app, origins=[
-    "https://sample-service-name-p531.onrender.com",
-    "https://potential-chainsaw-97j7q96jxvv4cxx6v-3000.app.github.dev",
-    "https://supreme-telegram-7vpvr97px66vhpr55-3000.app.github.dev",
-    "https://cautious-halibut-4jwjg7qwr9qphqw5q-3000.app.github.dev",
-    "https://sample-service-name-alvt.onrender.com",
-    "http://localhost:3000"
-], supports_credentials=True)
+CORS(app, resources={r"/api/*": {
+    "origins": [
+        "https://sample-service-name-p531.onrender.com",  
+        "http://localhost:3000",                         
+        "https://potential-chainsaw-97j7q96jxvv4cxx6v-3000.app.github.dev", 
+        "https://supreme-telegram-7vpvr97px66vhpr55-3000.app.github.dev",
+        "https://cautious-halibut-4jwjg7qwr9qphqw5q-3000.app.github.dev",
+        "https://sample-service-name-alvt.onrender.com"
+    ]
+}}, supports_credentials=True)
 print("🔥 CORS está activo:", app.after_request_funcs)
 
 
