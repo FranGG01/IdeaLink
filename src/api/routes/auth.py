@@ -10,6 +10,8 @@ auth_api = Blueprint('auth_api', __name__)
 @auth_api.route('/register', methods=['POST', 'OPTIONS'])
 @cross_origin(origins="https://sample-service-name-p531.onrender.com", supports_credentials=True)
 def register_user():
+    if request.method == "OPTIONS":
+        return jsonify({}), 200
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
