@@ -8,6 +8,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Navigation } from 'swiper/modules';
 
+const API_BASE = import.meta.env.VITE_API_URL;
+
 export default function Tarjeta({ project, userFavorites, setUserFavorites, onHashtagClick }) {
     const isFavorite = Array.isArray(userFavorites) && userFavorites.includes(project.id);
 

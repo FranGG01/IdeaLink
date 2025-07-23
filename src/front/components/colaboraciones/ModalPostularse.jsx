@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Dialog, DialogHeader, DialogBody, DialogFooter, Button, Avatar } from "@material-tailwind/react";
 import { toast } from "react-toastify";
+const API_BASE = import.meta.env.VITE_API_URL;
 
 export default function PostulacionesModal({ open, handleClose }) {
     const [postulaciones, setPostulaciones] = useState([]);

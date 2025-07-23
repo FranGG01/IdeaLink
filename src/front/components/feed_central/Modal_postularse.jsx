@@ -12,6 +12,8 @@ import { UserCircle } from "lucide-react";
 import { toast } from "react-toastify";
 import "./Modal_postularse.css";
 
+const API_BASE = import.meta.env.VITE_API_URL;
+
 export default function Modal_postularse({ projectId }) {
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("");

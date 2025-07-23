@@ -1,7 +1,7 @@
 import { useContext, useReducer, createContext, useEffect, useState, useRef } from "react";
 import storeReducer, { initialStore } from "../store";
 import { StreamChat } from "stream-chat";
-
+const API_BASE = import.meta.env.VITE_API_URL;
 const StoreContext = createContext();
 const apiKey = "2pks7t76xeqd";
 const client = StreamChat.getInstance(apiKey);

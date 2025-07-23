@@ -3,6 +3,8 @@ import { createPortal } from "react-dom";
 import { Users } from "lucide-react";
 import useGlobalReducer from "../../hooks/useGlobalReducer"; // 👈 IMPORTANTE
 
+const API_BASE = import.meta.env.VITE_API_URL;
+
 export default function SolicitudesButton() {
     const [applications, setApplications] = useState([]);
     const [showRequests, setShowRequests] = useState(false);

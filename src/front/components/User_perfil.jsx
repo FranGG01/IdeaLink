@@ -3,6 +3,8 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 import Tarjeta from "./feed_central/Tarjeta_feed";
 import AddFriendButton from "./AddFriendButton";
 
+const API_BASE = import.meta.env.VITE_API_URL;
+
 const User_perfil = () => {
     const { store, dispatch } = useGlobalReducer();
     const user = store.user;

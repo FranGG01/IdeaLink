@@ -6,6 +6,8 @@ import { useState } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import sdk from "@stackblitz/sdk";
 
+const API_BASE = import.meta.env.VITE_API_URL;
+
 export default function Modal1() {
     const [open, setOpen] = useState(false);
     const { store, dispatch } = useGlobalReducer();

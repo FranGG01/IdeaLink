@@ -6,6 +6,8 @@ import LogoBombilla from "../LogoBombilla";
 import AIChatModal from "./AIChatModal";
 import useGlobalReducer from "../../hooks/useGlobalReducer";
 
+const API_BASE = import.meta.env.VITE_API_URL;
+
 export default function SidebarLeft() {
   const location = useLocation();
   const navigate = useNavigate();

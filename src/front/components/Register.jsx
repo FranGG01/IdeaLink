@@ -5,6 +5,7 @@ import Logo_dark from '../assets/img/Logo_dark.png';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+const API_BASE = import.meta.env.VITE_API_URL;
 
 const Register = () => {
   const [email, setEmail] = useState('');

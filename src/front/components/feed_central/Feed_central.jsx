@@ -4,6 +4,8 @@ import Tarjeta from './Tarjeta_feed';
 import useGlobalReducer from '../../hooks/useGlobalReducer';
 import { useState, useEffect } from 'react';
 
+const API_BASE = import.meta.env.VITE_API_URL;
+
 const Feed_central = () => {
     const { store, dispatch } = useGlobalReducer();
     const [userFavorites, setUserFavorites] = useState([]);
