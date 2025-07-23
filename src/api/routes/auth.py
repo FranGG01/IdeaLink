@@ -12,10 +12,12 @@ auth_api = Blueprint('auth_api', __name__)
 def register_user():
     if request.method == "OPTIONS":
         return jsonify({}), 200
+
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
     username = data.get('username')
+
     if not password or not email:
         return jsonify({"msg": "Email y contraseña requeridos"}), 400
 
