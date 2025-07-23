@@ -4,6 +4,7 @@ from .project import project_api
 from .application import application_api
 from .ia_routes import ia_bp
 
+
 api = Blueprint('api', __name__)
 
 api.register_blueprint(auth_api, url_prefix='')

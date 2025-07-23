@@ -3,10 +3,12 @@ from api.models import db, User
 from flask_jwt_extended import create_access_token
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_cors import cross_origin
 
 auth_api = Blueprint('auth_api', __name__)
 
-@auth_api.route('/register', methods=['POST'])
+@auth_api.route('/register', methods=['POST', 'OPTIONS'])
+@cross_origin(origins="https://sample-service-name-p531.onrender.com", supports_credentials=True)
 def register_user():
     data = request.get_json()
     email = data.get('email')
