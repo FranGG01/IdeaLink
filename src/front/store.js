@@ -10,7 +10,7 @@ export const initialStore = () => ({
   projects: [],
   todos: [
     { id: 1, title: "Make the bed", background: null },
-    { id: 2, title: "Do my homework", background: null }
+    { id: 2, title: "Do my homework", background: null },
   ],
   pendingApplications: 0, // <-- nuevo estado para solicitudes pendientes
 });
@@ -24,9 +24,9 @@ export default function storeReducer(store, action = {}) {
       const { id, color } = action.payload;
       return {
         ...store,
-        todos: store.todos.map(t =>
+        todos: store.todos.map((t) =>
           t.id === id ? { ...t, background: color } : t
-        )
+        ),
       };
     }
 
@@ -39,14 +39,13 @@ export default function storeReducer(store, action = {}) {
     case "set_projects":
       return { ...store, projects: action.payload };
 
-    case "set_pending_applications":  // <-- nuevo caso para actualizar solicitudes
+    case "set_pending_applications": // <-- nuevo caso para actualizar solicitudes
       return { ...store, pendingApplications: action.payload };
 
     default:
       throw Error("Unknown action.");
   }
-};
-
+}
 
 /*───────────────────────────────────────────────────────────
   Helpers de API
@@ -57,7 +56,7 @@ export const register = async (email, password, username) => {
   const res = await fetch(`${API_BASE}/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password, username })
+    body: JSON.stringify({ email, password, username }),
   });
   const data = await res.json();
   if (res.ok) {
@@ -72,7 +71,7 @@ export const login = async (email, password) => {
   const res = await fetch(`${API_BASE}/token`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password })
+    body: JSON.stringify({ email, password }),
   });
 
   if (!res.ok) {
@@ -92,8 +91,8 @@ export const getProfile = async () => {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   });
 
   if (!res.ok) {
