@@ -32,10 +32,10 @@ app.config['JWT_SECRET_KEY'] = 'supersecreto123'
 jwt = JWTManager(app)
 
 # Configura CORS para los orígenes que usas (añade los que necesites)
-CORS(app, origins=[
-    "https://sample-service-name-p531.onrender.com",  # tu frontend
-    "http://localhost:3000"  # para desarrollo
-], supports_credentials=True, expose_headers=["Authorization"], allow_headers=["Content-Type", "Authorization"])
+CORS(app, resources={r"/*": {"origins": [
+    "https://sample-service-name-p531.onrender.com",
+    "http://localhost:3000"
+]}}, supports_credentials=True)
 
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
