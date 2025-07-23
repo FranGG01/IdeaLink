@@ -38,6 +38,7 @@ const Register = () => {
       toast.error("❌ Error de red al registrar usuario");
     }
   };
+  console.log("✅ API_URL:", import.meta.env.VITE_API_URL);
 
   return (
     <div className="h-screen flex justify-center items-center bg-gray-900 text-white px-4">
