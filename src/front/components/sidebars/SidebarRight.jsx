@@ -157,7 +157,7 @@ export default function SidebarRight() {
             onClick={() => setShowRequests(!showRequests)}
             className="flex ms-5 items-center rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 py-3 px-6 text-sm font-medium text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
           >
-            Solicitudes
+            Peticiones
           </button>
           {pendingCount > 0 && (
             <span className="absolute -top-0  bg-red-600 text-white text-xs ms-31 mt-2 px-1.5 py-0.5 rounded-full">
