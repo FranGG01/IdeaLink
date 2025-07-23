@@ -73,7 +73,7 @@ export default function SidebarLeft() {
 
                 {/* 🔴 Notificación mejorada para "Colaboraciones" */}
                 {isCollab && hasPending && (
-                  <div className="absolute -top-1 -right-1 flex items-center justify-center">
+                  <div className="absolute -top-2 -left-1 flex items-center justify-center">
                     {/* Círculo de fondo con animación de pulso */}
                     <div className="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center animate-pulse shadow-lg">
                       {/* Número de solicitudes pendientes */}
