@@ -23,15 +23,7 @@ const team = [
         linkedin: "https://www.linkedin.com",
         github: "https://github.com/00hank00",
     },
-    {
-        name: "Enrique Spencer",
-        role: "Full Stack Developer",
-        description:
-            "Puedo con el front y el back… hasta que aparece un bug.",
-        image: "/Enrique.png",
-        linkedin: "https://www.linkedin.com",
-        github: "https://github.com/VykeAS",
-    },
+
 ];
 
 export default function AboutUs() {
@@ -64,7 +56,7 @@ export default function AboutUs() {
                 </motion.p>
             </div>
 
-            <div className="mt-20 grid gap-10 sm:grid-cols-3 justify-items-center max-w-6xl mx-auto">
+            <div className="mt-20 grid gap-10 sm:grid-cols-2 justify-items-center max-w-6xl mx-auto">
                 {team.map((member, index) => (
                     <motion.div
                         key={index}
