@@ -34,6 +34,7 @@ jwt = JWTManager(app)
 # Configura CORS para los orígenes que usas (añade los que necesites)
 CORS(app, resources={r"/*": {"origins": [
     "https://sample-service-name-397m.onrender.com",
+    "https://sample-service-name-p531.onrender.com",
     "http://localhost:3000"
 ]}}, supports_credentials=True)
 
