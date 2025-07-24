@@ -1,7 +1,7 @@
-const API = "http://127.0.0.1:5000/api";
+const API_BASE = import.meta.env.VITE_API_URL;
 
 export async function sendFriendRequestByUsername(username, token) {
-  return fetch(`${API}/friend-request-by-username`, {
+  return fetch(`${API_BASE}/friend-request-by-username`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -24,7 +24,7 @@ export async function deleteFriend(friendId, token) {
 
 
 export async function respondFriendRequest(id, action, token) {
-  return fetch(`${API}/friend-request/${id}`, {
+  return fetch(`${API_BASE}/friend-request/${id}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -35,7 +35,7 @@ export async function respondFriendRequest(id, action, token) {
 }
 
 export async function getFriends(token) {
-  return fetch(`${API}/friends`, {
+  return fetch(`${API_BASE}/friends`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -43,7 +43,7 @@ export async function getFriends(token) {
 }
 
 export async function getPendingRequests(token) {
-  const response = await fetch(`${API}/friend-requests`, {
+  const response = await fetch(`${API_BASE}/friend-requests`, {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
