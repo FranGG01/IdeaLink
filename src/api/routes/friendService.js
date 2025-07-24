@@ -12,7 +12,7 @@ export async function sendFriendRequestByUsername(username, token) {
 }
 
 export async function deleteFriend(friendId, token) {
-  const res = await fetch(`${API}/friend/${friendId}`, {
+  const res = await fetch(`${API_BASE}/friend/${friendId}`, {
       method: "DELETE",
       headers: {
           "Authorization": `Bearer ${token}`,
