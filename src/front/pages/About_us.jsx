@@ -19,7 +19,7 @@ const team = [
         role: "Full Stack Developer",
         description:
             "Disfruto convertir ideas en productos funcionales y bien ejecutados. Me centro en la calidad, los detalles y en que cada proyecto tenga un propósito claro y útil.",
-        image: "../public/juanka.png",
+        image: "/juanka.png",
         linkedin: "https://www.linkedin.com",
         github: "https://github.com/00hank00",
     },
