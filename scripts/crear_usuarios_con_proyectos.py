@@ -5,7 +5,7 @@ import random
 
 fake = Faker()
 
-BASE_URL = "http://127.0.0.1:5000/api"
+BASE_URL = "https://sample-service-name-alvt.onrender.com/api"
 REGISTER_URL = f"{BASE_URL}/register"
 TOKEN_URL = f"{BASE_URL}/token"
 PROFILE_URL = f"{BASE_URL}/profile"
@@ -17,6 +17,8 @@ hashtags_pool = [
 ]
 
 # Descargar múltiples imágenes reales aleatorias
+
+
 def get_multiple_images(count=2):
     images = []
     tries = 0
@@ -30,6 +32,7 @@ def get_multiple_images(count=2):
             img.name = f"{image_id}.jpg"
             images.append(img)
     return images
+
 
 num_users = 16
 
@@ -66,14 +69,14 @@ for i in range(num_users):
 
     # 3. Actualizar perfil
     requests.put(PROFILE_URL,
-        json={
-            "avatar_url": avatar_url,
-            "bio": fake.sentence(),
-            "location": fake.city(),
-            "role": fake.job()
-        },
-        headers={"Authorization": f"Bearer {token}"}
-    )
+                 json={
+                     "avatar_url": avatar_url,
+                     "bio": fake.sentence(),
+                     "location": fake.city(),
+                     "role": fake.job()
+                 },
+                 headers={"Authorization": f"Bearer {token}"}
+                 )
 
     # 4. Crear hashtags aleatorios
     random_hashtags = random.sample(hashtags_pool, k=random.randint(2, 4))
@@ -95,7 +98,8 @@ for i in range(num_users):
 
     files = []
     for idx, img in enumerate(images):
-        files.append(("image_files", (f"{username}_{i}_img{idx+1}.jpg", img, "image/jpeg")))
+        files.append(
+            ("image_files", (f"{username}_{i}_img{idx+1}.jpg", img, "image/jpeg")))
 
     project_res = requests.post(
         PROJECT_URL,
@@ -107,4 +111,5 @@ for i in range(num_users):
     if project_res.status_code in [200, 201]:
         print(f"✅ Proyecto creado para {username}")
     else:
-        print(f"⚠️ Error al crear proyecto: {project_res.status_code} - {project_res.text}")
+        print(
+            f"⚠️ Error al crear proyecto: {project_res.status_code} - {project_res.text}")

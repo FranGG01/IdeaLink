@@ -39,7 +39,7 @@ def create_project():
     for image in image_files:
         if image and image.filename:
             filename = image.filename
-            save_path = os.path.join("src", "static", "uploads", filename)
+            save_path = os.path.join("static", "uploads", filename)
             os.makedirs(os.path.dirname(save_path), exist_ok=True)
             image.save(save_path)
             image_urls.append(f"/static/uploads/{filename}")
