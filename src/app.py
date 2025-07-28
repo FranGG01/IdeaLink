@@ -43,7 +43,10 @@ CORS(app, origins=[
     "https://supreme-telegram-7vpvr97px66vhpr55-3000.app.github.dev",
     "https://sample-service-name-alvt.onrender.com",
     "http://localhost:3000"
-], supports_credentials=True)
+], supports_credentials=True,
+     expose_headers=["Authorization"],
+     allow_headers=["Content-Type", "Authorization"])
+
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
