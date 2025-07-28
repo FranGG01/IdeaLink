@@ -7,44 +7,61 @@ db = SQLAlchemy()
 
 favorites = db.Table(
     'favorites',
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
-    db.Column('project_id', db.Integer, db.ForeignKey('project.id'), primary_key=True)
+    db.Column('user_id', db.Integer, db.ForeignKey(
+        'user.id'), primary_key=True),
+    db.Column('project_id', db.Integer, db.ForeignKey(
+        'project.id'), primary_key=True)
 )
+
 
 class FriendRequest(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    sender_id: Mapped[int] = mapped_column(ForeignKey('user.id'), nullable=False)
-    receiver_id: Mapped[int] = mapped_column(ForeignKey('user.id'), nullable=False)
-    status: Mapped[str] = mapped_column(String(20), nullable=False, default='pending')  # pending, accepted, rejected
+    sender_id: Mapped[int] = mapped_column(
+        ForeignKey('user.id'), nullable=False)
+    receiver_id: Mapped[int] = mapped_column(
+        ForeignKey('user.id'), nullable=False)
+    status: Mapped[str] = mapped_column(
+        # pending, accepted, rejected
+        String(20), nullable=False, default='pending')
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
 
-    sender = relationship("User", foreign_keys=[sender_id], back_populates="sent_requests")
-    receiver = relationship("User", foreign_keys=[receiver_id], back_populates="received_requests")
+    sender = relationship("User", foreign_keys=[
+                          sender_id], back_populates="sent_requests")
+    receiver = relationship("User", foreign_keys=[
+                            receiver_id], back_populates="received_requests")
 
-    __table_args__ = (UniqueConstraint('sender_id', 'receiver_id', name='_sender_receiver_uc'),)
+    __table_args__ = (UniqueConstraint(
+        'sender_id', 'receiver_id', name='_sender_receiver_uc'),)
 
 
 class User(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
+    email: Mapped[str] = mapped_column(
+        String(120), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
-    is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False, default=True)
+    is_active: Mapped[bool] = mapped_column(
+        Boolean(), nullable=False, default=True)
     username: Mapped[str] = mapped_column(String(120), nullable=True)
-    avatar_url: Mapped[str] = mapped_column(String(255), nullable=True)
-    banner_url: Mapped[str] = mapped_column(String(255), nullable=True)
+    avatar_url: Mapped[str] = mapped_column(Text, nullable=True)
+    banner_url: Mapped[str] = mapped_column(Text, nullable=True)
     role: Mapped[str] = mapped_column(String(120), nullable=True)
     location: Mapped[str] = mapped_column(String(120), nullable=True)
     bio: Mapped[str] = mapped_column(Text, nullable=True)
 
-    sent_requests = relationship("FriendRequest", foreign_keys=[FriendRequest.sender_id], back_populates="sender", lazy="dynamic")
-    received_requests = relationship("FriendRequest", foreign_keys=[FriendRequest.receiver_id], back_populates="receiver", lazy="dynamic")
+    sent_requests = relationship("FriendRequest", foreign_keys=[
+                                 FriendRequest.sender_id], back_populates="sender", lazy="dynamic")
+    received_requests = relationship("FriendRequest", foreign_keys=[
+                                     FriendRequest.receiver_id], back_populates="receiver", lazy="dynamic")
 
-    favorite_projects = db.relationship("Project", secondary=favorites, backref="favorited_by")
+    favorite_projects = db.relationship(
+        "Project", secondary=favorites, backref="favorited_by")
 
     @property
     def friends(self):
-        sent = FriendRequest.query.filter_by(sender_id=self.id, status='accepted').all()
-        received = FriendRequest.query.filter_by(receiver_id=self.id, status='accepted').all()
+        sent = FriendRequest.query.filter_by(
+            sender_id=self.id, status='accepted').all()
+        received = FriendRequest.query.filter_by(
+            receiver_id=self.id, status='accepted').all()
         return [fr.receiver for fr in sent] + [fr.sender for fr in received]
 
     def serialize(self):
@@ -68,10 +85,12 @@ class Project(db.Model):
     hashtags: Mapped[str] = mapped_column(String(255), nullable=True)
     is_accepting_applications: Mapped[bool] = mapped_column(default=True)
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
-    owner_id: Mapped[int] = mapped_column(ForeignKey('user.id'), nullable=False)
+    owner_id: Mapped[int] = mapped_column(
+        ForeignKey('user.id'), nullable=False)
     owner = relationship("User")
 
-    collaborators = db.relationship('ProjectCollaborator', back_populates='project', cascade='all, delete-orphan')
+    collaborators = db.relationship(
+        'ProjectCollaborator', back_populates='project', cascade='all, delete-orphan')
     stackblitz_url = db.Column(db.String, nullable=True)
     code_files: Mapped[dict] = mapped_column(JSON, nullable=True)
 
@@ -79,11 +98,13 @@ class Project(db.Model):
         print("🔍 Comparando:", self.owner_id, "con", current_user_id)
         is_favorite = False
         if current_user_id:
-            is_favorite = any(user.id == current_user_id for user in self.favorited_by)
+            is_favorite = any(
+                user.id == current_user_id for user in self.favorited_by)
 
         hashtags_list = []
         if self.hashtags:
-            hashtags_list = [tag.strip().lstrip('#') for tag in self.hashtags.split(',') if tag.strip()]
+            hashtags_list = [tag.strip().lstrip('#')
+                             for tag in self.hashtags.split(',') if tag.strip()]
 
         return {
             'id': self.id,
@@ -111,7 +132,8 @@ class Postularse(db.Model):
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
 
     user_id: Mapped[int] = mapped_column(ForeignKey('user.id'), nullable=False)
-    project_id: Mapped[int] = mapped_column(ForeignKey('project.id'), nullable=False)
+    project_id: Mapped[int] = mapped_column(
+        ForeignKey('project.id'), nullable=False)
     user = relationship("User")
     project = relationship("Project")
 
@@ -133,7 +155,8 @@ class ProjectCollaborator(db.Model):
     __tablename__ = 'project_collaborators'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
+    project_id = db.Column(db.Integer, db.ForeignKey(
+        'project.id'), nullable=False)
 
     user = db.relationship('User')
     project = db.relationship('Project')
