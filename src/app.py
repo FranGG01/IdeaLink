@@ -33,16 +33,19 @@ stream_client = StreamChat(api_key=STREAM_API_KEY,
 app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = 'supersecreto123'
 jwt = JWTManager(app)
-CORS(app, supports_credentials=True, expose_headers=[
-     "Authorization"], allow_headers=["Content-Type", "Authorization"])
+CORS(app,
+     origins=[
+         "https://sample-service-name-ubys.onrender.com",
+         "https://potential-chainsaw-97j7q96jxvv4cxx6v-3000.app.github.dev",
+         "https://supreme-telegram-7vpvr97px66vhpr55-3000.app.github.dev",
+         "https://sample-service-name-alvt.onrender.com",
+         "http://localhost:3000"
+     ],
+     supports_credentials=True,
+     expose_headers=["Authorization"],
+     allow_headers=["Content-Type", "Authorization"]
+)
 
-# Configura CORS para los orígenes que usas (añade los que necesites)
-CORS(app, origins=[
-    "https://potential-chainsaw-97j7q96jxvv4cxx6v-3000.app.github.dev",
-    "https://supreme-telegram-7vpvr97px66vhpr55-3000.app.github.dev",
-    "https://sample-service-name-alvt.onrender.com",
-    "http://localhost:3000"
-], supports_credentials=True)
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
