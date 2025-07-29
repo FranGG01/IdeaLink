@@ -4,6 +4,7 @@ import requests
 
 ia_bp = Blueprint('ia_bp', __name__)
 
+
 @ia_bp.route('/ia', methods=['POST'])
 def chat_with_ai():
     data = request.get_json()
@@ -29,10 +30,15 @@ def chat_with_ai():
 
     try:
         response = requests.post(url, json=payload)
-        response.raise_for_status()
-        reply_text = response.json()["candidates"][0]["content"]["parts"][0]["text"]
+        response.raise_for_status()  # Lanza error si el status no es 200
+        reply_text = response.json(
+        )["candidates"][0]["content"]["parts"][0]["text"]
         return jsonify({"reply": reply_text})
 
+    except requests.exceptions.HTTPError as http_err:
+        print(f"HTTP error: {http_err} - Response content: {response.text}")
+        return jsonify({"error": "Error HTTP al contactar con la IA"}), 500
+
     except Exception as e:
-        print("Error al contactar con Gemini:", e)
+        print(f"Error al contactar con Gemini: {e}")
         return jsonify({"error": "Error al contactar con la IA"}), 500
