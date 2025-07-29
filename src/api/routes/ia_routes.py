@@ -30,15 +30,17 @@ def chat_with_ai():
 
     try:
         response = requests.post(url, json=payload)
-        response.raise_for_status()  # Lanza error si el status no es 200
+        response.raise_for_status()
         reply_text = response.json(
         )["candidates"][0]["content"]["parts"][0]["text"]
         return jsonify({"reply": reply_text})
 
     except requests.exceptions.HTTPError as http_err:
-        print(f"HTTP error: {http_err} - Response content: {response.text}")
+        print(f"HTTP error: {http_err}")
+        if http_err.response is not None:
+            print(f"Response content: {http_err.response.text}")
         return jsonify({"error": "Error HTTP al contactar con la IA"}), 500
 
     except Exception as e:
-        print(f"Error al contactar con Gemini: {e}")
+        print("Error al contactar con Gemini:", e)
         return jsonify({"error": "Error al contactar con la IA"}), 500
