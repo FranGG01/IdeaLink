@@ -38,6 +38,7 @@ def chat_with_ai():
     except requests.exceptions.HTTPError as http_err:
         print(f"HTTP error: {http_err}")
         if http_err.response is not None:
+            print(f"Status code: {http_err.response.status_code}")
             print(f"Response content: {http_err.response.text}")
         return jsonify({"error": "Error HTTP al contactar con la IA"}), 500
 
