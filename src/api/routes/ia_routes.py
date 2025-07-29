@@ -17,7 +17,8 @@ def chat_with_ai():
     if not GEMINI_API_KEY:
         return jsonify({"error": "Clave API no configurada"}), 500
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key={GEMINI_API_KEY}"
+    # CAMBIAMOS el modelo a uno válido:
+    url = f"https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateContent?key={GEMINI_API_KEY}"
 
     payload = {
         "contents": [
@@ -38,7 +39,6 @@ def chat_with_ai():
     except requests.exceptions.HTTPError as http_err:
         print(f"HTTP error: {http_err}")
         if http_err.response is not None:
-            print(f"Status code: {http_err.response.status_code}")
             print(f"Response content: {http_err.response.text}")
         return jsonify({"error": "Error HTTP al contactar con la IA"}), 500
 
