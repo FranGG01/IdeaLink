@@ -24,6 +24,7 @@ python-dotenv = "*"
 flask = "*"
 tomli = "*"
 async-timeout = "*"
+openai = "*"
 
 [requires]
 python_version = "3.13"
