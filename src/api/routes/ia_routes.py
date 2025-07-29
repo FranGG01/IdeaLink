@@ -1,9 +1,11 @@
 from flask import Blueprint, request, jsonify
 import os
-import requests
+import openai
+from dotenv import load_dotenv
+
+load_dotenv()
 
 ia_bp = Blueprint('ia_bp', __name__)
-
 
 @ia_bp.route('/ia', methods=['POST'])
 def chat_with_ai():
@@ -13,35 +15,23 @@ def chat_with_ai():
     if not user_message:
         return jsonify({"error": "Mensaje vacío"}), 400
 
-    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-    if not GEMINI_API_KEY:
-        return jsonify({"error": "Clave API no configurada"}), 500
+    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+    if not OPENAI_API_KEY:
+        return jsonify({"error": "Clave API de OpenAI no configurada"}), 500
 
-    # CAMBIAMOS el modelo a uno válido:
-    url = f"https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateContent?key={GEMINI_API_KEY}"
-
-    payload = {
-        "contents": [
-            {
-                "role": "user",
-                "parts": [{"text": user_message}]
-            }
-        ]
-    }
+    openai.api_key = OPENAI_API_KEY
 
     try:
-        response = requests.post(url, json=payload)
-        response.raise_for_status()
-        reply_text = response.json(
-        )["candidates"][0]["content"]["parts"][0]["text"]
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",  # o "gpt-4" si tienes acceso
+            messages=[
+                {"role": "user", "content": user_message}
+            ]
+        )
+
+        reply_text = response["choices"][0]["message"]["content"]
         return jsonify({"reply": reply_text})
 
-    except requests.exceptions.HTTPError as http_err:
-        print(f"HTTP error: {http_err}")
-        if http_err.response is not None:
-            print(f"Response content: {http_err.response.text}")
-        return jsonify({"error": "Error HTTP al contactar con la IA"}), 500
-
     except Exception as e:
-        print("Error al contactar con Gemini:", e)
-        return jsonify({"error": "Error al contactar con la IA"}), 500
+        print("Error al contactar con OpenAI:", e)
+        return jsonify({"error": "Error al contactar con OpenAI"}), 500
