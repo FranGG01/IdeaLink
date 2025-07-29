@@ -25,6 +25,7 @@ flask = "*"
 tomli = "*"
 async-timeout = "*"
 openai = "*"
+exceptiongroup = "*"
 
 [requires]
 python_version = "3.13"
