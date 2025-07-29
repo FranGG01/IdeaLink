@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 import os
+import requests
 from dotenv import load_dotenv
-from openai import OpenAI  # Nuevo cliente en v1.0+
 
 load_dotenv()
 
@@ -15,21 +15,33 @@ def chat_with_ai():
     if not user_message:
         return jsonify({"error": "Mensaje vacío"}), 400
 
-    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-    if not OPENAI_API_KEY:
-        return jsonify({"error": "Clave API de OpenAI no configurada"}), 500
-
-    client = OpenAI(api_key=OPENAI_API_KEY)
+    OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+    if not OPENROUTER_API_KEY:
+        return jsonify({"error": "Falta la clave de OpenRouter"}), 500
 
     try:
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",  # o "gpt-4" si tienes acceso
-            messages=[{"role": "user", "content": user_message}]
+        response = requests.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+                "Content-Type": "application/json"
+            },
+            json={
+                "model": "mistralai/mistral-7b-instruct",  # o gpt-4, anthropic/claude-3-haiku, etc.
+                "messages": [
+                    {"role": "user", "content": user_message}
+                ]
+            }
         )
 
-        reply_text = response.choices[0].message.content
-        return jsonify({"reply": reply_text})
+        data = response.json()
+        if "choices" in data:
+            reply_text = data["choices"][0]["message"]["content"]
+            return jsonify({"reply": reply_text})
+        else:
+            print("Error:", data)
+            return jsonify({"error": "Respuesta inválida de OpenRouter"}), 500
 
     except Exception as e:
-        print("Error al contactar con OpenAI:", e)
-        return jsonify({"error": f"Error al contactar con OpenAI: {str(e)}"}), 500
+        print("Error al contactar con OpenRouter:", e)
+        return jsonify({"error": "Error al contactar con OpenRouter"}), 500
