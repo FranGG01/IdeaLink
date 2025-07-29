@@ -73,6 +73,7 @@ setup_commands(app)
 app.register_blueprint(api, url_prefix='/api')
 app.register_blueprint(friend_bp)
 app.register_blueprint(favorites_bp, url_prefix='/api')
+app.register_blueprint(ia_bp)
 
 # Handle/serialize errors like a JSON object
 
