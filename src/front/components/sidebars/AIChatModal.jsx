@@ -60,7 +60,7 @@ const AIChatModal = () => {
           <X className="w-4 h-4" />
         </button>
 
-        <div className="p-4 flex flex-col overflow-hidden max-h-[90vh]">
+        <div className="p-4 flex flex-col overflow-hidden max-h-[60vh]">
           <h3 className="text-lg font-semibold mb-2 text-white">Chat IA</h3>
 
           <div className="flex-1 overflow-y-auto space-y-2 mb-2 px-1">
