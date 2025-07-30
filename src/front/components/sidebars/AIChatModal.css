@@ -42,3 +42,23 @@
   cursor: pointer;
   z-index: 3;
 }
+.scroll-custom::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scroll-custom::-webkit-scrollbar-track {
+  background: #2a2a3c; /* Fondo de la barra */
+}
+
+.scroll-custom::-webkit-scrollbar-thumb {
+  background-color: #3b82f6; /* Azul del pulgar (scroll activo) */
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+/* Opcional para Firefox */
+.scroll-custom {
+  scrollbar-color: #3b82f6 #2a2a3c;
+  scrollbar-width: thin;
+}
