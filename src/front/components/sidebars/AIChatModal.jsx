@@ -60,7 +60,7 @@ const AIChatModal = () => {
           <X className="w-4 h-4" />
         </button>
 
-        <div className="p-4 flex flex-col h-full">
+        <div className="p-4 flex flex-col flex-grow overflow-hidden">
           <h3 className="text-lg font-semibold mb-2 text-white">Chat IA</h3>
 
           <div className="flex-1 overflow-y-auto space-y-2 mb-2 px-1">
@@ -92,7 +92,7 @@ const AIChatModal = () => {
             />
             <button
               onClick={sendMessage}
-              className="px-3 py-1 bg-blue-600 rounded-xl hover:bg-blue-700 transition duration-200"
+              className="px-3 py-1 bg-blue-600 rounded-xl hover:bg-blue-700 transition duration-200 cursor-pointer"
             >
               Enviar
             </button>
@@ -100,7 +100,7 @@ const AIChatModal = () => {
 
           <button
             onClick={clearChat}
-            className="mt-2 text-xs text-gray-400 hover:underline self-start"
+            className="mt-2 text-xs text-gray-400 hover:underline self-start cursor-pointer"
           >
             Limpiar chat
           </button>

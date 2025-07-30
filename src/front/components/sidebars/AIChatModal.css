@@ -24,10 +24,11 @@
   border-radius: 1rem;
   width: 100%;
   max-width: 420px;
-  max-height: 90vh;
-  overflow: hidden;
+  height: 90vh; 
+  max-height: 90vh; 
   display: flex;
   flex-direction: column;
+  overflow: hidden; 
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
 }
 
