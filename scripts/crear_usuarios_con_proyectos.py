@@ -5,7 +5,7 @@ import random
 
 fake = Faker()
 
-BASE_URL = "https://sample-service-name-alvt.onrender.com/api"
+BASE_URL = "https://sample-service-name-msmp.onrender.com/api"
 REGISTER_URL = f"{BASE_URL}/register"
 TOKEN_URL = f"{BASE_URL}/token"
 PROFILE_URL = f"{BASE_URL}/profile"
