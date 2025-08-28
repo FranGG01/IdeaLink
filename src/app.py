@@ -16,6 +16,7 @@ from api.utils import APIException, generate_sitemap
 from flask_swagger import swagger
 from flask_migrate import Migrate
 from flask import Flask, request, jsonify, url_for, send_from_directory
+from api.routes.auth import auth_api
 import os
 from dotenv import load_dotenv          # ➊  Añade esto
 
@@ -74,6 +75,7 @@ app.register_blueprint(api, url_prefix='/api')
 app.register_blueprint(friend_bp)
 app.register_blueprint(favorites_bp, url_prefix='/api')
 app.register_blueprint(ia_bp)
+app.register_blueprint(auth_api, url_prefix='/api')
 
 # Handle/serialize errors like a JSON object
 

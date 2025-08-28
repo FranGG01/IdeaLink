@@ -26,6 +26,7 @@ tomli = "*"
 async-timeout = "*"
 openai = "*"
 exceptiongroup = "*"
+six = "*"
 
 [requires]
 python_version = "3.13"
