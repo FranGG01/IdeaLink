@@ -23,9 +23,13 @@ tomli = "*"
 async-timeout = "*"
 openai = "*"
 exceptiongroup = "*"
+<<<<<<< HEAD
 flask = "*"
 python-dotenv = "*"
 stream-chat = "*"
+=======
+six = "*"
+>>>>>>> 0dce4d4c9bcb2d692cccf3f09e5549cfed1fc68b
 
 [requires]
 python_version = "3.13"
