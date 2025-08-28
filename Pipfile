@@ -26,6 +26,7 @@ exceptiongroup = "*"
 python-dotenv = "*"
 stream-chat = "*"
 six = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.13"
