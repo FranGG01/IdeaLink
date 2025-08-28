@@ -115,8 +115,14 @@ def serve_any_other_file(path):
 
 @app.route('/static/uploads/<path:filename>')
 def uploaded_file(filename):
-    uploads_dir = os.path.join(os.path.dirname(
-        os.path.abspath(__file__)), 'static', 'uploads')
+    # Carpeta absoluta de uploads en la raíz del proyecto
+    uploads_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'static', 'uploads')
+    
+    # Verifica que el archivo existe
+    file_path = os.path.join(uploads_dir, filename)
+    if not os.path.isfile(file_path):
+        abort(404, description="Archivo no encontrado")
+
     return send_from_directory(uploads_dir, filename)
 
 
