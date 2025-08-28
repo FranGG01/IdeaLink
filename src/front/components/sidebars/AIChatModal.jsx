@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { X, MessageCircle } from "lucide-react";
 import "./AIChatModal.css";
-
+const API_BASE = import.meta.env.VITE_API_URL;
 const AIChatModal = () => {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -27,7 +27,7 @@ const AIChatModal = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("/ia", {
+      const res = await fetch(`${API_BASE}/ia`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userInput }),
