@@ -106,7 +106,7 @@ export default function Tarjeta({ project, userFavorites, setUserFavorites, onHa
                                     <div className="tarjeta-image-container">
                                         <div className="tarjeta-image-frame"></div>
                                         <img
-                                            src={`https://sample-service-name-alvt.onrender.com${img}`}
+                                            src={`http://127.0.0.1:5000${img}`}
                                             alt={`imagen ${index + 1}`}
                                             className="tarjeta-image"
                                         />
