@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import emailjs from "emailjs-com"; // Importa EmailJS
 
 export default function SupportPage() {
     const navigate = useNavigate()
@@ -11,10 +12,27 @@ export default function SupportPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Mensaje enviado:", formData);
-        alert("¡Gracias por contactarnos!");
-        setFormData({ name: "", email: "", message: "" });
-        navigate("/feed")
+
+        // Envía el correo usando EmailJS
+        emailjs.send(
+            "service_bivjvjq", // Reemplaza con tu Service ID
+            "template_usue40p", // Reemplaza con tu Template ID
+            {
+                from_name: formData.name,
+                from_email: formData.email,
+                message: formData.message,
+                to_email: formData.email,
+            },
+            "O2fBKUWflSKwxFw4n" // Reemplaza con tu Public Key
+        )
+            .then(() => {
+                alert("¡Gracias por contactarnos! Tu mensaje ha sido enviado.");
+                setFormData({ name: "", email: "", message: "" });
+                navigate("/feed");
+            })
+            .catch(() => {
+                alert("Hubo un error al enviar el mensaje. Intenta de nuevo.");
+            });
     };
 
     return (
