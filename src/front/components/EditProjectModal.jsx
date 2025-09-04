@@ -47,7 +47,7 @@ export default function EditProjectModal({ project, onClose, onSaved }) {
             <div className="w-full max-w-xl rounded-2xl bg-white dark:bg-neutral-900 p-5 shadow-xl">
                 <div className="flex items-center justify-between mb-4">
                     <h3 className="text-lg font-semibold">Editar proyecto</h3>
-                    <button onClick={onClose} className="px-2 py-1 rounded border">✕</button>
+                    <button onClick={onClose} className="px-2 py-1 rounded border cursor-pointer">✕</button>
                 </div>
 
                 <div className="grid gap-3">
@@ -71,15 +71,15 @@ export default function EditProjectModal({ project, onClose, onSaved }) {
                         <input className="border rounded px-3 py-2" value={stackblitz} onChange={e => setStackblitz(e.target.value)} />
                     </label>
 
-                    <label className="inline-flex items-center gap-2">
+                    <label className="inline-flex items-center gap-2 cursor-pointer">
                         <input type="checkbox" checked={isAccepting} onChange={e => setIsAccepting(e.target.checked)} />
                         <span>Aceptando colaboraciones</span>
                     </label>
                 </div>
 
                 <div className="flex justify-end gap-2 mt-5">
-                    <button className="px-4 py-2 rounded border" onClick={onClose} disabled={saving}>Cancelar</button>
-                    <button className="px-4 py-2 rounded bg-black text-white disabled:opacity-50" onClick={handleSave} disabled={saving}>
+                    <button className="px-4 py-2 rounded border cursor-pointer" onClick={onClose} disabled={saving}>Cancelar</button>
+                    <button className="px-4 py-2 rounded bg-black text-white disabled:opacity-50 cursor-pointer" onClick={handleSave} disabled={saving}>
                         {saving ? "Guardando…" : "Guardar"}
                     </button>
                 </div>
