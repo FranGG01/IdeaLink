@@ -3,11 +3,14 @@ import {
     Button, Input, Typography, Textarea
 } from "@material-tailwind/react";
 import { useState } from "react";
+
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import sdk from "@stackblitz/sdk";
 
 const API_BASE = import.meta.env.VITE_API_URL;
-
+// Cloudinary config
+const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dc6jr1l3i/image/upload"; // Reemplaza TU_CLOUD_NAME
+const CLOUDINARY_PRESET = "IDEALINK"; // Reemplaza TU_UPLOAD_PRESET
 export default function Modal1() {
     const [open, setOpen] = useState(false);
     const { store, dispatch } = useGlobalReducer();
@@ -19,7 +22,8 @@ export default function Modal1() {
         title: "",
         description: "",
         hashtags: "",
-        image_files: [],
+        image_files: [], // archivos locales
+        image_urls: [], // URLs de Cloudinary
         stackblitz_url: ""
     });
 
@@ -64,26 +68,49 @@ export default function Modal1() {
         }
     };
 
+    // Subir imágenes a Cloudinary y obtener URLs
+    const uploadImagesToCloudinary = async (files) => {
+        const urls = [];
+        for (const file of files) {
+            const data = new FormData();
+            data.append("file", file);
+            data.append("upload_preset", CLOUDINARY_PRESET);
+            const res = await fetch(CLOUDINARY_URL, {
+                method: "POST",
+                body: data
+            });
+            const result = await res.json();
+            if (result.secure_url) urls.push(result.secure_url);
+        }
+        return urls;
+    };
+
     const handleFinalSubmit = async () => {
         try {
-            const formDataToSend = new FormData();
-            formDataToSend.append("title", formData.title);
-            formDataToSend.append("description", formData.description);
-            formDataToSend.append("hashtags", formData.hashtags);
-            formDataToSend.append("stackblitz_url", formData.stackblitz_url);
-            formData.image_files.forEach((file) => {
-                formDataToSend.append("image_files", file);
-            });
+            // Subir imágenes a Cloudinary primero
+            let imageUrls = [];
+            if (formData.image_files.length > 0) {
+                imageUrls = await uploadImagesToCloudinary(formData.image_files);
+            }
 
+            // Enviar solo URLs al backend
+            const payload = {
+                title: formData.title,
+                description: formData.description,
+                hashtags: formData.hashtags,
+                stackblitz_url: formData.stackblitz_url,
+                image_urls: imageUrls
+            };
 
             const token = localStorage.getItem("jwt-token");
 
             const response = await fetch(`${API_BASE}/projects`, {
                 method: "POST",
                 headers: {
+                    "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`
                 },
-                body: formDataToSend
+                body: JSON.stringify(payload)
             });
 
             if (!response.ok) throw new Error("Error al crear proyecto");
@@ -95,10 +122,11 @@ export default function Modal1() {
                 title: "",
                 description: "",
                 hashtags: "",
-                image_file: null,
+                image_files: [],
+                image_urls: [],
                 stackblitz_url: ""
             });
-            setImagePreview(null);
+            setImagePreview([]);
             setOpen(false);
         } catch (err) {
             console.error("Error al guardar proyecto:", err);
