@@ -21,28 +21,18 @@ def get_project(id):
 @project_api.route('/projects', methods=['POST'])
 @jwt_required()
 def create_project():
-    import os
-
     user_id = get_jwt_identity()
-    title = request.form.get('title')
-    description = request.form.get('description')
-    raw_hashtags = request.form.get('hashtags', '')
+    data = request.get_json()
+
+    title = data.get('title')
+    description = data.get('description')
+    raw_hashtags = data.get('hashtags', '')
     hashtags = ', '.join(
         f"#{tag.strip().lstrip('#')}" 
         for tag in raw_hashtags.split(',') if tag.strip()
     )
-
-    stackblitz_url = request.form.get('stackblitz_url')
-    image_files = request.files.getlist('image_files')
-    image_urls = []
-
-    for image in image_files:
-        if image and image.filename:
-            filename = image.filename
-            save_path = os.path.join("static", "uploads", filename)
-            os.makedirs(os.path.dirname(save_path), exist_ok=True)
-            image.save(save_path)
-            image_urls.append(f"/static/uploads/{filename}")
+    stackblitz_url = data.get('stackblitz_url')
+    image_urls = data.get('image_urls', [])
 
     project = Project(
         title=title,
