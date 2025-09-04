@@ -61,36 +61,100 @@ def create_project():
     return jsonify(project.serialize(current_user_id=user_id)), 200
 
 # Actualizar un proyecto existente
-@project_api.route('/projects/<int:id>', methods=['PUT'])
+# Actualizar un proyecto existente (parcial). Acepta JSON o multipart.
+@project_api.route('/projects/<int:id>', methods=['PUT', 'PATCH'])
+@jwt_required()
 def update_project(id):
+    import os
     project = Project.query.get_or_404(id)
-    data = request.get_json()
+    user_id = int(get_jwt_identity())
+    if project.owner_id != user_id:
+        return jsonify({"msg": "Forbidden"}), 403
 
-    project.title = data.get('title', project.title)
-    project.description = data.get('description', project.description)
-    project.image_url = data.get('image_url', project.image_url)
+    if request.content_type and 'multipart/form-data' in request.content_type:
+        title = request.form.get('title', project.title)
+        description = request.form.get('description', project.description)
+        raw_hashtags = request.form.get('hashtags', None)
+        stackblitz_url = request.form.get('stackblitz_url', project.stackblitz_url)
+        is_accepting = request.form.get('is_accepting_applications', None)
+        code_files = request.form.get('code_files', project.code_files)
 
-    raw_hashtags = data.get('hashtags')
-    if raw_hashtags is not None:
-        project.hashtags = ', '.join(
-            f"#{tag.strip().lstrip('#')}" 
-            for tag in raw_hashtags.split(',') if tag.strip()
-        )
+        if raw_hashtags is not None:
+            hashtags = ', '.join(f"#{t.strip().lstrip('#')}" for t in raw_hashtags.split(',') if t.strip())
+        else:
+            hashtags = project.hashtags
 
-    project.is_accepting_applications = data.get('is_accepting_applications', project.is_accepting_applications)
-    project.stackblitz_url = data.get('stackblitz_url', project.stackblitz_url)
-    project.code_files = data.get('code_files', project.code_files)
+        if is_accepting is not None:
+            is_accepting = (str(is_accepting).lower() in ['1','true','yes'])
+        else:
+            is_accepting = project.is_accepting_applications
+
+        # Gestión de imágenes: añadir y/o eliminar
+        image_files = request.files.getlist('image_files') 
+        remove_list = request.form.getlist('remove_image_urls')  
+
+        current_urls = list(project.image_urls or [])
+        if remove_list:
+            current_urls = [u for u in current_urls if u not in set(remove_list)]
+
+        for image in image_files:
+            if image and image.filename:
+                filename = image.filename
+                save_path = os.path.join("static", "uploads", filename)
+                os.makedirs(os.path.dirname(save_path), exist_ok=True)
+                image.save(save_path)
+                current_urls.append(f"/static/uploads/{filename}")
+
+        project.title = title
+        project.description = description
+        project.hashtags = hashtags
+        project.stackblitz_url = stackblitz_url
+        project.is_accepting_applications = is_accepting
+        project.code_files = code_files
+        project.image_urls = current_urls
+
+    else:
+
+        data = request.get_json() or {}
+        project.title = data.get('title', project.title)
+        project.description = data.get('description', project.description)
+        project.stackblitz_url = data.get('stackblitz_url', project.stackblitz_url)
+        project.code_files = data.get('code_files', project.code_files)
+        if 'is_accepting_applications' in data:
+            project.is_accepting_applications = bool(data['is_accepting_applications'])
+
+        raw_hashtags = data.get('hashtags', None)
+        if raw_hashtags is not None:
+            project.hashtags = ', '.join(
+                f"#{tag.strip().lstrip('#')}" for tag in raw_hashtags.split(',') if tag.strip()
+            )
+
+        # Añadir/eliminar imágenes 
+        add_urls = data.get('add_image_urls', [])
+        remove_urls = set(data.get('remove_image_urls', []))
+        if add_urls or remove_urls:
+            current = list(project.image_urls or [])
+            current = [u for u in current if u not in remove_urls]
+            current.extend([u for u in add_urls if u])
+            project.image_urls = current
 
     db.session.commit()
-    return jsonify(project.serialize()), 200
+    return jsonify(project.serialize(current_user_id=user_id)), 200
+
 
 # Eliminar un proyecto
 @project_api.route('/projects/<int:id>', methods=['DELETE'])
+@jwt_required()
 def delete_project(id):
     project = Project.query.get_or_404(id)
+    user_id = int(get_jwt_identity())
+    if project.owner_id != user_id:
+        return jsonify({"msg": "Forbidden"}), 403
+
     db.session.delete(project)
     db.session.commit()
     return '', 204
+
 
 # Obtener los proyectos propios del usuario autenticado
 @project_api.route('/my-projects', methods=['GET'])

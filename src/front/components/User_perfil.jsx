@@ -1,7 +1,9 @@
+// src/front/components/User_perfil.jsx
 import { useEffect, useState, useCallback, useMemo } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import Tarjeta from "./feed_central/Tarjeta_feed";
 import AddFriendButton from "./AddFriendButton";
+import EditProjectModal from "./EditProjectModal"; // NUEVO
 
 const API_BASE = import.meta.env.VITE_API_URL;
 
@@ -16,6 +18,8 @@ const User_perfil = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [favoriteIds, setFavoriteIds] = useState([]);
+
+    const [editingProject, setEditingProject] = useState(null); // NUEVO
 
     const [formData, setFormData] = useState({
         username: user?.username || "",
@@ -33,13 +37,9 @@ const User_perfil = () => {
 
         try {
             const res = await fetch(`${API_BASE}/my-projects`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                headers: { Authorization: `Bearer ${token}` },
             });
-
             if (!res.ok) throw new Error(`Error ${res.status}: ${res.statusText}`);
-
             const data = await res.json();
             setUserProjects(data);
         } catch (error) {
@@ -56,9 +56,7 @@ const User_perfil = () => {
             const res = await fetch(`${API_BASE}/my-favorites`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-
             if (!res.ok) throw new Error("Error al cargar favoritos");
-
             const data = await res.json();
             setFavorites(data);
             setFavoriteIds(data.map(p => p.id));
@@ -80,18 +78,14 @@ const User_perfil = () => {
     const handleFileUpload = useCallback((file) => {
         if (!file) return;
         const reader = new FileReader();
-        reader.onloadend = () => {
-            setFormData(prev => ({ ...prev, avatar_url: reader.result }));
-        };
+        reader.onloadend = () => setFormData(prev => ({ ...prev, avatar_url: reader.result }));
         reader.readAsDataURL(file);
     }, []);
 
     const handleBannerUpload = useCallback((file) => {
         if (!file) return;
         const reader = new FileReader();
-        reader.onloadend = () => {
-            setFormData(prev => ({ ...prev, banner_url: reader.result }));
-        };
+        reader.onloadend = () => setFormData(prev => ({ ...prev, banner_url: reader.result }));
         reader.readAsDataURL(file);
     }, []);
 
@@ -109,7 +103,6 @@ const User_perfil = () => {
                 },
                 body: JSON.stringify(formData),
             });
-
             const updatedUser = await res.json();
             if (res.ok) {
                 dispatch({ type: "set_user", payload: updatedUser });
@@ -140,11 +133,37 @@ const User_perfil = () => {
 
     const isFormValid = useMemo(() => formData.username.trim().length > 0, [formData.username]);
 
+    // ======== NUEVO: acciones de proyectos (editar/borrar) ========
+    const handleEditProject = useCallback((project) => {
+        setEditingProject(project);
+    }, []);
+
+    const handleSavedProject = useCallback((updated) => {
+        setUserProjects(prev => prev.map(p => (p.id === updated.id ? updated : p)));
+    }, []);
+
+    const handleDeleteProject = useCallback(async (projectId) => {
+        const ok = confirm("¿Eliminar este proyecto permanentemente?");
+        if (!ok) return;
+        try {
+            const token = localStorage.getItem("jwt-token");
+            const res = await fetch(`${API_BASE}/projects/${projectId}`, {
+                method: "DELETE",
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            if (!res.ok) throw new Error(await res.text());
+            setUserProjects(prev => prev.filter(p => p.id !== projectId));
+        } catch (e) {
+            alert("No se pudo eliminar: " + (e?.message || e));
+        }
+    }, []);
+    // ===============================================================
+
     return (
         <>
+            {/* === Cabecera del perfil (se mantiene como lo tenías) === */}
             <div className="flex flex-col items-center bg-[#1e293b] text-white p-6 rounded-2xl w-full max-w-4xl mx-auto">
                 <div className="w-full bg-gradient-to-r from-pink-500 to-purple-500 h-39 rounded-t-2xl relative">
-                    {/* Banner de fondo si existe */}
                     {formData.banner_url && (
                         <img
                             src={formData.banner_url}
@@ -189,6 +208,7 @@ const User_perfil = () => {
                 </div>
             </div>
 
+            {/* === Editor del perfil (igual) === */}
             {editMode && (
                 <div className="bg-gray-800 text-white p-6 rounded-2xl mt-6 w-full max-w-4xl mx-auto space-y-6">
                     <div className="flex justify-between items-center">
@@ -242,8 +262,6 @@ const User_perfil = () => {
                             />
                         </div>
 
-
-
                         {/* Bio */}
                         <div className="md:col-span-2">
                             <label className="text-sm text-gray-300 mb-1 block">Bio</label>
@@ -274,9 +292,7 @@ const User_perfil = () => {
                                         src={formData.banner_url}
                                         alt="Banner preview"
                                         className="w-full h-32 object-cover rounded-md border border-purple-500"
-                                        onError={(e) => {
-                                            e.target.style.display = 'none';
-                                        }}
+                                        onError={(e) => { e.target.style.display = 'none'; }}
                                     />
                                     <button
                                         onClick={() => handleInputChange('banner_url', '')}
@@ -289,7 +305,7 @@ const User_perfil = () => {
                             )}
                         </div>
 
-                        {/* Avatar upload mejorado */}
+                        {/* Avatar upload */}
                         <div className="md:col-span-2 flex flex-col md:flex-row items-center gap-4">
                             <div>
                                 <label className="text-sm text-gray-300 mb-1 block">Avatar</label>
@@ -317,7 +333,6 @@ const User_perfil = () => {
                                     </button>
                                 </div>
                             )}
-
                         </div>
                     </div>
 
@@ -340,7 +355,7 @@ const User_perfil = () => {
                 </div>
             )}
 
-
+            {/* === Tabs === */}
             <div className="flex gap-6 mt-6 border-b border-gray-700 w-full px-6">
                 <button
                     className={`pb-2 ${activeTab === "projects" ? "border-b-2 border-white text-white" : "text-gray-400 hover:text-white"}, cursor-pointer`}
@@ -350,8 +365,8 @@ const User_perfil = () => {
                 </button>
                 <button
                     className={`pb-2 cursor-pointer ${activeTab === "favorites"
-                            ? "border-b-2 border-white text-white"
-                            : "text-gray-400 hover:text-white"
+                        ? "border-b-2 border-white text-white"
+                        : "text-gray-400 hover:text-white"
                         }`}
                     onClick={() => setActiveTab("favorites")}
                 >
@@ -359,6 +374,7 @@ const User_perfil = () => {
                 </button>
             </div>
 
+            {/* === Listas === */}
             <div className="mt-8 space-y-4 px-4 flex flex-col items-center">
                 {loading && userProjects.length === 0 ? (
                     <div className="text-white">Cargando proyectos...</div>
@@ -382,10 +398,10 @@ const User_perfil = () => {
                                 project={project}
                                 userFavorites={favoriteIds}
                                 setUserFavorites={setFavoriteIds}
+                                onEdit={handleEditProject}               // NUEVO
+                                onDelete={handleDeleteProject}           // NUEVO
                             />
-
                         ))
-
                     )
                 ) : (
                     favorites.length === 0 ? (
@@ -398,12 +414,19 @@ const User_perfil = () => {
                                 userFavorites={favoriteIds}
                                 setUserFavorites={setFavoriteIds}
                             />
-
                         ))
-
                     )
                 )}
             </div>
+
+            {/* Modal de edición de proyecto */}
+            {editingProject && (
+                <EditProjectModal
+                    project={editingProject}
+                    onClose={() => setEditingProject(null)}
+                    onSaved={handleSavedProject}
+                />
+            )}
         </>
     );
 };
