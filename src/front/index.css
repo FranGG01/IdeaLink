@@ -50,5 +50,26 @@ body{
   display: none;
 }
 
+/* Scrollbar general */
+::-webkit-scrollbar {
+  width: 8px;              /* ancho */
+}
+
+/* Fondo del track */
+::-webkit-scrollbar-track {
+  background: #1f2937;      /* gris oscuro */
+  border-radius: 8px;
+}
+
+/* El thumb (barra que se mueve) */
+::-webkit-scrollbar-thumb {
+  background-color: #8b5cf6; /* morado IdeaLink */
+  border-radius: 8px;
+}
+
+/* Hover en la barra */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #7c3aed;
+}
 
 
