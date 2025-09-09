@@ -14,6 +14,7 @@ import Perfil from "./pages/Perfil";
 import SupportPage from "./pages/Soporte";
 import Projects from "./pages/Projects";
 import PrivateRoute from "./components/PrivateRoute";
+import PublicPerfil from "./pages/PublicPerfil";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,6 +31,7 @@ export const router = createBrowserRouter(
         <Route path="perfil" element={<Perfil />} />
         <Route path="soporte" element={<SupportPage />} />
         <Route path="proyectos" element={<Projects />} />
+        <Route path="/perfil/:userId" element={<PublicPerfil />} />
       </Route>
     </Route>
   )

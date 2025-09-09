@@ -17,6 +17,7 @@ from flask_swagger import swagger
 from flask_migrate import Migrate
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from api.routes.auth import auth_api
+from api.routes.usersperfil import usersperfil_api
 import os
 from dotenv import load_dotenv          # ➊  Añade esto
 
@@ -35,15 +36,7 @@ app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = 'supersecreto123'
 jwt = JWTManager(app)
 CORS(app, supports_credentials=True, expose_headers=[
-     "Authorization"], allow_headers=["Content-Type", "Authorization"])
-
-# Configura CORS para los orígenes que usas (añade los que necesites)
-CORS(app, origins=[
-    "https://potential-chainsaw-97j7q96jxvv4cxx6v-3000.app.github.dev",
-    "https://supreme-telegram-7vpvr97px66vhpr55-3000.app.github.dev",
-    "https://sample-service-name-alvt.onrender.com",
-    "http://localhost:3000"
-], supports_credentials=True)
+    "Authorization"], allow_headers=["Content-Type", "Authorization"])
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
@@ -76,6 +69,7 @@ app.register_blueprint(friend_bp)
 app.register_blueprint(favorites_bp, url_prefix='/api')
 app.register_blueprint(ia_bp, url_prefix="/api")
 app.register_blueprint(auth_api, url_prefix='/api')
+app.register_blueprint(usersperfil_api, url_prefix='/api')
 
 # Handle/serialize errors like a JSON object
 

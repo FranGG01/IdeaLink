@@ -1,3 +1,13 @@
+export async function sendFriendRequest(receiverId, token) {
+  return fetch(`${API_BASE}/friend-request`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ receiver_id: receiverId }),
+  }).then((res) => res.json());
+}
 const API_BASE = import.meta.env.VITE_API_URL;
 
 export async function sendFriendRequestByUsername(username, token) {
@@ -40,6 +50,21 @@ export async function getFriends(token) {
       Authorization: `Bearer ${token}`,
     },
   }).then((res) => res.json());
+}
+
+export async function getFriendStatus(receiverId, token) {
+  try {
+    const response = await fetch(`${API_BASE}/friend-status/${receiverId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return await response.json();
+  } catch (error) {
+    return { error: "No se pudo obtener el estado" };
+  }
 }
 
 export async function getPendingRequests(token) {
