@@ -12,6 +12,15 @@ import { Navigation } from 'swiper/modules';
 const API_BASE = import.meta.env.VITE_API_URL;
 
 export default function Tarjeta({ project, userFavorites, setUserFavorites, onHashtagClick }) {
+    // Obtener el usuario actual desde localStorage
+    const userString = localStorage.getItem("user-profile");
+    let currentUserId = null;
+    if (userString) {
+        try {
+            const user = JSON.parse(userString);
+            currentUserId = user?.id;
+        } catch {}
+    }
     const navigate = useNavigate();
     if (!project || !project.owner) return null;
 
@@ -60,8 +69,11 @@ export default function Tarjeta({ project, userFavorites, setUserFavorites, onHa
                 <CardHeader floated={false} shadow={false} className="tarjeta-header">
                     <div className="tarjeta-user-info">
                         <div className="tarjeta-avatar-container" style={{cursor: 'pointer'}} onClick={() => {
-                            console.log('Avatar click:', project.owner?.id, project.owner);
-                            if (project.owner?.id) navigate(`/perfil/${project.owner.id}`);
+                            if (project.owner?.id === currentUserId) {
+                                navigate("/perfil"); // Ir a la página privada si es el propio usuario
+                            } else if (project.owner?.id) {
+                                navigate(`/perfil/${project.owner.id}`); // Ir a la pública si es otro usuario
+                            }
                         }}>
                             <div className="tarjeta-avatar-aura"></div>
                             <Avatar
@@ -73,7 +85,18 @@ export default function Tarjeta({ project, userFavorites, setUserFavorites, onHa
                             <div className="tarjeta-status-indicator"></div>
                         </div>
                         <div>
-                            <Typography variant="h6" className="tarjeta-username">
+                            <Typography
+                                variant="h6"
+                                className="tarjeta-username"
+                                style={{ cursor: 'pointer' }}
+                                onClick={() => {
+                                    if (project.owner?.id === currentUserId) {
+                                        navigate("/perfil");
+                                    } else if (project.owner?.id) {
+                                        navigate(`/perfil/${project.owner.id}`);
+                                    }
+                                }}
+                            >
                                 {project.owner?.username || "Anónimo"}
                             </Typography>
                         </div>
