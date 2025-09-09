@@ -2,7 +2,7 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import Tarjeta from "./feed_central/Tarjeta_feed";
-import AddFriendButton from "./AddFriendButton";
+import PublicAddFriendButton from "./PublicAddFriendButton";
 // import EditProjectModal from "./EditProjectModal";
 
 const API_BASE = import.meta.env.VITE_API_URL;
@@ -168,7 +168,7 @@ const User_perfil = () => {
 
                     {user && user.id !== store.user.id && (
                         <div className="flex justify-center mt-2">
-                            <AddFriendButton receiverId={user.id} />
+                            <PublicAddFriendButton receiverId={user.id} />
                         </div>
                     )}
 

@@ -65,7 +65,7 @@ setup_commands(app)
 
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
-app.register_blueprint(friend_bp)
+app.register_blueprint(friend_bp, url_prefix='/api')
 app.register_blueprint(favorites_bp, url_prefix='/api')
 app.register_blueprint(ia_bp, url_prefix="/api")
 app.register_blueprint(auth_api, url_prefix='/api')
