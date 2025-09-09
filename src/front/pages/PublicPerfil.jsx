@@ -1,4 +1,4 @@
-import AddFriendButton from "../components/AddFriendButton";
+import PublicAddFriendButton from "../components/PublicAddFriendButton";
 
 import Sidebarleft from "../components/sidebars/SidebarLeft";
 import SidebarRight from "../components/sidebars/SidebarRight";
@@ -68,7 +68,7 @@ export default function PublicPerfil() {
                             )}
                             {/* Botón agregar amigo */}
                             <div className="absolute top-4 right-4">
-                                <AddFriendButton receiverId={user.id} />
+                                <PublicAddFriendButton receiverId={user.id} />
                             </div>
                             <img
                                 src={user.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username || "User")}`}
