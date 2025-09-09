@@ -1,4 +1,4 @@
-// src/front/components/EditProjectModal.jsx
+// Este componente ha sido eliminado porque la edición de proyectos ya no está permitida.
 import { useState } from "react";
 
 const API_BASE = import.meta.env.VITE_API_URL;

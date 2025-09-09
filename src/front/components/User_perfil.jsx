@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import Tarjeta from "./feed_central/Tarjeta_feed";
 import AddFriendButton from "./AddFriendButton";
-import EditProjectModal from "./EditProjectModal"; // NUEVO
+// import EditProjectModal from "./EditProjectModal";
 
 const API_BASE = import.meta.env.VITE_API_URL;
 
@@ -19,7 +19,7 @@ const User_perfil = () => {
     const [error, setError] = useState(null);
     const [favoriteIds, setFavoriteIds] = useState([]);
 
-    const [editingProject, setEditingProject] = useState(null); // NUEVO
+    // const [editingProject, setEditingProject] = useState(null);
 
     const [formData, setFormData] = useState({
         username: user?.username || "",
@@ -133,31 +133,7 @@ const User_perfil = () => {
 
     const isFormValid = useMemo(() => formData.username.trim().length > 0, [formData.username]);
 
-    // ======== NUEVO: acciones de proyectos (editar/borrar) ========
-    const handleEditProject = useCallback((project) => {
-        setEditingProject(project);
-    }, []);
-
-    const handleSavedProject = useCallback((updated) => {
-        setUserProjects(prev => prev.map(p => (p.id === updated.id ? updated : p)));
-    }, []);
-
-    const handleDeleteProject = useCallback(async (projectId) => {
-        const ok = confirm("¿Eliminar este proyecto permanentemente?");
-        if (!ok) return;
-        try {
-            const token = localStorage.getItem("jwt-token");
-            const res = await fetch(`${API_BASE}/projects/${projectId}`, {
-                method: "DELETE",
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            if (!res.ok) throw new Error(await res.text());
-            setUserProjects(prev => prev.filter(p => p.id !== projectId));
-        } catch (e) {
-            alert("No se pudo eliminar: " + (e?.message || e));
-        }
-    }, []);
-    // ===============================================================
+    // ...eliminado: acciones de proyectos (editar/borrar)...
 
     return (
         <>
@@ -398,8 +374,7 @@ const User_perfil = () => {
                                 project={project}
                                 userFavorites={favoriteIds}
                                 setUserFavorites={setFavoriteIds}
-                                onEdit={handleEditProject}               // NUEVO
-                                onDelete={handleDeleteProject}           // NUEVO
+                                // ...sin edición ni borrado de proyectos...
                             />
                         ))
                     )
@@ -419,14 +394,7 @@ const User_perfil = () => {
                 )}
             </div>
 
-            {/* Modal de edición de proyecto */}
-            {editingProject && (
-                <EditProjectModal
-                    project={editingProject}
-                    onClose={() => setEditingProject(null)}
-                    onSaved={handleSavedProject}
-                />
-            )}
+            {/* Modal de edición de proyecto eliminado */}
         </>
     );
 };

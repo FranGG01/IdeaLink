@@ -120,6 +120,7 @@ class Project(db.Model):
             'is_favorite': is_favorite,
             'is_owner': current_user_id == self.owner_id,
             'owner': {
+                'id': getattr(self.owner, "id", None),
                 'username': getattr(self.owner, "username", "Anónimo"),
                 'avatar_url': getattr(self.owner, "avatar_url", "https://ui-avatars.com/api/?name=User")
             }
