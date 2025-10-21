@@ -64,27 +64,6 @@ flask run
 ```
 
 > Asegúrate de configurar tus variables de entorno (`.env`) con las claves JWT, base de datos y Stream Chat antes de ejecutar.
-
----
-
-## 📂 Estructura del proyecto
-```
-IdeaLink/
-├── client/               # Frontend en React + Vite
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── context/
-│   │   └── services/
-│   └── ...
-├── server/               # Backend Flask
-│   ├── app.py
-│   ├── models/
-│   ├── routes/
-│   └── ...
-└── README.md
-```
-
 ---
 
 ## 🧑‍💻 Autores
